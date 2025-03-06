@@ -1,19 +1,30 @@
 footer{
   background-color: #EFEFEF;
   width: 100%;
-  height: 21.75rem;
+  min-height: 10rem;
   display: flex;
   flex-direction: column;
 
 
   .footer_up{
     height: 16rem;
+    display: flex;
+    flex-direction: row;
+    align-items:start;
+    justify-content: space-around;
+    margin-top: 2rem;
+
     .f_up_1{
       display: flex;
       flex-direction: column;
-      .f_up_logo_section{
+      margin-right: 3rem;
+
+
+      .f_up_logo_section a{
         display: flex;
         flex-direction: row;
+        text-decoration: none;
+
 
         .f_up_text_logo{
           display: flex;
@@ -32,21 +43,28 @@ footer{
       }
     }
 
-    .f_up_2{
+    .f_up_2, .f_up_3, .f_up_4{
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      font-family: poppins;
+      padding-right: 10rem !important;
       p{
         font-weight: 600;
       }
       ul{
         list-style: none;
-        padding:2rem 0;
+        padding:1rem 0;
         font-weight: 400;
+
 
         a{
           color: black;
           text-decoration: none;
+        }
+
+        li{
+          padding-top:0.5rem;
         }
       }
     }
@@ -65,8 +83,9 @@ footer{
     font-weight:300;
     font-size: 9px;
     line-height: 140%;
-    text-align: right;
+    text-align: end;
     color: black;
     width: 100%;
+    padding-bottom: 1rem !important;
   }
 }
