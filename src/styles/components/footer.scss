@@ -20,9 +20,11 @@ footer{
       margin-right: 3rem;
 
 
-      .f_up_logo_section{
+      .f_up_logo_section a{
         display: flex;
         flex-direction: row;
+        text-decoration: none;
+
 
         .f_up_text_logo{
           display: flex;

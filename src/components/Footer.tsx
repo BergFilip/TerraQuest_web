@@ -6,8 +6,11 @@ const Footer = () => {
             <div className="footer_up">
                 <div className="f_up_1">
                     <div className="f_up_logo_section">
-                        <img src="src/assets/terraquest.webp" alt="logo"/>
-                        <div className="f_up_text_logo">TerraQuest</div>
+                        <a href="/">
+                            <img src="src/assets/terraquest.webp" alt="logo"/>
+                            <div className="f_up_text_logo">TerraQuest</div>
+                        </a>
+
                     </div>
                     <div className="f_up_icon_section">
 
