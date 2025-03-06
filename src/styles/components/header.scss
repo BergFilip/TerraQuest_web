@@ -9,7 +9,7 @@ header {
   .logo {
     display: flex;
     img {
-      height: 63px;
+      height: 3.938rem;
     }
     .f_up_text_logo{
       display: flex;
@@ -24,22 +24,9 @@ header {
 
   nav {
     display: flex;
+    justify-content: right;
     gap: 15px;
-
-    button {
-      background: transparent;
-      border: none;
-      padding: 8px 12px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      border-radius: 6px;
-
-      &:hover,
-      &:focus {
-        background: #f0f0f0;
-      }
-    }
+    width: 54.375rem;
   }
 
   .login {
