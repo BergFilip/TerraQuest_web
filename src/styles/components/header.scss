@@ -1,15 +1,23 @@
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
+  justify-content: space-between !important;
+  padding: 10px 3rem;
   background: white;
   border-bottom: 1px solid #ccc;
 
+
+
   .logo {
     display: flex;
+    a{
+      text-decoration: none;
+      display: flex;
+      flex-direction: row;
+    }
     img {
-      height: 3.938rem;
+      height: 4rem;
+      margin-right: 0.5rem;
     }
     .f_up_text_logo{
       display: flex;
@@ -18,7 +26,7 @@ header {
       color: #FFAD00;
       font-size: 1.75rem;
       font-weight: bold;
-      font-family: poppins;
+      font-family: poppins !important;
     }
   }
 
@@ -27,6 +35,9 @@ header {
     justify-content: right;
     gap: 15px;
     width: 54.375rem;
+    button {
+      font-family: poppins !important;
+    }
   }
 
   .login {
@@ -39,6 +50,7 @@ header {
       border-radius: 6px;
       cursor: pointer;
       transition: 0.3s;
+      font-family: poppins !important;
 
       &:first-child {
         background: white;

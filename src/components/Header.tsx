@@ -5,8 +5,10 @@ const Header  = () => {
     return (
         <header>
             <div className="logo">
-                <img src="src/assets/terraquest.webp" alt="Logo TerraQuest"/>
-                <div className="f_up_text_logo">TerraQuest</div>
+                <a href="/">
+                    <img src="src/assets/terraquest.webp" alt="Logo TerraQuest"/>
+                    <div className="f_up_text_logo">TerraQuest</div>
+                </a>
             </div>
             <nav>
                 <Button text={"Dom"}></Button>
