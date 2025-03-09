@@ -1,4 +1,5 @@
 import "../styles/components/footer.scss"
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -21,7 +22,7 @@ const Footer = () => {
                     <ul>
                         <li><a href="#">Planer podróży</a></li>
                         <li><a href="#">Pogoda</a></li>
-                        <li><a href="#">Newsletter</a></li>
+                        <li><Link to="/newsletter">Newsletter</Link></li>
                         <li><a href="#">Specjalne oferty</a></li>
                     </ul>
                 </div>
