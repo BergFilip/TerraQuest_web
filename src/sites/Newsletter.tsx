@@ -1,14 +1,11 @@
-import Footer from "../components/Footer.tsx";
-import Header from "../components/Header.tsx";
-import "../styles/sites/newsletter.scss"
+
+import "../styles/sites/Newsletter.scss"
 import React, { useState } from "react";
 
 function App() {
     return(
         <div className="container">
-            <Header></Header>
             <Main></Main>
-            <Footer></Footer>
         </div>
     )
 }
