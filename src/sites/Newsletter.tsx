@@ -1,12 +1,9 @@
-
 import "../styles/sites/Newsletter.scss"
 import React, { useState } from "react";
 
 function App() {
     return(
-        <div className="container">
-            <Main></Main>
-        </div>
+        <Main></Main>
     )
 }
 
@@ -19,7 +16,7 @@ const Main = () => {
     };
 
     return (
-        <main>
+        <main className={"Main_Newsletter"}>
             <h1>Zapisz się do Newslettera</h1>
             <p>nie pozwól, aby ominęły cię promocje i nowe atrakcje</p>
                 <form>
