@@ -1,15 +1,11 @@
-import "./index.scss";
-import './App.scss'
-import Footer from "../components/Footer.tsx";
-import Header from "../components/Header.tsx";
+import '../styles/sites/Newsletter.scss'
 
-function App() {
+function Newsletter() {
     return(
         <div className="container">
-            <Header></Header>
-            <Footer></Footer>
+
         </div>
     )
 }
 
-export default App
+export default Newsletter
