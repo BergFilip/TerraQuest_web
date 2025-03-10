@@ -1,0 +1,79 @@
+.alert-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 9.375rem;
+  width: 28.313rem;
+}
+
+.alert-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  display: flex;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  color: black;
+}
+
+.alert-icon {
+  color: #007bff;
+  font-size: 1.5rem;
+}
+
+.alert-close {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.alert-body {
+  font-size: 16px;
+  color: black;
+  text-align: left;
+}
+
+.alert-button-ok {
+  margin-top: 10px;
+  width: 3.125rem;
+  height: 2rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  padding: 0;
+}
+.alert-box-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 24.313rem;
+}
+.info{
+  width: 2rem;
+}
+.alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); // Przyciemnione tło
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

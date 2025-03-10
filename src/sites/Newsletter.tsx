@@ -1,5 +1,6 @@
 import "../styles/sites/Newsletter.scss"
-import React, { useState } from "react";
+import Alert from "../components/Alert"
+import { useState } from "react";
 
 function App() {
     return(
@@ -14,25 +15,19 @@ const Main = () => {
         event.preventDefault();
         setShowAlert(true);
     };
-
     return (
         <main className={"Main_Newsletter"}>
             <h1>Zapisz się do Newslettera</h1>
-            <p>nie pozwól, aby ominęły cię promocje i nowe atrakcje</p>
+            <p className={"p_main"}>nie pozwól, aby ominęły cię promocje i nowe atrakcje</p>
                 <form>
                     <input type="email" placeholder={"jan.kowalski@wp.pl"}/>
                     <input type="submit" value="Zapisz się" onClick={handleClick} className="alert-button"/>
                     {showAlert && (
-                        <div className="alert-box">
-                            <div className="alert-header">
-                                <span>Zgłoszono pomyślnie</span>
-                                <button className="alert-close" onClick={() => setShowAlert(false)}>×</button>
-                            </div>
-                            <div className="alert-body">
-                                Dziękujemy za zapisanie się do naszego Newslettera. Sprawdź wiadomość e-mail.
-                            </div>
-                            <button className="alert-button-ok" onClick={() => setShowAlert(false)}>Ok</button>
-                        </div>
+                        <Alert
+                            title="Zgłoszono pomyślnie"
+                            message="Dziękujemy za zapisanie się do naszego Newslettera. Sprawdź wiadomość e-mail."
+                            onClose={() => setShowAlert(false)}
+                        />
                     )}
                 </form>
         </main>
