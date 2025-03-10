@@ -1,7 +1,7 @@
 import "../styles/sites/Newsletter.scss"
 import React, { useState } from "react";
 
-function App() {
+function Newsletter() {
     return(
         <Main></Main>
     )
@@ -39,4 +39,4 @@ const Main = () => {
     )
 };
 
-export default App
+export default Newsletter
