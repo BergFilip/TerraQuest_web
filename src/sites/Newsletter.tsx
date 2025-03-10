@@ -2,7 +2,7 @@ import "../styles/sites/Newsletter.scss"
 import Alert from "../components/Alert"
 import { useState } from "react";
 
-function App() {
+function Newsletter() {
     return(
         <Main></Main>
     )
@@ -34,4 +34,4 @@ const Main = () => {
     )
 };
 
-export default App
+export default Newsletter
