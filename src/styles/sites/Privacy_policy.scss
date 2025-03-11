@@ -1,0 +1,44 @@
+$primary-color: #333;
+$secondary-color: #f4f4f4;
+$background-color: #fff;
+$accent-color: green;
+
+main{
+  margin-top: 4rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: poppins !important;
+
+  .privacy {
+    max-width: 80%;
+    margin: auto;
+    background: $background-color;
+  }
+  .update{
+    margin-bottom: 1rem;
+    font-size: 14px;
+  }
+  h1{
+    margin-bottom: 3rem;
+  }
+  h2{
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  h1, h2 {
+    color: $primary-color;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  ul li::before {
+    content: "✔ ";
+    color: $accent-color;
+  }
+
+}
+
