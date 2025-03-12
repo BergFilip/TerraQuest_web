@@ -1,10 +1,11 @@
 import "../styles/sites/About.scss"
+import Button from "../components/Button";
 
 function App() {
     return(
         <section>
             <div className="photo_conteiner">
-                <img src="src/assets/about.webp" alt=""/>
+
             </div>
             <div className="our_mission">
                 <div>
@@ -13,11 +14,27 @@ function App() {
                 </div>
             </div>
             <div className="about_terraquest">
-                <div>
-
+                <div className="text">
+                    <h2>
+                        O TerraQuest
+                    </h2>
+                    <p>
+                        <ul>Profesjonalny i elegancki wydźwięk, który pasuje do dużej aplikacji dla różnych platform.
+                            <li>
+                                Łatwość zapamiętania i silne nawiązanie do odkrywania nowych miejsc (terra = ziemia, quest = misja, podróż).
+                            </li>
+                            <li>
+                                Uniwersalność – sprawdzi się zarówno dla klientów indywidualnych, jak i organizatorów wycieczek.
+                            </li>
+                        </ul>
+                    </p>
+                    <div className="buttons">
+                        <Button text={"Button"}></Button>
+                        <Button text={"Button"}></Button>
+                    </div>
                 </div>
-                <div>
-
+                <div className="image">
+                    <img src="src/assets/" alt="Kompas"/>
                 </div>
             </div>
             <div className="info">
@@ -79,7 +96,7 @@ function App() {
                     </div>
                     <div className="event">
                         Druga runda finansowania
-                    </div><br/>
+                    </div><br/><br/>
                     <div className="event" data-year="2024">
                         Przejęcie weekend.com
                     </div>
