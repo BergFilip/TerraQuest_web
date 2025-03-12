@@ -2,7 +2,8 @@
 import './App.scss'
 import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
-import {BrowserRouter as Router,Routes, } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Home from "./sites/Home.tsx";
 
 
 
@@ -13,7 +14,8 @@ function App() {
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
-
+                        <Route path="/" element={<Home/>} />
+                        <Route path="/home" element={<Home/>} />
                     </Routes>
                 </main>
                 <Footer></Footer>
