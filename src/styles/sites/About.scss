@@ -1,0 +1,99 @@
+section{
+  .photo_conteiner{
+    max-height: 31.25rem;
+    img{
+      max-height: 31.25rem;
+    }
+  }
+  .our_mission{
+    height: 18.313rem;
+    background-color: #FFAD00;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    h6{
+      font-size: 20px;
+      font-weight: normal;
+    }
+    p{
+      font-size: 32px;
+      height: 7.688rem;
+      width: 74.625rem;
+    }
+  }
+  .about_terraquest{
+    height: 41.063rem;
+  }
+  .info{
+    height: 15rem;
+    background-color: #FFAD00;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    div{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      span{
+        width: 9.625rem;
+        h4{
+          font-size: 51px;
+        }
+        p{
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  .history{
+    padding: 3.875rem 7.563rem;
+    h1{
+      font-size: 51px;
+    }
+    .timeline{
+      position: relative;
+      max-width: 80%;
+      margin-left: 5rem;
+      font-size: 18px;
+      .event {
+        position: relative;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+      }
+      .event::before {
+        content: attr(data-year);
+        position: absolute;
+        left: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        color: #333;
+      }
+      .event::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        width: 11px;
+        height: 11px;
+        background: #ffa500;
+        border-radius: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background-color: #ffa500;
+    }
+  }
+}
