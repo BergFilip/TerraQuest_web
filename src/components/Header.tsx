@@ -1,15 +1,11 @@
 import "../styles/components/header.scss"
 import Button from "./Button.tsx";
+import Logo from "./logo.tsx";
 
 const Header  = () => {
     return (
         <header>
-            <div className="logo">
-                <a href="/">
-                    <img src="src/assets/terraquest.webp" alt="Logo TerraQuest"/>
-                    <div className="f_up_text_logo">TerraQuest</div>
-                </a>
-            </div>
+            <Logo></Logo>
             <nav>
                 <Button text={"Dom"}></Button>
                 <Button text={"Odkrywaj"}></Button>
