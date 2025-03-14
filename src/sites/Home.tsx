@@ -1,6 +1,8 @@
 import "../styles/sites/Home.scss"
 import HSection from "../components/h-section.tsx";
 import Card from "../components/card.tsx";
+import Places_1 from "../components/places_section_1.tsx";
+import Places_2 from "../components/places_section_2.tsx";
 
 
 function Home() {
@@ -36,6 +38,19 @@ function Home() {
                               colorT={"white"}>
 
                         </Card>
+                    </div>
+                </div>
+                <div className="section3">
+                    <HSection text1={"Popularne cele podróży"}
+                              text2={"Najpopularniejsze cele podróży wśród gości z Polski"}></HSection>
+                    <div className="places_section_1">
+                        <Places_1 text1={"Warszawa"} text2={"PL"}></Places_1>
+                        <Places_1 text1={"Warszawa"} text2={"PL"}></Places_1>
+                    </div>
+                    <div className="places_section_2">
+                        <Places_2 text1={"Poznań"} text2={"PL"}></Places_2>
+                        <Places_2 text1={"Kraków"} text2={"PL"}></Places_2>
+                        <Places_2 text1={"Karpacz"} text2={"PL"}></Places_2>
                     </div>
                 </div>
             </div>
