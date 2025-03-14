@@ -1,4 +1,4 @@
-import "../styles/components/places_section_1.scss"
+import "../styles/components/places_section.scss"
 
 type PlacesSection = {
     text1: string;
