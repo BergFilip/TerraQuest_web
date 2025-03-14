@@ -4,6 +4,7 @@ import Card from "../components/card.tsx";
 import Places_1 from "../components/places_section_1.tsx";
 import Places_2 from "../components/places_section_2.tsx";
 import Places_3 from "../components/places_section_3.tsx";
+import Places_4 from "../components/places_section_4.tsx";
 
 
 function Home() {
@@ -58,11 +59,23 @@ function Home() {
                     <HSection text1={"Szukaj według rodzaju obiektu"}
                               text2={""}></HSection>
                     <div className="places_section_3">
-                        <Places_3 text1={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Hotele"}></Places_3>
-                        <Places_3 text1={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Ośrodki wypoczynkowe"}></Places_3>
-                        <Places_3 text1={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Apartamenty"}></Places_3>
-                        <Places_3 text1={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Wille"}></Places_3>
-
+                        <Places_3 link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Hotele"}></Places_3>
+                        <Places_3 link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Ośrodki wypoczynkowe"}></Places_3>
+                        <Places_3 link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Apartamenty"}></Places_3>
+                        <Places_3 link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"} text2={"Wille"}></Places_3>
+                    </div>
+                </div>
+                <div className="section5">
+                    <HSection text1={"Polska - zobacz ! "}
+                              text2={"Te popularne miejsca mają wiele do zaoferowania"}></HSection>
+                    <div className="places_section_4">
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Gdańsk"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Warszawa"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Poznań"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Kołobrzeg"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Kraków"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Karpacz"} text2={"1 000 obiektów"}></Places_4>
+                        <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Wrocław"} text2={"1 000 obiektów"}></Places_4>
                     </div>
                 </div>
             </div>
