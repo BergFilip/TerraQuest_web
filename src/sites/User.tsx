@@ -3,15 +3,34 @@ import { useState } from "react";
 
 function User() {
     const [expanded, setExpandedIndex] = useState<number | null>(null);
+    const [bookings, setBookings] = useState([
+        { id: 1, date: "04.02.2025", route: "Poznań - Warszawa", price: "345zł" },
+        { id: 2, date: "05.02.2025", route: "Wrocław - Kraków", price: "290zł" },
+        { id: 3, date: "06.02.2025", route: "Gdańsk - Katowice", price: "410zł" },
+        { id: 4, date: "07.02.2025", route: "Łódź - Szczecin", price: "350zł" },
+    ]);
 
     const toggleExpand = (index: number) => {
         setExpandedIndex(expanded === index ? null : index);
     };
 
+    const clearBookings = () => {
+        setBookings([]);
+    };
+
+    const addBooking = () => {
+        const newBooking = {
+            id: bookings.length + 1,
+            date: "08.02.2025",
+            route: "Nowa trasa - Miasto",
+            price: "400zł",
+        };
+        setBookings([...bookings, newBooking]);
+    };
+
     return (
         <main className="user">
             <div className="container">
-                {/* Panel użytkownika */}
                 <div className="user-card">
                     <img
                         src="src/assets/terraquest.webp"
@@ -24,90 +43,64 @@ function User() {
 
                     <div className="settings">
                         <div className="setting-item">
-                            <i className="fa-solid fa-eye-slash"></i> <strong>Pokaż hasło</strong>
+                            <i className="fa-solid fa-eye-slash"></i> <p><strong>Pokaż hasło</strong></p>
                         </div>
-                        <hr></hr>
+
                         <div className="setting-item">
-                            <i className="fa-solid fa-clock"></i> <strong>Czas i godzina </strong> (PM)
+                            <i className="fa-solid fa-clock"></i> <p><strong>Czas i godzina </strong> (PM)</p>
                         </div>
-                        <hr></hr>
+
                         <div className="setting-item">
-                            <i className="fa-solid fa-globe"></i> <strong>Język </strong> (Polski)
+                            <i className="fa-solid fa-globe"></i> <p><strong>Język </strong> (Polski)</p>
                         </div>
-                        <hr></hr>
+
                         <div className="setting-item">
-                            <i className="fa-solid fa-moon"></i> <strong>Motyw </strong> (ciemny)
+                            <i className="fa-solid fa-moon"></i> <p><strong>Motyw </strong> (ciemny)</p>
                         </div>
-                        <hr></hr>
+
                         <div className="setting-item">
-                            <i className="fa-solid fa-download"></i> <strong>Aktualizacja</strong>
+                            <i className="fa-solid fa-download"></i> <p><strong>Aktualizacja</strong></p>
                         </div>
-                        <hr></hr>
                     </div>
                 </div>
 
-                {/* Historia rezerwacji */}
                 <div className="booking-history">
+                    <h2>Historia rezerwacji i planowania</h2>
+                    <p className="subtitle">Sprawdź swoją historię podróży</p>
 
-                        <h2>Historia rezerwacji i planowania</h2>
-                        <p className="subtitle">Sprawdź swoją historię podróży</p>
-
-                    <div className="booking-list">
-                        {/* Rezerwacja 1 */}
-                        <div className={`booking-item ${expanded === 1 ? "expanded" : ""}`} onClick={() => toggleExpand(1)}>
-                            <div className="booking-header">
-                                <div className="date"><strong>04.02.2025</strong></div>
-                                <div className="route">Poznań - Warszawa</div>
-                                <div className="price">345zł</div>
-                                <button className="expand-btn">{expanded === 1 ? "▲" : "▼"}</button>
-                            </div>
-                            <div className={`booking-details ${expanded === 1 ? "visible" : ""}`}>
-                                <p>Tu jakiś tekst</p>
+                    {bookings.length > 0 ? (
+                        <div className="booking-list-container">
+                            <div className="booking-list">
+                                {bookings.map((booking) => (
+                                    <div
+                                        key={booking.id}
+                                        className={`booking-item ${expanded === booking.id ? "expanded" : ""}`}
+                                        onClick={() => toggleExpand(booking.id)}
+                                    >
+                                        <div className="booking-header">
+                                            <div className="date"><strong>{booking.date}</strong></div>
+                                            <div className="route">{booking.route}</div>
+                                            <div className="price">{booking.price}</div>
+                                            <button className="expand-btn">
+                                                {expanded === booking.id ? "▲" : "▼"}
+                                            </button>
+                                        </div>
+                                        <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
+                                            <p>Szczegóły podróży...</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-
-                        {/* Rezerwacja 2 */}
-                        <div className={`booking-item ${expanded === 2 ? "expanded" : ""}`} onClick={() => toggleExpand(2)}>
-                            <div className="booking-header">
-                                <div className="date"><strong>05.02.2025</strong></div>
-                                <div className="route">Wrocław - Kraków</div>
-                                <div className="price">290zł</div>
-                                <button className="expand-btn">{expanded === 2 ? "▲" : "▼"}</button>
-                            </div>
-                            <div className={`booking-details ${expanded === 2 ? "visible" : ""}`}>
-                                <p>Tu jakiś tekst</p>
-                            </div>
+                    ) : (
+                        <div className="empty-state">
+                            <p><strong>Wygląda, że masz tu pusto</strong></p>
                         </div>
+                    )}
 
-                        {/* Rezerwacja 3 */}
-                        <div className={`booking-item ${expanded === 3 ? "expanded" : ""}`} onClick={() => toggleExpand(3)}>
-                            <div className="booking-header">
-                                <div className="date"><strong>06.02.2025</strong></div>
-                                <div className="route">Gdańsk - Katowice</div>
-                                <div className="price">410zł</div>
-                                <button className="expand-btn">{expanded === 3 ? "▲" : "▼"}</button>
-                            </div>
-                            <div className={`booking-details ${expanded === 3 ? "visible" : ""}`}>
-                                <p>Tu jakiś tekst</p>
-                            </div>
-                        </div>
-
-                        {/* Rezerwacja 4 */}
-                        <div className={`booking-item ${expanded === 4 ? "expanded" : ""}`} onClick={() => toggleExpand(4)}>
-                            <div className="booking-header">
-                                <div className="date"><strong>07.02.2025</strong></div>
-                                <div className="route">Łódź - Szczecin</div>
-                                <div className="price">350zł</div>
-                                <button className="expand-btn">{expanded === 4 ? "▲" : "▼"}</button>
-                            </div>
-                            <div className={`booking-details ${expanded === 4 ? "visible" : ""}`}>
-                                <p>Tu jakiś tekst</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="empty-state">
-                        <p><strong>Wygląda, że masz tu pusto</strong></p>
+                    <div className="test-buttons">
+                        <button onClick={clearBookings}>Wyczyść historię</button>
+                        <button onClick={addBooking}>Dodaj rezerwację</button>
                     </div>
                 </div>
             </div>

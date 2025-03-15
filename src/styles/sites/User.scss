@@ -1,7 +1,7 @@
 .user {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 30px;
 
   .container {
     display: flex;
@@ -48,13 +48,21 @@
         cursor: pointer;
         transition: background 0.2s;
 
-        &:hover {
+        p:hover {
           background: #f0f0f0;
         }
 
         i {
           margin-right: 10px;
           font-size: 16px;
+        }
+
+        p{
+          text-align: left;
+          padding: 10px;
+          font-size: 14px;
+          border-bottom: black 1px solid;
+          width: 100%;
         }
       }
     }
@@ -68,6 +76,12 @@
     width: 51.375rem;
     text-align: center;
     font-family: "Roboto Light", sans-serif;
+
+    .booking-list-container {
+      max-height:  507px;  // Ustaw odpowiednią maksymalną wysokość
+      overflow-y: auto;   // Umożliwia przewijanie w pionie, jeśli zawartość przekroczy maksymalną wysokość
+      padding-right: 10px; // Dodaj trochę przestrzeni na pasek przewijania (opcjonalnie)
+    }
 
     .subtitle {
       color: gray;
@@ -84,6 +98,9 @@
         margin: 10px;
         transition: all 0.3s ease-in-out;
         overflow: hidden;
+
+
+
 
         .booking-header {
           display: flex;
