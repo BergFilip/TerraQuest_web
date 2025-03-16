@@ -78,9 +78,9 @@
     font-family: "Roboto Light", sans-serif;
 
     .booking-list-container {
-      max-height:  507px;  // Ustaw odpowiednią maksymalną wysokość
-      overflow-y: auto;   // Umożliwia przewijanie w pionie, jeśli zawartość przekroczy maksymalną wysokość
-      padding-right: 10px; // Dodaj trochę przestrzeni na pasek przewijania (opcjonalnie)
+      max-height:  507px;
+      overflow-y: auto;
+      padding-right: 10px;
     }
 
     .subtitle {
@@ -170,3 +170,201 @@
     }
   }
 }
+
+
+/*
+.user {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  flex-wrap: wrap;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 834px;
+}
+
+.user-card,
+.booking-history {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-card {
+  width: 300px;
+  height: auto;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.user-card h2 {
+  font-size: 20px;
+}
+
+.user-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.email {
+  color: gray;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.settings .setting-item {
+  display: flex;
+  height: 1.75rem;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settings .setting-item p:hover {
+  background: #f0f0f0;
+}
+
+.settings .setting-item i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.settings .setting-item p {
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  border-bottom: black 1px solid;
+  width: 100%;
+}
+
+.booking-history {
+  flex: 1;
+  padding: 20px;
+  height: auto;
+  width: 500px;
+  text-align: center;
+  font-family: "Roboto Light", sans-serif;
+}
+
+.booking-list-container {
+  max-height: 507px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.subtitle {
+  color: gray;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.booking-list .booking-item {
+  background: #f8f8f8;
+  border: 1px solid #ececec;
+  width: 100%;
+  border-radius: 8px;
+  margin: 10px 0;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.booking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.booking-details {
+  text-align: left;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  padding: 0 10px;
+  background: transparent;
+}
+
+.booking-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.expanded .booking-details {
+  max-height: 50px;
+  padding: 10px 10px;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 100px;
+  margin: 30px auto;
+  padding: 15px;
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  background: #f8f8f8;
+  font-size: 20px;
+}
+
+@media (max-width: 834px) {
+  .user {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .user-card {
+    width: 90%;
+    max-width: 350px;
+  }
+
+  .booking-history {
+    width: 90%;
+    max-width: 600px;
+    padding: 15px;
+  }
+
+  .booking-list .booking-item {
+    margin: 5px 0;
+  }
+
+  header, footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  header nav, footer nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 834px;
+    margin: 0 auto;
+  }
+}
+
+*/
