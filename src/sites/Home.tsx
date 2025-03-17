@@ -8,6 +8,7 @@ import Places_4 from "../components/places_section_4.tsx";
 import Places_5 from "../components/places_section_5.tsx";
 import Places_6 from "../components/places_section_6.tsx";
 import Places_7 from "../components/places_section_7.tsx";
+import FaqSection from "../components/help_section.tsx";
 
 
 function Home() {
@@ -168,6 +169,17 @@ function Home() {
                             colorT={"black"}
                         ></Places_7>
                     </div>
+                </div>
+
+                <div className="section9">
+                    <HSection text1={"Najczęściej zadawane pytania"}
+                              text2={"Sekcja odpowiedzi"}></HSection>
+
+                    <div className="places_section_8">
+                        <FaqSection></FaqSection>
+                    </div>
+
+
                 </div>
             </div>
         </div>
