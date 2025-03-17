@@ -1,5 +1,3 @@
-import "./index.scss";
-import './App.scss'
 import Footer from "../components/Footer.tsx";
 import Header from "../components/Header.tsx";
 
