@@ -7,6 +7,7 @@ import Places_3 from "../components/places_section_3.tsx";
 import Places_4 from "../components/places_section_4.tsx";
 import Places_5 from "../components/places_section_5.tsx";
 import Places_6 from "../components/places_section_6.tsx";
+import Places_7 from "../components/places_section_7.tsx";
 
 
 function Home() {
@@ -132,18 +133,40 @@ function Home() {
 
                     <div className="places_section_6">
                         <div className="inspiration_big">
-                            <img src="https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"/>
+                            <img
+                                src="https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"/>
                             <h4>{"6 niepowtarzalnych domów wakacyjnych w Austrii"}</h4>
                             <h4 className="descr_h4">{"Wakacje z wiekszą ekipą? Trafiłeś idealnie!"}</h4>
                         </div>
                         <Places_6
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"} text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}></Places_6>
+                            text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
+                            text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}></Places_6>
                         <Places_6
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Najlepsze domki na drzewie na świecie"} text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}></Places_6>
+                            text1={"Najlepsze domki na drzewie na świecie"}
+                            text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}></Places_6>
 
 
+                    </div>
+                </div>
+
+                <div className="section8">
+                    <HSection text1={"Podróżuj więcej, płać mniej "}
+                              text2={""}></HSection>
+
+                    <div className="places_section_7">
+                        <Places_7
+                            link={"fa-solid fa-circle-info"}
+                            text1={"Zaloguj się i oszczędzaj"}
+                            text2={"Promocje? Last minute? I wiele więce? Zaloguj się, by nie przegabić żadnych z nich."}
+                            text3={"Zaloguj się "}
+                            text4={"Zarejestruj się "}
+                            colorB2={"#FFAD00"}
+                            colorT2={"white"}
+                            colorB={"#e1e1e1"}
+                            colorT={"black"}
+                        ></Places_7>
                     </div>
                 </div>
             </div>
