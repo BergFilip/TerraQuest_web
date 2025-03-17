@@ -1,6 +1,7 @@
 import './App.scss'
 import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
+import Error from "./sites/Error.tsx"
 import {BrowserRouter as Router,Routes, Route, } from "react-router-dom";
 
 
@@ -12,7 +13,7 @@ function App() {
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
-                        <Route path="/error" element={</>}/>
+                        <Route path="/error" element={<Error/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
