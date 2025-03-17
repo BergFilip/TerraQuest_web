@@ -78,6 +78,10 @@ function Home() {
                         <Places_4 link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} text1={"Wrocław"} text2={"1 000 obiektów"}></Places_4>
                     </div>
                 </div>
+                <div className="section6">
+                    <HSection text1={"Oferty na weekend "}
+                              text2={"Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego"}></HSection>
+                </div>
             </div>
         </div>
     );
