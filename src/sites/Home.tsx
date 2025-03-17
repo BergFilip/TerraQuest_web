@@ -5,6 +5,7 @@ import Places_1 from "../components/places_section_1.tsx";
 import Places_2 from "../components/places_section_2.tsx";
 import Places_3 from "../components/places_section_3.tsx";
 import Places_4 from "../components/places_section_4.tsx";
+import Places_5 from "../components/places_section_5.tsx";
 
 
 function Home() {
@@ -81,6 +82,22 @@ function Home() {
                 <div className="section6">
                     <HSection text1={"Oferty na weekend "}
                               text2={"Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego"}></HSection>
+
+                    <div className="places_section_5">
+                        <Places_5
+                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"} text5={"785zł"}></Places_5>
+
+                        <Places_5
+                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"} text5={"785zł"}></Places_5>
+                        <Places_5
+                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"} text5={"785zł"}></Places_5>
+                        <Places_5
+                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"} text5={"785zł"}></Places_5>
+                    </div>
                 </div>
             </div>
         </div>

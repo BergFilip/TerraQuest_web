@@ -101,3 +101,57 @@
 
   }
 }
+
+
+.places_section_5 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .Places_5 {
+    font-family: poppins !important;
+    width: 24%;
+    height: 25rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    padding:15px;
+    border:1px solid #dfdfdf;
+    font-family: poppins;
+
+    img {
+      width: 100% !important;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      height: 40rem !important;
+    }
+    h4{
+      font-size: 16px !important;
+      font-weight: 400;
+      margin-bottom: 0.2rem;
+    }
+    .descr_h4{
+      font-size: 12px !important;
+      font-weight: 400;
+    }
+    p{
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      .span1{
+        color: rgba(0, 0, 0, 0.5);
+        margin-right: 10px;
+      }
+      .span2{
+        color:red;
+        margin-right: 10px;
+      }
+      .span3{
+        font-weight: 600;
+      }
+    }
+
+
+  }
+}
