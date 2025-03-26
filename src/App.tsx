@@ -10,14 +10,14 @@ function App() {
     return(
         <Router>
             <div className="container">
-                <Header></Header>
+
                 <main className="main-container">
                     <Routes>
                         <Route path="/newsletter" element={<Newsletter/>}/>
                         <Route path="/About" element={<About/>}/>
                     </Routes>
                 </main>
-                <Footer></Footer>
+
             </div>
         </Router>
     )
