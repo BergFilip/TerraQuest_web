@@ -2,7 +2,7 @@ import "../styles/sites/Privacy_policy.scss"
 
 function PrivacyPolicies() {
     return(
-        <main className="privacy">
+        <div className="privacy">
             <h1>Polityka Prywatności</h1>
             <div className="container">
 
@@ -87,7 +87,7 @@ function PrivacyPolicies() {
                 <p>📞 Telefon: +48 123 456 789</p>
                 <p>🏢 Adres: TravelQuest Sp. z o.o., ul. Światowa 12, 00-123 Warszawa</p>
             </div>
-        </main>
+        </div>
     );
 }
 
