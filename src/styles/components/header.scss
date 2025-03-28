@@ -1,29 +1,31 @@
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between !important;
-  padding: 10px 3rem;
+  justify-content: space-between;
+  padding: 2px 3rem;
   background: white;
   border-bottom: 1px solid #ccc;
-
-
+  height: 85px !important;
 
   .logo {
     display: flex;
-    a{
+    align-items: center;
+
+    a {
       text-decoration: none;
       display: flex;
       flex-direction: row;
-    }
-    img {
-      height: 4rem;
-      margin-right: 0.5rem;
-    }
-    .f_up_text_logo{
-      display: flex;
       justify-content: center;
       align-items: center;
-      color: #FFAD00;
+
+      img {
+        height: 5rem;
+        margin-right: 0.5rem;
+      }
+    }
+
+    .f_up_text_logo {
+      color: #ffad00;
       font-size: 1.75rem;
       font-weight: bold;
       font-family: poppins !important;
@@ -34,11 +36,13 @@ header {
     display: flex;
     justify-content: right;
     gap: 15px;
-    width: 54.375rem;
+
     button {
       font-family: poppins !important;
     }
+
   }
+
 
   .login {
     display: flex;
@@ -68,4 +72,123 @@ header {
       }
     }
   }
+
+  .mobile {
+    display: none;
+  }
+
+  .icons {
+    display: none;
+  }
+
+  .menu-icon, .user-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+}
+
+
+// Tablet
+@media (max-width: 1100px) {
+  header {
+    height: 60px !important;
+    padding: 10px 2rem;
+
+    .logo {
+      a {
+        img {
+          height: 4rem;
+        }
+      }
+
+      .f_up_text_logo {
+        font-size: 21px;
+      }
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 61px;
+      left: 0;
+      width: 100%;
+      background: white;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav.open {
+      display: flex !important;
+    }
+
+    .login {
+      display: none;
+    }
+
+    .menu-icon, .user-icon {
+      display: flex;
+    }
+
+    .icons {
+      display: flex;
+      margin-left: 2rem;
+    }
+
+    .user-icon {
+      margin-right: 2rem !important;
+    }
+  }
+}
+
+// Mobile
+@media (max-width: 850px) {
+  header{
+    padding: 10px 2rem;
+    nav {
+      display: none;
+      position: absolute;
+      top: 61px;
+      left: 0;
+      width: 100%;
+      background: white;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    nav.open {
+      display: flex !important;
+    }
+    .login {
+      display: none;
+    }
+    .menu-icon, .user-icon {
+      display: block;
+    }
+    .user-icon{
+      margin-right: 2rem;
+    }
+    .icons {
+      display: flex;
+      gap: 15px;
+
+      i{
+        font-size: 24px !important;
+      }
+    }
+  }
+  @media (max-width: 450px) {
+    .f_up_text_logo{
+      display: none;
+    }
+    .user-icon{
+      margin-right: 0.7rem !important;
+    }
+  }
+
 }

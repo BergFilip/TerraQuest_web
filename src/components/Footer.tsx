@@ -1,32 +1,46 @@
-import "../styles/components/footer.scss"
+import "../styles/components/footer.scss";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Footer = () => {
+    const [activeSection, setActiveSection] = useState<string | null>(null);
+
+    const toggleSection = (section: string) => {
+        setActiveSection(activeSection === section ? null : section);
+    };
+
     return (
         <footer className="footer">
             <div className="footer_up">
                 <div className="f_up_1">
                     <div className="f_up_logo_section">
                         <a href="/">
-                            <img src="src/assets/terraquest.webp" alt="logo"/>
+                            <img src="src/assets/terraquest.webp" alt="logo" />
                             <div className="f_up_text_logo">TerraQuest</div>
                         </a>
-
                     </div>
                     <div className="f_up_icon_section">
-
+                        {/* Ikony */}
                     </div>
                 </div>
-                <div className="f_up_2">
+
+                <div
+                    className={`footer_section ${activeSection === "odkryj" ? "active" : ""}`}
+                    onClick={() => toggleSection("odkryj")}
+                >
                     <p className="footer_p">Odkryj</p>
                     <ul>
                         <li><a href="#">Planer podróży</a></li>
-                        <li><a href="#">Pogoda</a></li>
+                        <li><Link to="/pogoda">Pogoda</Link></li>
                         <li><Link to="/newsletter">Newsletter</Link></li>
                         <li><a href="#">Specjalne oferty</a></li>
                     </ul>
                 </div>
-                <div className="f_up_3">
+
+                <div
+                    className={`footer_section ${activeSection === "produkty" ? "active" : ""}`}
+                    onClick={() => toggleSection("produkty")}
+                >
                     <p className="footer_p">Nasze produkty</p>
                     <ul>
                         <li><a href="#">Website App</a></li>
@@ -35,7 +49,11 @@ const Footer = () => {
                         <li><a href="#">Project</a></li>
                     </ul>
                 </div>
-                <div className="f_up_4">
+
+                <div
+                    className={`footer_section ${activeSection === "informacje" ? "active" : ""}`}
+                    onClick={() => toggleSection("informacje")}
+                >
                     <p className="footer_p">Informacje ogólne</p>
                     <ul>
                         <li><a href="#">O TerraQuest</a></li>
@@ -45,6 +63,7 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
+
             <div className="footer_mid">
                 Copyright © 2025 TerraQuest. Wszystkie prawa zastrzeżone.
             </div>
@@ -53,7 +72,6 @@ const Footer = () => {
             </div>
         </footer>
     );
-
 };
-export default Footer;
 
+export default Footer;
