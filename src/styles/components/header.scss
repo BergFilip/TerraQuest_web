@@ -146,8 +146,9 @@ header {
 
 // Mobile
 @media (max-width: 850px) {
-  header{
+  header {
     padding: 10px 2rem;
+
     nav {
       display: none;
       position: absolute;
@@ -161,28 +162,36 @@ header {
       padding: 10px 0;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     nav.open {
       display: flex !important;
     }
+
     .login {
       display: none;
     }
+
     .menu-icon, .user-icon {
       display: block;
     }
-    .user-icon{
+
+    .user-icon {
       margin-right: 2rem;
     }
+
     .icons {
       display: flex;
       gap: 15px;
 
-      i{
+      i {
         font-size: 24px !important;
       }
     }
   }
-  @media (max-width: 450px) {
+}
+@media (max-width: 450px) {
+  header {
+    padding: 10px 1rem;
     .f_up_text_logo{
       display: none;
     }
