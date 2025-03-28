@@ -139,14 +139,17 @@ function Home() {
                             <h4>{"6 niepowtarzalnych domów wakacyjnych w Austrii"}</h4>
                             <h4 className="descr_h4">{"Wakacje z wiekszą ekipą? Trafiłeś idealnie!"}</h4>
                         </div>
-                        <Places_6
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
-                            text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}></Places_6>
-                        <Places_6
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Najlepsze domki na drzewie na świecie"}
-                            text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}></Places_6>
+                        <div className="other_palce">
+                            <Places_6
+                                link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                                text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
+                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}></Places_6>
+                            <Places_6
+                                link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                                text1={"Najlepsze domki na drzewie na świecie"}
+                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}></Places_6>
+
+                        </div>
 
 
                     </div>

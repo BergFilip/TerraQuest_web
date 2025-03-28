@@ -106,3 +106,131 @@
 
   }
 }
+
+
+@media (max-width: 1250px) {
+  .main_home_section {
+    padding: 0rem 4rem !important;
+
+    .places_section_5 .Places_5:nth-last-child(-n+2), .places_section_4 .Places_4:nth-last-child(-n+2) {
+      display: none;
+    }
+
+    .places_section_5 .Places_5 {
+      width: 49%;
+    }
+
+    .section7 .places_section_6 {
+      flex-direction: column;
+
+
+      .inspiration_big {
+        width: 100%;
+      }
+
+      .other_palce {
+        width: 100%;
+        margin-top: 0rem;
+
+        .Places_6 {
+          height: 22rem !important;
+        }
+      }
+
+    }
+
+    .section8 {
+      .places_section_7 {
+        .Places_7 {
+          min-height: 1rem;
+
+          .content {
+            .title {
+              font-size: 20px !important;
+            }
+
+            .desc {
+              font-size: 14px !important;
+            }
+          }
+        }
+      }
+    }
+
+    .places_section_4 {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .Places_4 {
+        width: 19%;
+        height: 11rem;
+
+        h4{
+          font-size: 14px !important;
+        }
+        .descr_h4{
+          font-size: 12px !important;
+        }
+      }
+    }
+
+    .places_section_3 {
+      .Places_3 {
+        height: 12rem;
+        h4{
+          font-size: 14px !important;
+        }
+      }
+    }
+
+    .places_section_2{
+      .Places_2{
+        font-family: roboto !important;
+        width: 32%;
+        height: 15rem;
+      }
+    }
+
+    .places_section_1{
+      .Places_1{
+        font-family: roboto !important;
+        width: 49%;
+        height: 15rem;
+      }
+    }
+
+    .section9, .section8, .section7, .section3 {
+      margin-top: 2.5rem !important;
+    }
+
+    .section6, .section5 {
+      margin-top: 2rem !important;
+    }
+
+    .section4, .section2 {
+      margin-top: 1rem !important;
+    }
+
+
+  }
+}
+@media (max-width: 850px) {
+
+}
+@media (max-width: 450px) {
+  .main_home_section{
+    .section7 .places_section_6{
+
+      .inspiration_big{
+        display: none;
+      }
+      .other_palce{
+        display: flex;
+        flex-direction: column;
+      }
+
+    }
+  }
+}
+
