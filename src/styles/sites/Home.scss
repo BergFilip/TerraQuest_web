@@ -78,7 +78,7 @@
         color: white;
         cursor: pointer;
         transition: background 0.3s;
-        font-size:16px !important;
+        font-size:16px;
         min-height: 2.5rem;
 
         &:hover {
@@ -214,10 +214,130 @@
 
 
   }
+  .section1{
+    background-size: 100% !important;
+    height: 20rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: start !important;
+
+    h1{
+      font-size: 52px !important;
+      margin-bottom: 0rem !important;
+      height: 4.5rem !important;
+    }
+    p{
+      font-size: 22px !important;
+      margin-bottom: 2.5rem !important;
+    }
+    form{
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+
+
+      input{
+        height: 38px;
+
+      }
+      input::placeholder{
+        font-size: 14px !important;
+      }
+
+      input[type="text"],input[type="date"]{
+        width: 40% !important;
+        font-size: 14px !important;
+      }
+
+      input[type="number"]{
+        width: 68% !important;
+        font-size: 14px !important;
+      }
+      input[type="submit"]{
+        width: 12% !important;
+        font-size: 14px !important;
+      }
+    }
+  }
 }
 @media (max-width: 850px) {
+  .section1{
 
+    h1{
+      font-size: 40px !important;
+      height: 3.5rem !important;
+    }
+    p{
+      font-size: 20px !important;
+    }
+    form{
+
+      input[type="number"]{
+        width: 60% !important;
+
+      }
+      input[type="submit"]{
+        width: 20% !important;
+
+      }
+    }
+  }
 }
+@media (max-width: 740px) {
+  .section1{
+    background-size: 100% 150% !important;
+    background-repeat: no-repeat;
+
+    h1{
+      font-size: 35px !important;
+      height: 3.2rem !important;
+    }
+    p{
+      font-size: 19px !important;
+    }
+  }
+}
+
+
+@media (max-width: 535px) {
+  .section1{
+    background-size: 100% 150% !important;
+    background-repeat: no-repeat;
+    height: 23rem !important;
+
+    h1{
+      font-size: 30px !important;
+      height: 3rem !important;
+    }
+    p{
+      font-size: 17px !important;
+    }
+    form{
+      input{
+        height: 20px !important;
+
+      }
+      input::placeholder{
+        font-size: 16px !important;
+      }
+
+      input[type="text"],input[type="date"]{
+        width: 80% !important;
+        font-size: 16px !important;
+      }
+
+      input[type="number"]{
+        width: 80% !important;
+        font-size: 16px !important;
+      }
+      input[type="submit"]{
+        width: 40% !important;
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
 @media (max-width: 450px) {
   .main_home_section{
     .section7 .places_section_6{
@@ -230,6 +350,44 @@
         flex-direction: column;
       }
 
+    }
+  }
+
+  .section1{
+    background-size: 100% 150% !important;
+    background-repeat: no-repeat;
+    height: 21rem !important;
+
+    h1{
+      font-size: 20px !important;
+      height: 2rem !important;
+    }
+    p{
+      font-size: 14px !important;
+      margin-bottom: 1rem !important;
+    }
+    form{
+      input{
+        height: 20px !important;
+
+      }
+      input::placeholder{
+        font-size: 16px !important;
+      }
+
+      input[type="text"],input[type="date"]{
+        width: 80% !important;
+        font-size: 16px !important;
+      }
+
+      input[type="number"]{
+        width: 80% !important;
+        font-size: 16px !important;
+      }
+      input[type="submit"]{
+        width: 40% !important;
+        font-size: 16px !important;
+      }
     }
   }
 }
