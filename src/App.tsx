@@ -10,15 +10,15 @@ import About from "../src/sites/About.tsx";
 
 
 function App() {
-    return(
+    return (
         <Router>
             <div className="container">
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
 
-                        <Route path="/" element={<Home/>} />
-                        <Route path="/home" element={<Home/>} />
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/home" element={<Home/>}/>
                         <Route path="/privacypolicies" element={<PrivacyPolicies/>}/>
                         <Route path="/newsletter" element={<Newsletter/>}/>
                         <Route path="/About" element={<About/>}/>
@@ -30,5 +30,6 @@ function App() {
         </Router>
     )
 }
+
 
 export default App
