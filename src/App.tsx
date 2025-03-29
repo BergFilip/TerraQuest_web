@@ -6,23 +6,27 @@ import Home from "./sites/Home.tsx";
 import PrivacyPolicies from "./sites/Privacy_policy.tsx";
 import Newsletter from "../src/sites/Newsletter.tsx";
 import About from "../src/sites/About.tsx";
+import Error from "./sites/Error.tsx"
+
+
 
 
 
 function App() {
-    return (
+    return(
         <Router>
             <div className="container">
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
 
+
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
                         <Route path="/privacypolicies" element={<PrivacyPolicies/>}/>
                         <Route path="/newsletter" element={<Newsletter/>}/>
                         <Route path="/About" element={<About/>}/>
-
+                        <Route path="/error" element={<Error/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
