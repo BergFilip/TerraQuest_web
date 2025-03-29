@@ -168,6 +168,7 @@
 
         h4{
           font-size: 14px !important;
+          margin-bottom: 0.3rem !important;
         }
         .descr_h4{
           font-size: 12px !important;
@@ -180,6 +181,7 @@
         height: 12rem;
         h4{
           font-size: 14px !important;
+
         }
       }
     }
@@ -283,6 +285,17 @@
   }
   .main_home_section{
     padding: 0rem 3rem !important;
+
+    .section7 .places_section_6 {
+
+      .other_palce {
+
+        .Places_6 {
+          width: 48.5% !important;
+        }
+      }
+
+    }
   }
 }
 @media (max-width: 740px) {
@@ -298,6 +311,69 @@
       font-size: 19px !important;
     }
   }
+  .main_home_section{
+    .section7 .places_section_6 {
+
+      .inspiration_big{
+        display: none;
+      }
+      .other_palce {
+        display: flex;
+        flex-direction: column;
+
+        .Places_6 {
+          width: 100% !important;
+          height: auto !important;
+
+          img{
+            height: auto  ;
+          }
+        }
+        .Places_6:first-child{
+          margin-bottom:1rem ;
+        }
+      }
+
+    }
+   .places_section_5 .Places_5{
+     height: 20rem !important;
+      img{
+        height: 15rem !important;
+      }
+    }
+    .places_section_4 {
+      .Places_4 {
+        width: 24%;
+      }
+    }
+    .places_section_4 .Places_4:nth-last-child(-n+3){
+      display: none;
+    }
+
+    .places_section_2{
+      .Places_2{
+        font-family: roboto !important;
+        width: 48.5%;
+        margin-top: 1rem !important;
+      }
+      .Places_2:last-child{
+        display: none;
+      }
+    }
+
+    .places_section_1{
+      .Places_1{
+        font-family: roboto !important;
+        width: 100%;
+        height: 15rem;
+      }
+      .Places_1:last-child{
+        display: none;
+      }
+    }
+  }
+
+
 }
 
 
@@ -359,6 +435,62 @@
         }
       }
     }
+
+    .section7 .places_section_6 {
+      .other_palce {
+        .Places_6 {
+          margin-bottom: 1rem ;
+        }
+      }
+    }
+
+    .places_section_5 .Places_5{
+      width: 100%;
+      height: 21rem !important;
+      img{
+        height: 15rem !important;
+      }
+    }
+    .places_section_5 .Places_5:first-child, .places_section_4 .Places_4:nth-last-child(-n+4){
+      display: none;
+    }
+    .places_section_4 {
+      .Places_4 {
+        width: 31%;
+        height: 10rem !important;
+      }
+    }
+    .places_section_3 .Places_3:first-child {
+      display: none;
+    }
+    .places_section_3 .Places_3{
+      width: 31%;
+      height: 10rem !important;
+    }
+
+    .places_section_2{
+      .Places_2{
+        padding: 15px !important;
+        h3{
+          font-size: 16px !important;
+        }
+        i{
+          font-size: 14px ;
+        }
+      }
+    }
+
+    .places_section_1{
+      .Places_1{
+        padding: 15px !important;
+        h3{
+          font-size: 16px !important;
+        }
+        i{
+          font-size: 14px ;
+        }
+      }
+    }
   }
 }
 
@@ -417,22 +549,38 @@
 
   .main_home_section{
     padding: 0rem 2rem !important;
+
+    .places_section_3 .Places_3:last-child {
+      display: none;
+    }
+    .places_section_3 .Places_3 {
+      width: 48.5%;
+    }
+
+    .places_section_2{
+      .Places_2{
+       height: 8rem !important;
+      }
+    }
   }
 }
 
 
 @media (max-width: 405px) {
+  .main_home_section {
     .section8 {
       .places_section_7 {
         .Places_7 {
-          .icon{
+          .icon {
             display: none;
           }
-          .content{
-            button{
+
+          .content {
+            button {
               width: 100%;
             }
-            button:first-child{
+
+            button:first-child {
               margin-bottom: 10px;
             }
           }
@@ -440,4 +588,14 @@
         }
       }
     }
+    .places_section_4 {
+      .Places_4 {
+        height: 9rem !important;
+      }
+    }
+
+
+
+
   }
+}
