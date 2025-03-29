@@ -19,7 +19,7 @@ function App() {
                         O TerraQuest
                     </h2>
                     <p>
-                        <ul>Profesjonalny i elegancki wydźwięk, który pasuje do dużej aplikacji dla różnych platform.
+                        <ul><span>Profesjonalny i elegancki wydźwięk, który pasuje do dużej aplikacji dla różnych platform.</span>
                             <li>
                                 Łatwość zapamiętania i silne nawiązanie do odkrywania nowych miejsc (terra = ziemia, quest = misja, podróż).
                             </li>
