@@ -262,7 +262,6 @@
 }
 @media (max-width: 850px) {
   .section1{
-
     h1{
       font-size: 40px !important;
       height: 3.5rem !important;
@@ -281,6 +280,9 @@
 
       }
     }
+  }
+  .main_home_section{
+    padding: 0rem 3rem !important;
   }
 }
 @media (max-width: 740px) {
@@ -333,6 +335,28 @@
       input[type="submit"]{
         width: 40% !important;
         font-size: 16px !important;
+      }
+    }
+  }
+
+  .main_home_section {
+    .cards_section{
+      display: flex;
+      flex-direction: column !important;
+    }
+    .section8 {
+      .places_section_7 {
+        .Places_7 {
+          padding: 20px;
+          .icon{
+            margin-right: 15px !important;
+          }
+          .content{
+            .buttons button:nth-child(1){
+              margin-right: 15px;
+            }
+          }
+        }
       }
     }
   }
@@ -390,5 +414,30 @@
       }
     }
   }
+
+  .main_home_section{
+    padding: 0rem 2rem !important;
+  }
 }
 
+
+@media (max-width: 405px) {
+    .section8 {
+      .places_section_7 {
+        .Places_7 {
+          .icon{
+            display: none;
+          }
+          .content{
+            button{
+              width: 100%;
+            }
+            button:first-child{
+              margin-bottom: 10px;
+            }
+          }
+
+        }
+      }
+    }
+  }

@@ -77,14 +77,21 @@
 
 @media (max-width: 1250px) {
   .places_section_8{
-    padding-bottom:3rem !important; ;
+    padding-bottom:3rem !important;
     .faq-section {
       width: 90%;
 
     }
   }
+}
 
-
+@media (max-width: 535px) {
+  .places_section_8{
+    .faq-section {
+      width: 100%;
+      margin-top: 2rem !important;
+    }
+  }
 }
 
 
