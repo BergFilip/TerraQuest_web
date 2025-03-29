@@ -10,7 +10,7 @@ const Header = () => {
         <header>
             <Logo />
             <nav className={menuOpen ? "open" : ""}>
-                <Button text="Dom" />
+                <Button text="Dom"/>
                 <Button text="Odkrywaj" />
                 <Button text="Pogoda" />
                 <Button text="O nas" />
