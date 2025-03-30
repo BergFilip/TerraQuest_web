@@ -23,3 +23,32 @@
     border: 1px solid transparent;
   }
 }
+
+@media (max-width: 1250px) {
+  .card{
+    font-family: poppins !important;
+    width: 49%;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #dfdfdf;
+    margin-top: 1.5rem;
+    h3{
+      font-size: 18px !important;
+    }
+    h6{
+      font-size: 14px !important;
+    }
+    button{
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media (max-width: 535px) {
+  .card{
+    width: 100%;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+
+  }
+}

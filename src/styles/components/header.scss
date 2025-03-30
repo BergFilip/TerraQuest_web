@@ -95,6 +95,10 @@ header {
     height: 60px !important;
     padding: 10px 2rem;
 
+    nav{
+      z-index: 99;
+    }
+
     .logo {
       a {
         img {

@@ -162,10 +162,11 @@
   flex-direction: row;
   justify-content: space-between;
 
+
   .inspiration_big{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 49.5%;
     margin-top: 1.5rem;
     img{
       border-radius: 15px;
@@ -183,33 +184,43 @@
       color: rgba(0, 0, 0, 0.5) !important;
     }
   }
-  .Places_6 {
-    font-family: roboto !important;
-    width: 24%;
-    height: 25rem;
-    border-radius: 8px;
-    margin-top: 1.5rem;
+  .other_palce{
     display: flex;
-    flex-direction: column;
-    font-family: roboto;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 49.5%;
 
-    img {
-      width: 100% !important;
-      border-radius: 15px;
-      margin-bottom: 0.5rem;
-      height: 15rem !important;
-    }
-    h4{
-      font-size: 16px !important;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
-    .descr_h4{
-      font-size: 14px !important;
-      font-weight: 400;
-      color: rgba(0, 0, 0, 0.5) !important;
+    .Places_6 {
+      font-family: roboto !important;
+      width: 49.5%;
+      height: 25rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      font-family: roboto;
+
+      img {
+        width: 100% !important;
+        border-radius: 15px;
+        margin-bottom: 0.5rem;
+        height: 15rem !important;
+      }
+
+      h4 {
+        font-size: 16px !important;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+      }
+
+      .descr_h4 {
+        font-size: 14px !important;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.5) !important;
+      }
     }
   }
+
 }
 
 
