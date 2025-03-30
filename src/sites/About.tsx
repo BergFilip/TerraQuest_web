@@ -3,7 +3,7 @@ import Button from "../components/Button";
 
 function App() {
     return(
-        <section>
+        <section className="About_section">
             <div className="photo_conteiner">
 
             </div>
