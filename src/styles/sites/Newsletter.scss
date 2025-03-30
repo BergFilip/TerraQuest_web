@@ -22,7 +22,6 @@
   }
 
   h1 {
-    font-size: 3rem;
     font-weight: bold;
     margin-bottom: 10px;
     position: relative;
@@ -87,7 +86,7 @@
       margin-bottom: 0rem !important;
       height: 4.5rem !important;
     }
-    p{
+    p_main{
       font-size: 22px !important;
       margin-bottom: 2.5rem !important;
     }
@@ -164,7 +163,7 @@
       height: 5rem !important;
     }
 
-    .p {
+    .p_main {
       margin-bottom: 20px;
       height: 2.375rem;
       position: relative;
@@ -183,7 +182,7 @@
       font-size: 35px !important;
       height: 3.2rem !important;
     }
-    p{
+    p_main{
       font-size: 18px !important;
     }
     form{
@@ -210,7 +209,7 @@
       line-height: 2.5rem !important;
       margin-bottom: 1rem !important;
     }
-    p{
+    p_main{
       font-size: 17px !important;
       margin-bottom: 3rem !important;
       padding: 0rem 1rem;

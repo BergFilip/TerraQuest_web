@@ -11,7 +11,7 @@ const Error = () => {
                 <p>
                     Wróć do strony głównej
                 </p>
-                <Button text={"Powrót"}></Button>
+                <Button text={"Powrót"} route={"/"}></Button>
             </div>
         </section>
     );
