@@ -59,25 +59,25 @@ $accent-color: green;
   .privacy{
     padding: 0rem 3rem !important;
     font-size: 15px !important;
-  }
-  h1{
-    font-size: 24px !important;
-  }
-  h2{
-    font-size: 20px !important;
-    margin-top: 2.5rem !important;
+    h1{
+      font-size: 24px !important;
+    }
+    h2{
+      font-size: 20px !important;
+      margin-top: 2.5rem !important;
+    }
   }
 }
 @media (max-width: 450px) {
   .privacy {
     padding: 0rem 2rem !important;
-  }
-  h1{
-    font-size: 22px !important;
-  }
-  h2{
-    font-size: 18px !important;
-    margin-top: 2.5rem !important;
+    h1{
+      font-size: 22px !important;
+    }
+    h2{
+      font-size: 18px !important;
+      margin-top: 2.5rem !important;
+    }
   }
 }
 

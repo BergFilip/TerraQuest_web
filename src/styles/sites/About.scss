@@ -1,5 +1,6 @@
 @media (min-width: 835px) {
   section{
+    width: 100%;
     .photo_conteiner{
       height: 31.25rem;
       background-image: url("src/assets/about.webp");
@@ -88,6 +89,7 @@
 
     }
     .info{
+      width: 100%;
       height: 15rem;
       background-color: rgba(255, 173, 0, 0.8);
       color: white;
@@ -112,7 +114,7 @@
       }
     }
     .history{
-      height: 62.375rem;
+      min-height: 62.375rem;
       padding: 3.875rem 7.563rem;
       h1{
         font-size: 51px;
@@ -262,6 +264,7 @@
     }
     .info{
       height: 23.188rem;
+      width: 100%;
       background-color: rgba(255, 173, 0, 0.8);
       color: white;
       display: flex;
@@ -288,7 +291,7 @@
       }
     }
     .history{
-      height: 60.063rem;
+      min-height: 60.063rem;
       padding: 3.875rem 7.563rem;
       h1{
         font-size: 51px;
@@ -438,6 +441,7 @@
     }
     .info{
       height: 18.063rem;
+      width: 100%;
       background-color: rgba(255, 173, 0, 0.8);
       color: white;
       display: flex;
@@ -464,7 +468,7 @@
       }
     }
     .history{
-      height: 64.75rem;
+      min-height: 64.75rem;
       padding: 4.938rem 2.063rem;
       h1{
         font-size: 35px;
