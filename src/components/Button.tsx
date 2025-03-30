@@ -1,11 +1,19 @@
-import "../styles/components/button.scss"
+import { Link } from "react-router-dom";
+import "../styles/components/button.scss";
 
 type ButtonProps = {
     text: string;
+    route?: string;
 };
 
-const Button = ({ text }: ButtonProps) => {
-    return <button>{text}</button>;
+const Button = ({ text, route }: ButtonProps) => {
+    return route ? (
+        <Link to={route}>
+            <button>{text}</button>
+        </Link>
+    ) : (
+        <button>{text}</button>
+    );
 };
+
 export default Button;
-

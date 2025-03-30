@@ -56,9 +56,9 @@ const Footer = () => {
                 >
                     <p className="footer_p">Informacje ogólne</p>
                     <ul>
-                        <li><a href="#">O TerraQuest</a></li>
+                        <li><a href="/about">O TerraQuest</a></li>
                         <li><a href="#">Pomoc</a></li>
-                        <li><a href="#">Polityka Prywatności</a></li>
+                        <li><a href="/privacypolicies">Polityka Prywatności</a></li>
                         <li><a href="#">Moje konto</a></li>
                     </ul>
                 </div>

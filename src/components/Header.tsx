@@ -10,11 +10,11 @@ const Header = () => {
         <header>
             <Logo />
             <nav className={menuOpen ? "open" : ""}>
-                <Button text="Dom"/>
-                <Button text="Odkrywaj" />
-                <Button text="Pogoda" />
-                <Button text="O nas" />
-                <Button text="Kontakt" />
+                <Button text="Dom" route={"/"}/>
+                <Button text="Odkrywaj" route={"/discover"}/>
+                <Button text="Pogoda" route={"/weather"}/>
+                <Button text="O nas" route={"/about"}/>
+                <Button text="Kontakt" route={"/contact"}/>
                 <div className="login desktop">
                     <Button text="Zaloguj się" />
                     <Button text="Zarejestruj" />
