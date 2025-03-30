@@ -3,7 +3,7 @@ import Button from  "../components/Button.tsx"
 
 const Error = () => {
     return (
-        <section>
+        <section className="error">
             <div className="back">
                 <h1>
                     Nieznaleziono strony

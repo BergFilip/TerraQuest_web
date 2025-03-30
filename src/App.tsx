@@ -1,7 +1,7 @@
 import './App.scss'
 import Footer from "./components/Footer.tsx";
 import Header from "./components/Header.tsx";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import Home from "./sites/Home.tsx";
 import PrivacyPolicies from "./sites/Privacy_policy.tsx";
 import Newsletter from "../src/sites/Newsletter.tsx";
@@ -26,6 +26,7 @@ function App() {
                         <Route path="/privacypolicies" element={<PrivacyPolicies/>}/>
                         <Route path="/newsletter" element={<Newsletter/>}/>
                         <Route path="/About" element={<About/>}/>
+                        <Route path="*" element={<Navigate to="/error"/>}/>
                         <Route path="/error" element={<Error/>}/>
                     </Routes>
                 </main>

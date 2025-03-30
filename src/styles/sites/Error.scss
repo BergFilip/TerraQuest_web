@@ -1,5 +1,5 @@
 @media (min-width: 835px) {
-  section{
+  .error{
     background-image: url("src/assets/404_error.webp");
     background-size: cover;
     background-position: center center;
@@ -35,7 +35,7 @@
   }
 }
 @media (max-width: 834px) {
-  section{
+  .error{
     background-image: url("src/assets/404_error.webp");
     background-size: cover;
     background-position: center top;
@@ -64,7 +64,7 @@
   }
 }
 @media (max-width: 402px) {
-  section{
+  .error{
     background-image: url("src/assets/404_error.webp");
     background-size: cover;
     background-position: center center;
