@@ -34,7 +34,7 @@ function App() {
                     </div>
                 </div>
                 <div className="image">
-                    <img src="src/assets/" alt="Kompas"/>
+                    <img src="src/assets/kompas.webp" alt="Kompas"/>
                 </div>
             </div>
             <div className="info">

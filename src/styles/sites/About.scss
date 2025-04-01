@@ -80,10 +80,11 @@
         }
       }
     }
-    .image{
+    .image img{
       width: 28.938rem;
       height: 22.625rem;
       background-color: black;
+      border-radius: 15px;
     }
 
   }
@@ -614,7 +615,7 @@
           }
         }
       }
-      .image{
+      .image img{
         width: 28.938rem;
         height: 22.625rem;
         background-color: black;

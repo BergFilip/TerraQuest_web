@@ -7,6 +7,8 @@ import PrivacyPolicies from "./sites/Privacy_policy.tsx";
 import Newsletter from "../src/sites/Newsletter.tsx";
 import About from "../src/sites/About.tsx";
 import Error from "./sites/Error.tsx"
+import Product from "./sites/Product.tsx";
+import Help from "./sites/Help.tsx";
 
 
 
@@ -28,6 +30,8 @@ function App() {
                         <Route path="/About" element={<About/>}/>
                         <Route path="*" element={<Navigate to="/error"/>}/>
                         <Route path="/error" element={<Error/>}/>
+                        <Route path="/product" element={<Product/>}/>
+                        <Route path="/help" element={<Help/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
