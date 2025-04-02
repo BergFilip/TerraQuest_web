@@ -9,10 +9,7 @@ import About from "../src/sites/About.tsx";
 import Error from "./sites/Error.tsx"
 import Product from "./sites/Product.tsx";
 import Help from "./sites/Help.tsx";
-
-
-
-
+import User from "./sites/User.tsx";
 
 function App() {
     return(
@@ -21,7 +18,6 @@ function App() {
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
-
 
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
@@ -32,6 +28,8 @@ function App() {
                         <Route path="/error" element={<Error/>}/>
                         <Route path="/product" element={<Product/>}/>
                         <Route path="/help" element={<Help/>}/>
+                        <Route path="/user" element={<User/>}/>
+
                     </Routes>
                 </main>
                 <Footer></Footer>
@@ -39,6 +37,5 @@ function App() {
         </Router>
     )
 }
-
-
 export default App
+
