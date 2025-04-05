@@ -10,6 +10,7 @@ import Error from "./sites/Error.tsx"
 import Product from "./sites/Product.tsx";
 import Help from "./sites/Help.tsx";
 import User from "./sites/User.tsx";
+import Contact from "./sites/Contact.tsx";
 
 function App() {
     return(
@@ -29,7 +30,7 @@ function App() {
                         <Route path="/product" element={<Product/>}/>
                         <Route path="/help" element={<Help/>}/>
                         <Route path="/user" element={<User/>}/>
-
+                        <Route path="/contact" element={<Contact/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
