@@ -7,7 +7,7 @@
     flex: 1;
     background-size: cover;
     background-position: center;
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
     background-image: url("src/assets/rejestracja.webp");
   }
 
@@ -54,15 +54,19 @@
       .checkbox-container {
         display: flex;
         align-items: start;
+        flex-direction: row;
         margin-bottom: 20px;
+        margin-top: 20px;
+        width: 70%;
 
         input {
           margin-right: 10px;
-          margin-top: 3px;
+          margin-top: 5px;
         }
 
         label {
           font-size: 16px;
+          margin-top: 0px;
         }
       }
 
@@ -134,17 +138,21 @@
         margin-bottom: 10px;
       }
       form{
-        input{
+        .input_from_register{
           width: 80% !important;
         }
         label{
           margin-top: 15px;
+          width: 80%;
         }
         button{
           width: 80%;
         }
         .auth-footer{
           width: 80% !important;
+        }
+        .checkbox-container{
+          width: 80%;
         }
       }
     }
@@ -155,12 +163,19 @@
   .register-section {
     .auth-form{
       form {
-        input {
+        .input_from_register {
           width: 90% !important;
+        }
+
+        label{
+          width: 90%;
         }
 
 
         button {
+          width: 90%;
+        }
+        .checkbox-container{
           width: 90%;
         }
 
@@ -176,12 +191,17 @@
   .register-section {
     .auth-form {
       form {
-        input {
+        .input_from_register {
           width: 100% !important;
         }
-
+        label{
+          width: 100%;
+        }
 
         button {
+          width: 100%;
+        }
+        .checkbox-container{
           width: 100%;
         }
 
@@ -199,7 +219,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    height: 30rem;
     z-index: 0 !important;
   }
 
@@ -210,11 +229,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("src/assets/logowanie.webp");
     background-color: #f0f0f0;
     background-size: cover;
     background-position: center;
-    clip-path: polygon(0 0, 80% 0, 50% 100%, 0% 100%);
+    clip-path: polygon(50% 0%, 100% 0%,100% 100%, 20% 100%);
+    background-image: url("src/assets/rejestracja.webp");
     z-index: -1;
   }
   .register-section {
@@ -245,7 +264,7 @@
         width: 100% !important;
       }
 
-      input {
+      .input_from_register {
         padding: 12px 16px;
         border-radius: 8px;
         border: 1px solid #ccc;
@@ -330,7 +349,11 @@
   }
 }
 @media (max-width: 405px) {
-
+  .register-section{
+    .auth-form{
+      padding: 1.5rem 1.2rem;
+    }
+  }
 }
 
 

@@ -4,22 +4,19 @@ import  '../styles/sites/Register.scss';
 function Register(){
     return (
         <div className="register-section">
-            <div className="auth-image"/>
             <div className="auth-form">
                 <h2>Register</h2>
                 <form>
                     <label>Email</label>
-                    <input type="email" placeholder="Uzupełnij" />
+                    <input type="email" placeholder="Uzupełnij" className="input_from_register"/>
 
                     <label>Hasło</label>
-                    <input type="password" placeholder="Uzupełnij" />
+                    <input type="password" placeholder="Uzupełnij" className="input_from_register"/>
 
                     <div className="checkbox-container">
-                        <input type="checkbox" id="stay-logged" />
+                        <input type="checkbox" id="stay-logged"/>
                         <label htmlFor="stay-logged">
-                            <strong>Nie wylogowuj</strong>
-                            <br />
-                            Opis
+                            <p>Nie wylogowuj</p>
                         </label>
                     </div>
 
@@ -31,6 +28,7 @@ function Register(){
                     </div>
                 </form>
             </div>
+            <div className="auth-image"/>
         </div>
     );
 };

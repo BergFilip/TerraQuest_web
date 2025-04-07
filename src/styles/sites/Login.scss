@@ -139,6 +139,7 @@
         }
         label{
           margin-top: 15px;
+          width: 80%;
         }
         button{
           width: 80%;
@@ -158,7 +159,9 @@
         input {
           width: 90% !important;
         }
-
+        label{
+          width: 90%;
+        }
 
         button {
           width: 90%;
@@ -180,6 +183,9 @@
           width: 100% !important;
         }
 
+        label{
+          width: 100%;
+        }
 
         button {
           width: 100%;
@@ -330,7 +336,11 @@
   }
 }
 @media (max-width: 405px) {
-
+  .login-section{
+    .auth-form{
+      padding: 1.5rem 1.2rem;
+    }
+  }
 }
 
 
