@@ -17,12 +17,12 @@ const Header = () => {
                 <Button text="Kontakt" route={"/contact"}/>
                 <div className="login desktop">
                     <Button text="Zaloguj się" route={"/login"}/>
-                    <Button text="Zarejestruj" />
+                    <Button text="Zarejestruj" route={"/register"}/>
                 </div>
             </nav>
             <div className="login mobile">
                 <Button text="Zaloguj się" route={"/login"}/>
-                <Button text="Zarejestruj" route={"/"}/>
+                <Button text="Zarejestruj" route={"/register"}/>
             </div>
             <div className="icons">
                 <i className="fa-solid fa-user user-icon"></i>
