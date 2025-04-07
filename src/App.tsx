@@ -10,6 +10,7 @@ import Error from "./sites/Error.tsx"
 import Product from "./sites/Product.tsx";
 import Help from "./sites/Help.tsx";
 import User from "./sites/User.tsx";
+import Login from "./sites/Login.tsx";
 
 function App() {
     return(
@@ -29,6 +30,7 @@ function App() {
                         <Route path="/product" element={<Product/>}/>
                         <Route path="/help" element={<Help/>}/>
                         <Route path="/user" element={<User/>}/>
+                        <Route path="/login" element={<Login/>}/>
 
                     </Routes>
                 </main>

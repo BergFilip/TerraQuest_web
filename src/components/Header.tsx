@@ -16,13 +16,13 @@ const Header = () => {
                 <Button text="O nas" route={"/about"}/>
                 <Button text="Kontakt" route={"/contact"}/>
                 <div className="login desktop">
-                    <Button text="Zaloguj się" />
+                    <Button text="Zaloguj się" route={"/login"}/>
                     <Button text="Zarejestruj" />
                 </div>
             </nav>
             <div className="login mobile">
-                <Button text="Zaloguj się" />
-                <Button text="Zarejestruj" />
+                <Button text="Zaloguj się" route={"/login"}/>
+                <Button text="Zarejestruj" route={"/"}/>
             </div>
             <div className="icons">
                 <i className="fa-solid fa-user user-icon"></i>

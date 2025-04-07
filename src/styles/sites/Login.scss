@@ -1,0 +1,336 @@
+.login-section {
+  display: flex;
+  min-height: 45rem;
+  font-family: poppins !important;
+
+  .auth-image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    background-image: url("src/assets/logowanie.webp");
+  }
+
+  .auth-form {
+    flex: 1;
+    padding: 80px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      label {
+        margin: 10px 0.5px;
+        font-size: 16px;
+        width:70%;
+        margin-top: 30px;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        width:70%;
+        color: #B3B3B3;
+      }
+      input::placeholder {
+        color: #B3B3B3;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: start;
+        margin-bottom: 20px;
+
+        input {
+          margin-right: 10px;
+          margin-top: 3px;
+        }
+
+        label {
+          font-size: 16px;
+        }
+      }
+
+      button {
+        background-color: #2C2C2C;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        margin-top: 20px;
+        width: 70%;
+        font-size: 16px;
+
+      }
+
+      .auth-footer {
+        text-align: center;
+        font-size: 16px;
+        width: 70%;
+
+        a {
+          color: #222;
+          text-decoration: none;
+          display: block;
+          margin: 10px 0;
+
+        }
+
+        .separator {
+          display: flex;
+          align-items: center;
+          margin: 20px 0;
+          padding-left: 15%;
+          padding-right: 15%;
+
+          span {
+            margin: 0 10px;
+            color: #afafaf;
+          }
+
+          &::before,
+          &::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ccc;
+          }
+        }
+      }
+      .auth-footer .register{
+        font-weight: 600;
+      }
+      .auth-footer .forgot_pass{
+        text-decoration: underline;
+        text-align: left;
+
+      }
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .login-section {
+    min-height: 40rem;
+    .auth-form{
+      h2{
+        margin-bottom: 10px;
+      }
+      form{
+        input{
+          width: 80% !important;
+        }
+        label{
+          margin-top: 15px;
+        }
+        button{
+          width: 80%;
+        }
+        .auth-footer{
+          width: 80% !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .login-section {
+    .auth-form{
+      form {
+        input {
+          width: 90% !important;
+        }
+
+
+        button {
+          width: 90%;
+        }
+
+        .auth-footer {
+          width: 90% !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 740px) {
+  .login-section {
+    .auth-form {
+      form {
+        input {
+          width: 100% !important;
+        }
+
+
+        button {
+          width: 100%;
+        }
+
+        .auth-footer {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 630px) {
+  .login-section {
+    padding: 2rem 3rem !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 30rem;
+    z-index: 0 !important;
+  }
+
+  .login-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("src/assets/logowanie.webp");
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+    clip-path: polygon(0 0, 80% 0, 50% 100%, 0% 100%);
+    z-index: -1;
+  }
+  .login-section {
+
+    .auth-image {
+      display: none;
+    }
+
+    .auth-form {
+      z-index: 1 !important;
+      width: 100%;
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      h2 {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      label {
+        font-size: 14px;
+        margin-top: 0.5rem;
+        width: 100% !important;
+      }
+
+      input {
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+
+
+        &::placeholder {
+          color: #aaa;
+        }
+      }
+
+      button[type="submit"] {
+        margin-top: 1rem;
+        padding: 12px;
+        background-color: black;
+        color: white;
+        font-weight: 500;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        margin-bottom: 25px;
+
+        &:hover {
+          background-color: #333;
+        }
+      }
+
+      .auth-footer {
+        text-align: center;
+        font-size: 14px;
+
+        .forgot_pass {
+          display: block;
+          margin-top: 1rem;
+          color: #444;
+          text-decoration: underline;
+        }
+
+        .separator {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 1rem 0;
+          color: #999;
+
+          span {
+            padding: 0 0.5rem;
+          }
+
+          &::before,
+          &::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #ddd;
+          }
+        }
+
+        .register {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 450px) {
+  .login-section {
+    padding: 2rem 2rem !important;
+    .auth-form {
+      .auth-footer{
+        .register, .forgot_pass{
+          font-size: 14px;
+        }
+        .register{
+          margin-top: 10px !important;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 405px) {
+
+}
+
+
