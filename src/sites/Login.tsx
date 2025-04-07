@@ -6,7 +6,7 @@ function Login(){
         <div className="login-section">
             <div className="auth-image"/>
             <div className="auth-form">
-                <h2>Login</h2>
+                <h2>Zaloguj</h2>
                 <form>
                     <label>Email</label>
                     <input type="email" placeholder="Uzupełnij" />
@@ -14,12 +14,12 @@ function Login(){
                     <label>Hasło</label>
                     <input type="password" placeholder="Uzupełnij" />
 
-                    <button type="submit">Sign In</button>
+                    <button type="submit">Zaloguj się</button>
 
                     <div className="auth-footer">
-                        <Link to="#" className="forgot_pass">Forgot password?</Link>
-                        <div className="separator"><span>or</span></div>
-                        <Link to="/register" className="register">Register</Link>
+                        <Link to="#" className="forgot_pass">Zapomniałeś hasła?</Link>
+                        <div className="separator"><span>lub</span></div>
+                        <Link to="/register" className="register">Stwórz konto</Link>
                     </div>
                 </form>
             </div>

@@ -5,7 +5,7 @@ function Register(){
     return (
         <div className="register-section">
             <div className="auth-form">
-                <h2>Register</h2>
+                <h2>Zarejestruj się</h2>
                 <form>
                     <label>Email</label>
                     <input type="email" placeholder="Uzupełnij" className="input_from_register"/>
@@ -20,11 +20,11 @@ function Register(){
                         </label>
                     </div>
 
-                    <button type="submit">Register</button>
+                    <button type="submit">Stwórz konto</button>
 
                     <div className="auth-footer">
-                        <div className="separator"><span>or</span></div>
-                        <Link to="/login">Sign In</Link>
+                        <div className="separator"><span>lub</span></div>
+                        <Link to="/login">Zaloguj</Link>
                     </div>
                 </form>
             </div>
