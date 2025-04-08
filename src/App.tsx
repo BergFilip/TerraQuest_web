@@ -19,8 +19,9 @@ function App() {
     return(
         <Router>
             <div className="container">
-                <Header></Header>
                 <main className="main-container">
+                    <Header></Header>
+
                     <Routes>
 
                         <Route path="/" element={<Home/>}/>
@@ -44,4 +45,5 @@ function App() {
     )
 }
 export default App
+
 
