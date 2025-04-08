@@ -140,7 +140,9 @@ function Product() {
                                 <h4>{review.title}</h4>
                                 <p>{review.body}</p>
                                 <div className="review_user">
-                                    <div className="avatar" />
+                                    <div className="avatar">
+                                        <img src="/src/assets/terraquest.webp" alt="avatar"></img>
+                                    </div>
                                     <div>
                                         <p>{review.reviewer}</p>
                                         <p>{review.date}</p>
