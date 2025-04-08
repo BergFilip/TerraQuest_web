@@ -20,7 +20,7 @@ const Alert: React.FC<AlertProps> = ({ title, message, onClose }) => {
             <div className="alert-container">
                 <div className="alert-box">
                     <div className="info">
-                        <X />
+
                     </div>
                     <div className="alert-box-content">
                         <div className="alert-header">
@@ -32,7 +32,7 @@ const Alert: React.FC<AlertProps> = ({ title, message, onClose }) => {
                         <div className="alert-body">
                             <p>{message}</p>
                         </div>
-                        <button onClick={onClose} className="alert-button-ok">
+                        <button onClick={onClose} className="alert-button-ok" >
                             Okej
                         </button>
                     </div>
