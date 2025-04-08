@@ -166,6 +166,184 @@
     }
   }
 }
+
+/* Ekrany 1250px */
+@media (max-width: 1250px) {
+  .user {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+
+    .container {
+      display: flex;
+      gap: 15px; /* Zmniejszenie odstępu między kontenerami */
+    }
+
+    .user-card,
+    .booking-history {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-card {
+      width: 20rem; /* Zmniejszenie szerokości */
+      height: 30rem; /* Zmniejszenie wysokości */
+      text-align: center;
+
+      h2 {
+        font-size: 18px; /* Dostosowanie rozmiaru czcionki */
+      }
+
+      .user-avatar {
+        width: 7.5rem;
+        height: 7.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .email {
+        color: gray;
+        font-size: 12px; /* Dostosowanie rozmiaru czcionki */
+        margin-bottom: 40px;
+      }
+
+      .settings {
+        .setting-item {
+          display: flex;
+          height: 1.75rem;
+          align-items: center;
+          padding: 10px 0; /* Zmniejszenie paddingu */
+          font-size: 12px;
+          cursor: pointer;
+          transition: background 0.2s;
+
+          p:hover {
+            background: #f0f0f0;
+          }
+
+          i {
+            margin-right: 8px;
+            font-size: 14px; /* Dostosowanie rozmiaru ikony */
+          }
+
+          p {
+            text-align: left;
+            padding: 8px; /* Zmniejszenie paddingu */
+            font-size: 12px; /* Dostosowanie rozmiaru czcionki */
+            border-bottom: black 1px solid;
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .booking-history {
+      flex: 1;
+      padding-left: 2rem; /* Zmniejszenie paddingu */
+      padding-right: 2rem; /* Zmniejszenie paddingu */
+      height: 30rem; /* Zmniejszenie wysokości */
+      width: 35rem; /* Zmniejszenie szerokości */
+      text-align: center;
+      font-family: "Roboto Light", sans-serif;
+
+      h2 {
+        font-size: 18px; /* Dostosowanie rozmiaru czcionki */
+      }
+
+      .booking-list-container {
+        max-height: 350px;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+
+      .subtitle {
+        color: gray;
+        font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
+        margin-bottom: 30px;
+      }
+
+      .booking-list {
+        .booking-item {
+          background: #f8f8f8;
+          border: 1px solid #ececec;
+          width: 100%;
+          border-radius: 8px;
+          margin: 10px;
+          transition: all 0.3s ease-in-out;
+          overflow: hidden;
+
+          .booking-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px; /* Zmniejszenie paddingu */
+            cursor: pointer;
+          }
+
+          .date {
+            text-align: left;
+            flex: 1;
+          }
+
+          .route {
+            flex: 2;
+          }
+
+          .price {
+            flex: 1;
+          }
+
+          .expand-btn {
+            border: none;
+            background: none;
+            font-size: 16px; /* Zmniejszenie rozmiaru przycisku */
+            cursor: pointer;
+          }
+
+          .booking-details {
+            text-align: left;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 0 10px;
+            background: transparent;
+
+            p {
+              margin: 0;
+              font-size: 14px;
+              color: #555;
+            }
+          }
+
+          &.expanded {
+            .booking-details {
+              max-height: 50px;
+              padding: 10px 10px;
+            }
+          }
+        }
+      }
+
+      .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        margin: 30px auto;
+        padding: 15px;
+        border: 1px solid #ececec;
+        border-radius: 8px;
+        background: #D9D9D9;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
   /*Tablet*/
  @media (max-width: 835px) {
    .user {
@@ -343,6 +521,186 @@
      }
    }
  }
+
+/* Ekrany 700px */
+@media (max-width: 700px) {
+  .user {
+    display: flex;
+    justify-content: center;
+    padding: 20px; /* Zmniejszenie paddingu */
+
+    .container {
+      display: flex;
+      flex-direction: column; /* Zmiana na układ pionowy */
+      align-items: center;
+      gap: 20px;
+    }
+
+    .user-card,
+    .booking-history {
+      background: white;
+      border-radius: 12px;
+      padding: 15px; /* Zmniejszenie paddingu */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-card {
+      width: 24rem; /* Zmniejszenie szerokości */
+      height: 25rem; /* Zmniejszenie wysokości */
+      text-align: center;
+
+      h2 {
+        font-size: 16px; /* Zmniejszenie rozmiaru czcionki */
+      }
+
+      .user-avatar {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .email {
+        color: gray;
+        font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+        margin-bottom: 30px;
+      }
+
+      .settings {
+        .setting-item {
+          display: flex;
+          height: 1.5rem;
+          align-items: center;
+          padding: 8px 0; /* Zmniejszenie paddingu */
+          font-size: 12px;
+          cursor: pointer;
+          transition: background 0.2s;
+
+          p:hover {
+            background: #f0f0f0;
+          }
+
+          i {
+            margin-right: 8px;
+            font-size: 14px;
+          }
+
+          p {
+            text-align: left;
+            padding: 6px; /* Zmniejszenie paddingu */
+            font-size: 12px;
+            border-bottom: black 1px solid;
+            width:250px;
+          }
+        }
+      }
+    }
+
+    .booking-history {
+      flex: 1;
+      padding-left: 1rem; /* Zmniejszenie paddingu */
+      padding-right: 1rem; /* Zmniejszenie paddingu */
+      height: 25rem; /* Zmniejszenie wysokości */
+      width: 24rem; /* Zmniejszenie szerokości */
+      text-align: center;
+      font-family: "Roboto Light", sans-serif;
+
+      h2 {
+        font-size: 16px; /* Zmniejszenie rozmiaru czcionki */
+      }
+
+      .booking-list-container {
+        max-height: 250px;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+
+      .subtitle {
+        color: gray;
+        font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+        margin-bottom: 20px;
+      }
+
+      .booking-list {
+        .booking-item {
+          background: #f8f8f8;
+          border: 1px solid #ececec;
+          width: 100%;
+          border-radius: 8px;
+          margin: 10px;
+          transition: all 0.3s ease-in-out;
+          overflow: hidden;
+
+          .booking-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px; /* Zmniejszenie paddingu */
+            cursor: pointer;
+          }
+
+          .date {
+            text-align: left;
+            flex: 1;
+          }
+
+          .route {
+            flex: 2;
+          }
+
+          .price {
+            flex: 1;
+          }
+
+          .expand-btn {
+            border: none;
+            background: none;
+            font-size: 16px; /* Zmniejszenie rozmiaru przycisku */
+            cursor: pointer;
+          }
+
+          .booking-details {
+            text-align: left;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 0 8px; /* Zmniejszenie paddingu */
+            background: transparent;
+
+            p {
+              margin: 0;
+              font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+              color: #555;
+            }
+          }
+
+          &.expanded {
+            .booking-details {
+              max-height: 50px;
+              padding: 10px 10px;
+            }
+          }
+        }
+      }
+
+      .empty-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        margin: 30px auto;
+        padding: 12px;
+        border: 1px solid #ececec;
+        border-radius: 8px;
+        background: #D9D9D9;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+
   /*Telefon*/
 @media (max-width: 420px) {
   .user {
