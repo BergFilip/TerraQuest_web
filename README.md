@@ -1,12 +1,15 @@
-# TerraQuest - System rezerwacji
+<div style="display: flex; align-items: center; gap: 10px;">
+  <img src="./src/assets/terraquest.webp" alt="Mapa strony" width="100">
+  <h1 style="color:gold; margin: 0;">TerraQuest</h1>
+</div>
 
 TerraQuest to platforma rezerwacyjna, która umożliwia użytkownikom łatwe wyszukiwanie, rezerwowanie oraz ocenianie obiektów noclegowych takich jak hotele, apartamenty, hostele i inne. Dzięki TerraQuest użytkownicy mogą szybko i wygodnie znaleźć idealne miejsce na wypoczynek, a także zarządzać swoimi rezerwacjami w jednym miejscu.
 
-Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów, filtry wyszukiwania oraz możliwość płatności online, wszystko po to, aby ułatwić użytkownikom planowanie podróży i rezerwację noclegów.
+Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry wyszukiwania, wszystko po to, aby ułatwić użytkownikom planowanie podróży i rezerwację noclegów.
 
 ---
 
-## 🔧 Technologie
+# 🔧 Technologie
 
 - **Frontend:** React.js, SCSS
 - **Backend:** Node.js, Express.js
@@ -14,7 +17,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów, filtry wys
 
 ---
 
-## 🧑‍💻 Funkcjonalności
+# 🧑‍💻 Funkcjonalności
 
 - ✅ **Rejestracja i logowanie użytkownika**  
   Użytkownicy mogą się zarejestrować, zalogować i zarządzać swoimi danymi.
@@ -40,17 +43,30 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów, filtry wys
 - ✅ **Podstawowa administracja**  
   Administratorzy mogą zarządzać obiektami (dodawanie nowych, edytowanie, usuwanie).
 
-- ✅ **Integracja z systemem płatności**  
-  Umożliwienie użytkownikom dokonywania płatności za rezerwacje online (opcjonalnie).
-
 ---
 
-## ⚙️ Instalacja
-
-1. **Sklonuj repozytorium:**
+# ⚙️ Instalacja
+**📥 Krok 1 – Klonowanie repozytorium**
    ```bash
-   git clone https://github.com/BergFilip/TerraQuest_web.git
+      git clone https://github.com/BergFilip/TerraQuest_web.git
    ```
+**⬇️ Krok 2 – Przejście do projektu**
+   ```bash
+      cd TerraQuest
+   ```
+**📦 Krok 3 – Instalacja zależności**
+   ```bash
+      npm install
+   ```
+**▶️ Krok 4 – Uruchomienie aplikacji**
+   ```bash
+      npm run dev
+   ```
+**🌐 Po chwili aplikacja będzie dostępna pod adresem:**
+   ```bash
+      http://localhost:5173
+   ```
+
 ---
 
 # Podział pracy w projekcie TerraQuest
@@ -115,8 +131,151 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów, filtry wys
 
 ## Dokumentacja
 
-- **Przygotowanie dokumentacji technicznej**: Michał
-- **Przygotowanie dokumentacji użytkownika**: Ola
+- **Przygotowanie dokumentacji technicznej**: [Każdy]
+
+---
+
+# 🌐 Opis podstron
+
+### 🧩 `App.tsx` – [Każdy]
+- **Opis**:  
+  Główny komponent aplikacji. Odpowiada za strukturę routingu i layout globalny.
+- **Funkcje**:
+  - Ustawienie tras (React Router)
+  - Globalne komponenty (np. Header, Footer)
+- **Zależności**: `main.tsx`, `routes`, `components`
+
+---
+
+### 🌐 `main.tsx` – [Każdy]
+- **Opis**:  
+  Punkt wejściowy aplikacji. Renderuje aplikację do DOM.
+- **Funkcje**:
+  - Montowanie `<App />`
+  - Konfiguracja `React.StrictMode`
+
+---
+
+### 📘 `About.tsx` – [Filip]
+- **Opis**:  
+  Strona informacyjna o projekcie lub firmie.
+- **Zawiera**: tekst + ilustracje
+
+---
+
+### 📩 `Contact.tsx` – [Filip]
+- **Opis**:  
+  Formularz kontaktowy + dane kontaktowe
+- **Funkcje**:
+  - Walidacja formularza
+  - Możliwość wysłania wiadomości
+
+---
+
+### 🚧 `Error.tsx` – [Filip]
+- **Opis**:  
+  Strona błędu 404 lub innego – wyświetlana gdy trasa nie istnieje
+- **Funkcje**:
+  - Przekierowanie do Home
+  - Komunikat dla użytkownika
+
+---
+
+### 🔍 `Explore.tsx` – [Wiktor]
+- **Opis**:  
+  Strona eksploracji miejsc – propozycje podróży, ciekawe lokalizacje
+- **Funkcje**:
+  - Interaktywne kafelki
+  - Dynamiczne generowanie treści
+
+---
+
+### ❓ `Help.tsx` – [Filip]
+- **Opis**:  
+  FAQ lub sekcja z pomocą dla użytkownika
+- **Funkcje**:
+  - Rozwijane pytania
+  - Stylowanie UX-friendly
+
+---
+
+### 🏠 `Home.tsx` – [Wiktor]
+- **Opis**:  
+  Strona główna, landing page projektu
+- **Zawiera**:
+  - Banery
+  - Sekcje promujące funkcje
+  - Nawigacja do reszty podstron
+
+---
+
+### 🔐 `Login.tsx` – [Wiktor]
+- **Opis**:  
+  Formularz logowania
+- **Funkcje**:
+  - Walidacja danych
+  - Obsługa błędów
+
+---
+
+### 📬 `Newsletter.tsx` – [Filip]
+- **Opis**:  
+  Subskrypcja newslettera
+- **Funkcje**:
+  - Walidacja e-mail
+  - Obsługa potwierdzeń
+
+---
+
+### 🛡️ `Privacy_policy.tsx` – [Wiktor]
+- **Opis**:  
+  Polityka prywatności
+- **Zawiera**:
+  - Tekst statyczny
+  - Linki do zewnętrznych dokumentów
+
+---
+
+### 📦 `Product.tsx` – [Jacek]
+- **Opis**:  
+  Widok konkretnego produktu/oferty
+- **Funkcje**:
+  - Pobieranie danych z API
+  - Wyświetlanie szczegółów
+
+---
+
+### 📝 `Registration.tsx` – [Wiktor]
+- **Opis**:  
+  Rejestracja nowego użytkownika
+- **Funkcje**:
+  - Walidacja formularza
+  - Hashowanie hasła (back-end)
+
+---
+
+### 🔎 `Search.tsx` – [Imię]
+- **Opis**:  
+  Strona wyszukiwania miejsc/ofert
+- **Funkcje**:
+  - Filtry
+  - Sortowanie
+  - Integracja z back-endem
+
+---
+
+### 👤 `User.tsx` – [Jacek]
+- **Opis**:  
+  Profil użytkownika
+- **Funkcje**:
+  - Edycja danych
+  - Historia rezerwacji
+
+---
+
+### ☀️ `Weather.tsx` – [Filip]
+- **Opis**:  
+  Praca wtoku
 
 ---
 
