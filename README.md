@@ -53,6 +53,73 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów, filtry wys
    ```
 ---
 
+# Podział pracy w projekcie TerraQuest
+
+## Frontend
+
+### `src`
+
+- **App.scss**: [Każdy]
+- **App.tsx**: [Każdy]
+- **index.scss**: [Każdy]
+- **main.tsx**: [Każdy]
+
+#### `sites`
+- **About.tsx**: [Filip]
+- **Contact.tsx**: [Filip]
+- **Error.tsx**: [Filip]
+- **Explore.tsx**: [Wiktor]
+- **Help.tsx**: [Filip]
+- **Home.tsx**: [Wiktor]
+- **Login.tsx**: [Wiktor]
+- **Newsletter.tsx**: [Filip]
+- **Privacy_policy.tsx**: [Wiktor]
+- **Product.tsx**: [Jacek]
+- **Registration.tsx**: [Wiktor]
+- **Search.tsx**: [Imię]
+- **User.tsx**: [Jacek]
+- **Weather.tsx**: [Filip]
+
+#### `styles`
+- **About.scss**: [Filip]
+- **Contact.scss**: [Filip]
+- **Error.scss**: [Filip]
+- **Help.scss**: [Filip]
+- **Home.scss**: [Wiktor]
+- **Login.scss**: [Wiktor]
+- **Newsletter.scss**: [Filip]
+- **Privacy_policy.scss**: [Wiktor]
+- **Product.scss**: [Jacek]
+- **Register.scss**: [Wiktor]
+- **User.scss**: [Jacek]
+
+---
+
+## Backend
+
+
+
+---
+
+## Baza danych
+
+
+
+---
+
+## Testowanie
+
+
+
+---
+
+## Dokumentacja
+
+- **Przygotowanie dokumentacji technicznej**: Michał
+- **Przygotowanie dokumentacji użytkownika**: Ola
+
+---
+
 ## 📂 Struktura projektu
 
 <pre>
