@@ -1,0 +1,123 @@
+.weather{
+  background-image: url("src/assets/kompas.webp");
+  background-size: cover;
+  background-position: center center;
+  height: 40.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #f9f9f9;
+  .back {
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+      font-size: 64px;
+    }
+
+    p {
+      font-size: 32px;
+      color: #f7f7f7;
+      margin-bottom: 1rem;
+    }
+
+    Button {
+      color: #eeeeee;
+      background-color: #2c2c2c;
+      padding: 15px 45px;
+      margin-top: 15px;
+      font-size: 16px;
+      font-family: poppins;
+    }
+    Button:hover {
+      color: #2c2c2c;
+      background-color: white;
+    }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .weather{
+    height: 30rem !important;
+    .back{
+      h1{
+        font-size: 40px;
+      }
+      p{
+        font-size: 28px;
+      }
+      Button {
+        padding: 12px 45px;
+      }
+    }
+  }
+}
+@media (max-width: 950px) {
+  .weather{
+    height: 35rem !important;
+    .back{
+      h1{
+        font-size: 32px;
+      }
+    }
+  }
+}
+@media (max-width: 740px) {
+  .weather{
+    height: 30rem !important;
+    .back{
+      h1{
+        font-size: 26px;
+      }
+      p{
+        font-size: 24px;
+      }
+      Button {
+        padding: 12px 45px;
+      }
+    }
+  }
+}
+@media (max-width: 570px) {
+  .weather{
+    height: 30rem !important;
+    .back{
+      h1{
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 1rem;
+        line-height: 2rem;
+      }
+      p{
+        font-size: 18px;
+      }
+      Button {
+        padding: 10px 30px;
+        font-size: 15px;
+      }
+    }
+  }
+}
+@media (max-width: 450px) {
+  .weather{
+    .back{
+      h1{
+        font-size: 16px;
+      }
+      p{
+        font-size: 14px;
+      }
+      Button {
+        padding: 10px 26px;
+        font-size: 12px;
+      }
+    }
+  }
+}

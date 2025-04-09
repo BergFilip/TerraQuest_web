@@ -13,6 +13,7 @@ import User from "./sites/User.tsx";
 import Contact from "./sites/Contact.tsx";
 import Login from "./sites/Login.tsx";
 import Register from "./sites/Registration.tsx";
+import Weather from "./sites/Weather.tsx";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/product" element={<Product/>}/>
+                        <Route path="/weather" element={<Weather/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
