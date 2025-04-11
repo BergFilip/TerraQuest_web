@@ -14,6 +14,8 @@ import Contact from "./sites/Contact.tsx";
 import Login from "./sites/Login.tsx";
 import Register from "./sites/Registration.tsx";
 import Weather from "./sites/Weather.tsx";
+import Explore from "./sites/Explore.tsx";
+
 
 
 function App() {
@@ -24,7 +26,6 @@ function App() {
                     <Header></Header>
 
                     <Routes>
-
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
                         <Route path="/privacypolicies" element={<PrivacyPolicies/>}/>
@@ -40,6 +41,8 @@ function App() {
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/product" element={<Product/>}/>
                         <Route path="/weather" element={<Weather/>}/>
+                        <Route path="/explore" element={<Explore/>}/>
+
                     </Routes>
                 </main>
                 <Footer></Footer>
