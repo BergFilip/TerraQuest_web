@@ -13,6 +13,7 @@ import User from "./sites/User.tsx";
 import Contact from "./sites/Contact.tsx";
 import Login from "./sites/Login.tsx";
 import Register from "./sites/Registration.tsx";
+import Explore from "./sites/Explore.tsx";
 
 
 function App() {
@@ -22,7 +23,6 @@ function App() {
                 <Header></Header>
                 <main className="main-container">
                     <Routes>
-
                         <Route path="/" element={<Home/>}/>
                         <Route path="/home" element={<Home/>}/>
                         <Route path="/privacypolicies" element={<PrivacyPolicies/>}/>
@@ -36,6 +36,8 @@ function App() {
                         <Route path="/contact" element={<Contact/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
+                        <Route path="/explore" element={<Explore/>}/>
+
                     </Routes>
                 </main>
                 <Footer></Footer>

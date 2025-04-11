@@ -109,7 +109,7 @@
 
 
 @media (max-width: 1250px) {
-  .main_home_section {
+  .home .main_home_section {
     padding: 0rem 4rem !important;
 
     .places_section_5 .Places_5:nth-last-child(-n+2), .places_section_4 .Places_4:nth-last-child(-n+2) {
@@ -216,7 +216,7 @@
 
 
   }
-  .section1{
+  .home .section1{
     background-size: 100% !important;
     height: 20rem !important;
     display: flex;
@@ -263,7 +263,7 @@
   }
 }
 @media (max-width: 850px) {
-  .section1{
+  .home .section1{
     h1{
       font-size: 40px !important;
       height: 3.5rem !important;
@@ -283,7 +283,7 @@
       }
     }
   }
-  .main_home_section{
+  .home .main_home_section{
     padding: 0rem 3rem !important;
 
     .section7 .places_section_6 {
@@ -299,7 +299,7 @@
   }
 }
 @media (max-width: 740px) {
-  .section1{
+  .home .section1{
     background-size: 100% 150% !important;
     background-repeat: no-repeat;
 
@@ -311,7 +311,7 @@
       font-size: 19px !important;
     }
   }
-  .main_home_section{
+  .home .main_home_section{
     .section7 .places_section_6 {
 
       .inspiration_big{
@@ -361,7 +361,7 @@
       }
     }
 
-    .places_section_1{
+     .places_section_1{
       .Places_1{
         font-family: roboto !important;
         width: 100%;
@@ -378,7 +378,7 @@
 
 
 @media (max-width: 535px) {
-  .section1{
+  .home .section1{
     background-size: 100% 150% !important;
     background-repeat: no-repeat;
     height: 23rem !important;
@@ -415,7 +415,7 @@
     }
   }
 
-  .main_home_section {
+  .home .main_home_section {
     .cards_section{
       display: flex;
       flex-direction: column !important;
@@ -495,7 +495,7 @@
 }
 
 @media (max-width: 450px) {
-  .main_home_section{
+  .home .main_home_section{
     .section7 .places_section_6{
 
       .inspiration_big{
@@ -509,7 +509,7 @@
     }
   }
 
-  .section1{
+  .home .section1{
     background-size: 100% 150% !important;
     background-repeat: no-repeat;
     height: 21rem !important;
@@ -547,7 +547,7 @@
     }
   }
 
-  .main_home_section{
+  .home .main_home_section{
     padding: 0rem 2rem !important;
 
     .places_section_3 .Places_3:last-child {
@@ -567,7 +567,7 @@
 
 
 @media (max-width: 405px) {
-  .main_home_section {
+  .home .main_home_section {
     .section8 {
       .places_section_7 {
         .Places_7 {
