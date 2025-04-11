@@ -15,6 +15,7 @@ import Login from "./sites/Login.tsx";
 import Register from "./sites/Registration.tsx";
 import Weather from "./sites/Weather.tsx";
 import Explore from "./sites/Explore.tsx";
+import Search from "./sites/Search.tsx";
 
 
 
@@ -42,7 +43,7 @@ function App() {
                         <Route path="/product" element={<Product/>}/>
                         <Route path="/weather" element={<Weather/>}/>
                         <Route path="/explore" element={<Explore/>}/>
-
+                        <Route path="/search" element={<Search/>}/>
                     </Routes>
                 </main>
                 <Footer></Footer>
