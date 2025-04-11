@@ -11,7 +11,7 @@ const Header = () => {
             <Logo />
             <nav className={menuOpen ? "open" : ""}>
                 <Button text="Dom" route={"/"}/>
-                <Button text="Odkrywaj" route={"/discover"}/>
+                <Button text="Odkrywaj" route={"/explore"}/>
                 <Button text="Pogoda" route={"/weather"}/>
                 <Button text="O nas" route={"/about"}/>
                 <Button text="Kontakt" route={"/contact"}/>
