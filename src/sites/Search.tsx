@@ -29,24 +29,16 @@ function Search() {
 
     return (
         <main className="search_site">
-            <section className="search_header">
-                <h2 className="search_heading">Oto wyniki twojego wyszukiwania dla:</h2>
-                <div className="search_bar">
-                    <div className="search_field">
-                        <span className="icon">🏨</span>
-                        <input type="text" placeholder="Miejsce docelowe" />
-                    </div>
-                    <div className="search_field">
-                        <span className="icon">📅</span>
-                        <input type="text" placeholder="Data wyjazdu i powrotu" />
-                    </div>
-                    <div className="search_field">
-                        <span className="icon">👥</span>
-                        <input type="text" placeholder="Ilość uczestników" />
-                    </div>
-                    <button className="search_button">Search</button>
-                </div>
-            </section>
+            <div className="section1">
+                <h1>Oto wyniki twojego wyszukiwana</h1>
+
+                <form>
+                    <input type="text" placeholder={"Miejsce docelowe"}/>
+                    <input type="date" placeholder={"Data wyjazdu i powrotu"}/>
+                    <input type="number" placeholder={"Ilość uczestników"}/>
+                    <input type="submit" value="Wyszukaj" className="alert-button"/>
+                </form>
+            </div>
 
             <section className="search_content">
                 <aside className="filters">
