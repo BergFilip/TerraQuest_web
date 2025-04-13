@@ -1,4 +1,3 @@
-
 import "../styles/sites/Newsletter.scss"
 import Alert from "../components/Alert"
 import { useState } from "react";

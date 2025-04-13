@@ -6,7 +6,7 @@ import Button from "../components/Button.tsx";
 
 function Help() {
     return(
-        <section className="help_site">
+        <section className="help_site" data-testid="search-form">
             <div className="section9">
                 <article>
                     <h1>Cześć, jak możemy ci pomóc?</h1>

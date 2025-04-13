@@ -18,16 +18,18 @@ function App() {
                     <h2>
                         O TerraQuest
                     </h2>
-                    <p>
-                        <ul><span>Profesjonalny i elegancki wydźwięk, który pasuje do dużej aplikacji dla różnych platform.</span>
+                    <p><span>Profesjonalny i elegancki wydźwięk, który pasuje do dużej aplikacji dla różnych platform.</span></p>
+                        <ul>
                             <li>
-                                Łatwość zapamiętania i silne nawiązanie do odkrywania nowych miejsc (terra = ziemia, quest = misja, podróż).
+                                Łatwość zapamiętania i silne nawiązanie do odkrywania nowych miejsc (terra = ziemia,
+                                quest = misja, podróż).
                             </li>
                             <li>
-                                Uniwersalność – sprawdzi się zarówno dla klientów indywidualnych, jak i organizatorów wycieczek.
+                                Uniwersalność – sprawdzi się zarówno dla klientów indywidualnych, jak i organizatorów
+                                wycieczek.
                             </li>
                         </ul>
-                    </p>
+
                     <div className="buttons">
                         <Button text={"Button"}></Button>
                         <Button text={"Button"}></Button>

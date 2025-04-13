@@ -1,14 +1,20 @@
-/** @type {import('jest').Config} */
-const config = {
-    transform: {
-        '^.+\\.scss$': 'sass-jest',
-        '^.+\\.jsx?$': 'babel-jest',
-        '^.+\\.tsx?$': 'ts-jest',
-    },
+module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'jsdom',
     moduleNameMapper: {
-        "\\.scss$": "identity-obj-proxy",
+        '\\.(scss)$': 'identity-obj-proxy',
+        '^@components/(.*)$': '<rootDir>/src/components/$1',
+        '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js'
     },
-    testEnvironment: "jest-environment-jsdom",
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    transform: {
+        '^.+\\.tsx?$': [
+            'ts-jest',
+            {
+                tsconfig: 'tsconfig.json',
+                useESM: true
+            }
+        ]
+    },
+    extensionsToTreatAsEsm: ['.ts', '.tsx'],
 };
-
-module.exports = config;
