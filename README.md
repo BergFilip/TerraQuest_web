@@ -13,7 +13,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 - **Frontend:** React.js, SCSS
 - **Backend:** Node.js, Express.js
-- **Testy** Jest, R
+- **Testy:** Jest, React Testing Library, TypeScript, ts-jest
 - **Baza danych:** 
 
 ---
@@ -63,9 +63,6 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
    ```bash
       npm install
    ```
-  ```bash
-      npm install --save-dev @testing-library/react @testing-library/jest-dom jest ts-jest @types/jest identity-obj-proxy @types/react @types/react-dom
-  ```
 **▶️ Krok 5 – Uruchomienie Frontendu**
    ```bash
       npm run dev
