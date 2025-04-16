@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import "../styles/components/button.scss";
-
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 type ButtonProps = {
-    text: string;
+    text: string | React.ReactNode;
     route: string;
     onClick?: () => void;
 };

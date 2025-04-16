@@ -12,7 +12,7 @@ const Header = () => {
 
     const handleLogout = () => {
         logout();
-        navigate("/login");
+        navigate("/user");
     };
 
     return (
@@ -28,8 +28,8 @@ const Header = () => {
                 <div className="login desktop">
                     {isLoggedIn ? (
                         <>
-                            <Button text="Konto" route="/user" />
                             <Button text="Wyloguj" route="/" onClick={handleLogout} />
+                            <Button text={<i className='fa-solid fa-user'></i>} route="/user" />
                         </>
                     ) : (
                         <>
@@ -43,8 +43,8 @@ const Header = () => {
             <div className="login mobile">
                 {isLoggedIn ? (
                     <>
-                        <Button text="Konto" route="/user" />
-                        <Button text="Wyloguj" route="/" onClick={handleLogout} />
+                        <Button text="Wyloguj" route="/" onClick={handleLogout}/>
+                        <Button text={<i className='fa-solid fa-user'></i>} route="/user" />
                     </>
                 ) : (
                     <>

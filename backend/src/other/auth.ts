@@ -2,12 +2,35 @@ import express, { Request, Response, Router } from 'express';
 import { supabase } from '../utils/supabase';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
 const router: Router = express.Router();
 
+const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+};
+
+const validatePassword = (password: string): boolean => {
+    const minLength = 8;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return password.length >= minLength && passwordRegex.test(password);
+};
 
 router.post("/register", async (req: Request, res: Response, next) => {
     const  { email, password } = req.body;
+
+    if (!validateEmail(email)) {
+        res.status(400).json({
+            message: "Invalid email format",
+        });
+    }
+
+    if (!validatePassword(password)) {
+        res.status(400).json({
+            message: "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.",
+        });
+    }
 
     const { data, error: err} = await supabase
         .from('users_terraQuest')
@@ -40,6 +63,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
     if (!email || !password) {
         res.status(400).json({ message: 'Missing email or password' });
+        return
     }
 
     const { data, error } = await supabase
@@ -50,20 +74,66 @@ router.post('/login', async (req: Request, res: Response) => {
 
     if (error || !data) {
         res.status(401).json({ message: 'Invalid credentials' });
+        return
     }
 
     const passwordMatches = await bcrypt.compare(password, data.pass);
 
     if (!passwordMatches) {
         res.status(401).json({ message: 'Invalid credentials' });
+        return
     }
 
-    const token = jwt.sign({ id: data.id, email: data.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+    const token = jwt.sign(
+        { id: data.id, email: data.email },
+        process.env.JWT_SECRET || 'secret',
+        { expiresIn: '1h' }
+    );
+
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict',
+        maxAge: 3600 * 1000,
+    });
 
     res.status(200).json({
         message: 'Login successful',
-        token,
+        user: { email: data.email }
     });
+});
+
+router.get('/user', async (req: Request, res: Response) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        res.status(401).json({ message: 'Brak tokenu' });
+        return
+    }
+
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'secret');
+        const userId = decoded.id;
+
+        const { data, error } = await supabase
+            .from('users_terraQuest')
+            .select('email')
+            .eq('id', userId)
+            .single();
+
+        if (error || !data) {
+            res.status(404).json({ message: 'Użytkownik nie znaleziony' });
+            return
+        }
+
+        res.status(200).json({ email: data.email });
+    } catch (err) {
+        res.status(401).json({ message: 'Token jest nieprawidłowy' });
+    }
+});
+router.post('/logout', (req: Request, res: Response) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: 'Logout successful' });
 });
 
 export default router;

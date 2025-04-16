@@ -1,5 +1,7 @@
 import "../styles/sites/User.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function User() {
     const [expanded, setExpandedIndex] = useState<number | null>(null);
@@ -9,6 +11,30 @@ function User() {
         { id: 3, date: "06.02.2025", route: "Gdańsk - Katowice", price: "410zł" },
         { id: 4, date: "07.02.2025", route: "Łódź - Szczecin", price: "350zł" },
     ]);
+
+    const [currentTime, setCurrentTime] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
+    const { isLoggedIn, userEmail, checkAuth } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const verifyAuth = async () => {
+            const isAuthenticated = await checkAuth();
+            if (!isAuthenticated) {
+                navigate('/login');
+            } else {
+                setLoading(false);
+            }
+        };
+        verifyAuth();
+
+        const interval = setInterval(() => {
+            const now = new Date();
+            setCurrentTime(now.toLocaleTimeString());
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [checkAuth, navigate]);
 
     const toggleExpand = (index: number) => {
         setExpandedIndex(expanded === index ? null : index);
@@ -28,6 +54,15 @@ function User() {
         setBookings([...bookings, newBooking]);
     };
 
+    if (loading || !isLoggedIn) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Weryfikacja sesji...</p>
+            </div>
+        );
+    }
+
     return (
         <main className="user">
             <div className="container">
@@ -38,16 +73,14 @@ function User() {
                         className="user-avatar"
                     />
                     <h2>Jan Kowalski</h2>
-                    <p className="email">(jankowalski@gmail.com)</p>
+                    <p className="email">({userEmail})</p>
                     <hr></hr>
 
                     <div className="settings">
-                        <div className="setting-item">
-                            <i className="fa-solid fa-eye-slash"></i> <p><strong>Pokaż hasło</strong></p>
-                        </div>
 
                         <div className="setting-item">
-                            <i className="fa-solid fa-clock"></i> <p><strong>Czas i godzina </strong> (PM)</p>
+                            <i className="fa-solid fa-clock"></i>
+                            <p><strong>Czas i godzina </strong> {currentTime}</p>
                         </div>
 
                         <div className="setting-item">

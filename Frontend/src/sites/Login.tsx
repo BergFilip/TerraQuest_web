@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/sites/Login.scss';
-import { useAuth } from "../context/AuthContext.tsx";  // Upewnij się, że jest zaimportowane
+import { useAuth } from "../context/AuthContext.tsx";
 
 function Login() {
     const [email, setEmail] = useState<string>('');
@@ -9,7 +9,7 @@ function Login() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
-    const { login } = useAuth();  // Uzyskujemy login z kontekstu
+    const { login } = useAuth();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -19,25 +19,21 @@ function Login() {
         try {
             const res = await fetch('http://localhost:4000/api/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
+                credentials: 'include',
             });
 
             const data = await res.json();
 
             if (res.ok) {
-                // Jeśli logowanie jest udane, zapisujemy token w localStorage
-                localStorage.setItem('token', data.token);
-                login();  // Wywołujemy funkcję login z kontekstu
-                navigate('/user');  // Przekierowujemy na stronę użytkownika
+                await login(email);
+                navigate('/user');
             } else {
-                setError(data.message || 'Wystąpił błąd. Spróbuj ponownie.');
+                setError(data.message || 'Login failed');
             }
         } catch (err) {
-            console.error("Błąd podczas logowania:", err);
-            setError("Wystąpił błąd. Spróbuj ponownie.");
+            setError('Login failed');
         } finally {
             setLoading(false);
         }
