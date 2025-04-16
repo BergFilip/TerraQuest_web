@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { supabase } from "../supabaseClient"; // Klient Supabase
+import axios from "axios";
 import '../styles/sites/Register.scss';
 import Alert from "../components/Alert.tsx";
 
@@ -12,41 +12,32 @@ function Register() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        setError(null);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        try {
+            const res = await fetch('http://localhost:4000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-            email,
-            password,
-        });
+            const data = await res.json();
 
-        if (signUpError) {
-            setError(signUpError.message);
-            return;
+            if (res.ok) {
+                setShowAlert(true);
+                setTimeout(() => {
+                    navigate('/login');
+                }, 2000); // zmniejsz z 20s 😄
+            } else {
+                setError(data.message || 'Wystąpił błąd');
+            }
+        } catch (err) {
+            console.error(err);
+            setError('Coś poszło nie tak');
         }
-
-
-        const { error: insertError } = await supabase
-            .from('users_terraQuest')
-            .insert([
-                {
-                    pass: password,
-                    email: email,
-                    created_at: new Date().toISOString(),
-                }
-            ]);
-
-        if (insertError) {
-            setError(insertError.message);
-            return;
-        }
-
-        setShowAlert(true);
-        setTimeout(() => {
-            navigate('/login');
-        }, 20000);
     };
 
     return (

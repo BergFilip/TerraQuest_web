@@ -81,7 +81,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
    ```
 **▶️ Krok 8 – Uruchomienie Backendu**
    ```bash
-      DODAĆ
+      npx ts-node src/main.ts
    ```
 ---
 

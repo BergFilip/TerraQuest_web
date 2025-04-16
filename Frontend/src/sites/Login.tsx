@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../supabaseClient";
 import '../styles/sites/Login.scss';
 
 function Login() {
@@ -16,28 +15,26 @@ function Login() {
         setLoading(true);
 
         try {
-            // Szukamy użytkownika o podanym email
-            const { data: userData, error: fetchError } = await supabase
-                .from('users_terraQuest')
-                .select('email, pass')
-                .eq('email', email)
-                .single(); // zakładamy że email jest unikalny
+            // Wysyłamy dane logowania do backendu
+            const res = await fetch('http://localhost:4000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-            if (fetchError) {
-                setError("Nie znaleziono użytkownika lub wystąpił błąd.");
-                setLoading(false);
-                return;
+            const data = await res.json();
+
+            if (res.ok) {
+                // Zapisz token w localStorage
+                localStorage.setItem('token', data.token);
+
+                // Przekierowanie na stronę użytkownika po pomyślnym logowaniu
+                navigate('/user');
+            } else {
+                setError(data.message || 'Wystąpił błąd. Spróbuj ponownie.');
             }
-
-            if (!userData || userData.pass !== password) {
-                setError("Nieprawidłowy email lub hasło.");
-                setLoading(false);
-                return;
-            }
-
-
-            navigate('/user');
-
         } catch (err) {
             console.error("Błąd podczas logowania:", err);
             setError("Wystąpił błąd. Spróbuj ponownie.");
