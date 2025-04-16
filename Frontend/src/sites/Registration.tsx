@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import '../styles/sites/Register.scss';
 import Alert from "../components/Alert.tsx";
 
@@ -28,9 +27,6 @@ function Register() {
 
             if (res.ok) {
                 setShowAlert(true);
-                setTimeout(() => {
-                    navigate('/login');
-                }, 2000); // zmniejsz z 20s 😄
             } else {
                 setError(data.message || 'Wystąpił błąd');
             }
@@ -68,7 +64,7 @@ function Register() {
                     <div className="checkbox-container">
                         <input type="checkbox" id="stay-logged" />
                         <label htmlFor="stay-logged">
-                            <p>Nie wylogowuj</p>
+                            <p>Zaloguj automatycznie</p>
                         </label>
                     </div>
 
@@ -79,6 +75,7 @@ function Register() {
                             title="Dziękujemy za założenie konta"
                             message="Kliknij przycisk, aby przejść do logowania i zaloguj się na swoje konto."
                             onClose={() => setShowAlert(false)}
+                            onOk={() => navigate("/login")}
                         />
                     )}
 

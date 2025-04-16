@@ -2,28 +2,58 @@ import { useState } from "react";
 import "../styles/components/header.scss";
 import Button from "./Button.tsx";
 import Logo from "./logo.tsx";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.tsx";
 
 const Header = () => {
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
+    const { isLoggedIn, logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
 
     return (
         <header>
             <Logo />
             <nav className={menuOpen ? "open" : ""}>
-                <Button text="Dom" route={"/"}/>
-                <Button text="Odkrywaj" route={"/explore"}/>
-                <Button text="Pogoda" route={"/weather"}/>
-                <Button text="O nas" route={"/about"}/>
-                <Button text="Kontakt" route={"/contact"}/>
+                <Button text="Dom" route={"/"} />
+                <Button text="Odkrywaj" route={"/explore"} />
+                <Button text="Pogoda" route={"/weather"} />
+                <Button text="O nas" route={"/about"} />
+                <Button text="Kontakt" route={"/contact"} />
+
                 <div className="login desktop">
-                    <Button text="Zaloguj się" route={"/login"}/>
-                    <Button text="Zarejestruj" route={"/register"}/>
+                    {isLoggedIn ? (
+                        <>
+                            <Button text="Konto" route="/user" />
+                            <Button text="Wyloguj" route="/" onClick={handleLogout} />
+                        </>
+                    ) : (
+                        <>
+                            <Button text="Zaloguj się" route="/login" />
+                            <Button text="Zarejestruj" route="/register" />
+                        </>
+                    )}
                 </div>
             </nav>
+
             <div className="login mobile">
-                <Button text="Zaloguj się" route={"/login"}/>
-                <Button text="Zarejestruj" route={"/register"}/>
+                {isLoggedIn ? (
+                    <>
+                        <Button text="Konto" route="/user" />
+                        <Button text="Wyloguj" route="/" onClick={handleLogout} />
+                    </>
+                ) : (
+                    <>
+                        <Button text="Zaloguj się" route="/login" />
+                        <Button text="Zarejestruj" route="/register" />
+                    </>
+                )}
             </div>
+
             <div className="icons">
                 <i className="fa-solid fa-user user-icon"></i>
                 <i className="fa-solid fa-bars menu-icon" onClick={() => setMenuOpen(!menuOpen)}></i>

@@ -6,9 +6,10 @@ interface AlertProps {
     title: string;
     message: string;
     onClose: () => void;
+    onOk: () => void;
 }
 
-const Alert: React.FC<AlertProps> = ({ title, message, onClose }) => {
+const Alert: React.FC<AlertProps> = ({ title, message, onClose, onOk }) => {
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -32,7 +33,7 @@ const Alert: React.FC<AlertProps> = ({ title, message, onClose }) => {
                         <div className="alert-body">
                             <p>{message}</p>
                         </div>
-                        <button onClick={onClose} className="alert-button-ok" >
+                        <button onClick={onOk ? onOk : onClose} className="alert-button-ok" >
                             Okej
                         </button>
                     </div>

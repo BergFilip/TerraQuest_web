@@ -1,6 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import { supabase } from '../utils/supabase';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const router: Router = express.Router();
 
@@ -14,14 +15,11 @@ router.post("/register", async (req: Request, res: Response, next) => {
         .eq('email', email)
         .single();
 
-    if (err) {
-        next(err);
-    }
-
     if (data) {
         res.status(400).json({
             message: "User with this email already exists",
         })
+        return
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -31,7 +29,6 @@ router.post("/register", async (req: Request, res: Response, next) => {
         email,
         pass: hashedPass
     })
-
     if (insertError) next(insertError);
 
     res.status(200).json({message: 'Registered successful'});
@@ -44,8 +41,6 @@ router.post('/login', async (req: Request, res: Response) => {
     if (!email || !password) {
         res.status(400).json({ message: 'Missing email or password' });
     }
-
-    // Pobierz użytkownika z tabeli 'users' po mailu\
 
     const { data, error } = await supabase
         .from('users_terraQuest')
@@ -63,7 +58,12 @@ router.post('/login', async (req: Request, res: Response) => {
         res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    res.status(200).json({ message: 'Login successful' });
+    const token = jwt.sign({ id: data.id, email: data.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+
+    res.status(200).json({
+        message: 'Login successful',
+        token,
+    });
 });
 
 export default router;

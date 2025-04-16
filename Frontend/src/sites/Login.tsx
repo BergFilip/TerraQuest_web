@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/sites/Login.scss';
+import { useAuth } from "../context/AuthContext.tsx";  // Upewnij się, że jest zaimportowane
 
 function Login() {
     const [email, setEmail] = useState<string>('');
@@ -8,6 +9,7 @@ function Login() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { login } = useAuth();  // Uzyskujemy login z kontekstu
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -15,7 +17,6 @@ function Login() {
         setLoading(true);
 
         try {
-            // Wysyłamy dane logowania do backendu
             const res = await fetch('http://localhost:4000/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -27,11 +28,10 @@ function Login() {
             const data = await res.json();
 
             if (res.ok) {
-                // Zapisz token w localStorage
+                // Jeśli logowanie jest udane, zapisujemy token w localStorage
                 localStorage.setItem('token', data.token);
-
-                // Przekierowanie na stronę użytkownika po pomyślnym logowaniu
-                navigate('/user');
+                login();  // Wywołujemy funkcję login z kontekstu
+                navigate('/user');  // Przekierowujemy na stronę użytkownika
             } else {
                 setError(data.message || 'Wystąpił błąd. Spróbuj ponownie.');
             }
@@ -67,7 +67,15 @@ function Login() {
                         required
                     />
 
-                    <button type="submit" disabled={loading}>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{
+                            backgroundColor: loading ? 'gray' : '',
+                            color: 'white',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                    >
                         {loading ? 'Logowanie...' : 'Zaloguj się'}
                     </button>
 
