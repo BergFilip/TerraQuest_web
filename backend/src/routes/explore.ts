@@ -3,50 +3,39 @@ import axios from "axios";
 
 const router = express.Router();
 
-const client_id = "b3vViQVSstu5rlbuKAEbyAfGD7n2Qoki";
-const client_secret = "Q3LNGbuSqTkgceEF";
-
-const getAmadeusToken = async (): Promise<string> => {
-    const response = await axios.post(
-        "https://test.api.amadeus.com/v1/security/oauth2/token",
-        new URLSearchParams({
-            grant_type: "client_credentials",
-            client_id,
-            client_secret
-        }),
-        {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }
-    );
-
-    return response.data.access_token;
-};
-
 router.get("/", async (req, res) => {
-    const cityCode = req.query.cityCode as string;
+    const { city } = req.query;
 
-    if (!cityCode) {
-        return res.status(400).json({ error: "Brak parametru cityCode" });
+    if (!city) {
+        return res.status(400).json({ error: "Brakuje parametrów: city" });
     }
 
     try {
-        const token = await getAmadeusToken();
-
-        const hotelsRes = await axios.get(
-            `https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${cityCode}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+        const locationResponse = await axios.get("https://api.travsrv.com/widgetapi.aspx", {
+            params: {
+                type: "cities",
+                name: city,
+                count: 1
             }
-        );
+        });
 
-        res.json(hotelsRes.data);
-    } catch (err: any) {
-        console.error("❌ Błąd pobierania danych z Amadeus API:", err.response?.data || err.message);
-        res.status(500).json({ error: "Błąd podczas pobierania danych z Amadeus API" });
+        const locationId = locationResponse.data?.[0]?.LocationId;
+
+        if (!locationId) {
+            return res.status(404).json({ error: "Nie znaleziono locationId dla podanego miasta" });
+        }
+
+        const hotelsResponse = await axios.get("https://api.travsrv.com/Content.aspx", {
+            params: {
+                type: "findfeaturedhoteldeals",
+                locationid: locationId,
+            }
+        });
+
+        res.json(hotelsResponse.data);
+    } catch (error: any) {
+        console.error("❌ Błąd:", error.message || error);
+        res.status(500).json({ error: "Wystąpił błąd podczas pobierania danych" });
     }
 });
 

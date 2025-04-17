@@ -120,6 +120,11 @@
         justify-content: space-between;
       }
     }
+    .pagination-controls{
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
   }
 }
 

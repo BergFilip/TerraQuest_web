@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import "../styles/sites/Explore.scss";
 import HSection from "../components/h-section.tsx";
 import Places_5 from "../components/places_section_5.tsx";
@@ -14,59 +15,47 @@ const reviewsData = [
 ];
 
 type Hotel = {
-    name: string;
-    hotelId: string;
-    cityCode: string;
-    address?: {
-        lines: string[];
-        postalCode?: string;
-        cityName?: string;
-        countryCode?: string;
-    };
+    PropertyId: number;
+    PropertyName: string;
+    ReferencePrice: number;
+    MaxDiscountPercent: number;
+    PropertyAddress: string;
+    PropertyImageUrl: string;
 };
 
 function Explore() {
     const [hotels, setHotels] = useState<Hotel[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(0);
-    const hotelsPerPage = 4;
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/hotels?cityCode=LON")
-            .then((res) => res.json())
-            .then((data) => {
-                if (data && data.data) {
-                    setHotels(data.data);
+        const fetchHotels = async () => {
+            try {
+                const res = await axios.get("/api/hotels?city=paris");
+                if (!res.data || !Array.isArray(res.data)) {
+                    console.error("❌ Nieprawidłowa odpowiedź:", res.data);
+                    return;
                 }
-            })
-            .catch((err) => console.error("Błąd ładowania hoteli:", err));
+
+                setHotels(res.data);
+            } catch (error) {
+                console.error("❌ Błąd ładowania hoteli:", error);
+            }
+        };
+
+        fetchHotels();
     }, []);
 
-    const nextPage = () => {
-        if ((currentPage + 1) * hotelsPerPage < hotels.length) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const prevPage = () => {
-        if (currentPage > 0) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const displayedHotels = hotels.slice(
-        currentPage * hotelsPerPage,
-        (currentPage + 1) * hotelsPerPage
-    );
+    const currentHotels = hotels.slice(currentIndex, currentIndex + 4);
 
     return (
         <section className="explore_site">
             <div className="section1">
                 <h1>Zaoszczędzisz do 40% na następnym pobycie w hotelu</h1>
-                <p className={"s1_baner"}>Porównujemy ceny pokoi hotelowych na ponad 100 stronach</p>
+                <p className="s1_baner">Porównujemy ceny pokoi hotelowych na ponad 100 stronach</p>
                 <form>
-                    <input type="text" placeholder={"Miejsce docelowe"} />
-                    <input type="date" placeholder={"Data wyjazdu i powrotu"} />
-                    <input type="number" placeholder={"Ilość uczestników"} />
+                    <input type="text" placeholder="Miejsce docelowe" />
+                    <input type="date" placeholder="Data wyjazdu i powrotu" />
+                    <input type="number" placeholder="Ilość uczestników" />
                     <input type="submit" value="Wyszukaj" className="alert-button" />
                 </form>
             </div>
@@ -76,49 +65,61 @@ function Explore() {
 
                 <div className="section3">
                     <HSection
-                        text1={"Często wyszukiwane "}
-                        text2={"Zaoszczędz na pobytach w okresie 31 stycznia - 2 lutego"}
+                        text1="Często wyszukiwane "
+                        text2="Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego"
                     />
 
                     <div className="places_section_5">
-                        {displayedHotels.map((hotel) => (
-                            <Places_5
-                                key={hotel.hotelId}
-                                link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"} // placeholder image
-                                text1={hotel.name}
-                                text2={`${hotel.address?.cityName || "Nieznane miasto"}, ${hotel.address?.countryCode || ""}`}
-                                text3={"2 noce"} // przykładowa liczba nocy
-                                text4={"1432zł"} // przykładowa cena
-                                text5={"785zł"} // przykładowa zniżka
-                            />
-                        ))}
+                        {currentHotels.length > 0 ? (
+                            currentHotels.map((hotel) => {
+                                const originalPrice = hotel.ReferencePrice;
+                                const discountedPrice = (originalPrice * (100 - hotel.MaxDiscountPercent)) / 100;
+
+                                return (
+                                    <Places_5
+                                        key={hotel.PropertyId}
+                                        link={`https:${hotel.PropertyImageUrl}`}
+                                        text1={hotel.PropertyName}
+                                        text2={hotel.PropertyAddress}
+                                        text3={"1 noc"}
+                                        text4={`${originalPrice.toFixed(2)} zł`}
+                                        text5={`${discountedPrice.toFixed(2)} zł`}
+
+                                    />
+                                );
+                            })
+                        ) : (
+                            <p>Ładowanie danych o hotelach...</p>
+                        )}
                     </div>
 
-
                     <div className="pagination-controls">
-                        <button onClick={prevPage} disabled={currentPage === 0}>
-                            {"<"} Wstecz
+                        <button
+                            onClick={() => setCurrentIndex((prev) => Math.max(prev - 4, 0))}
+                            disabled={currentIndex === 0}
+                        >
+                            Wstecz <i className="fa-solid fa-arrow-left"></i>
                         </button>
                         <button
-                            onClick={nextPage}
-                            disabled={(currentPage + 1) * hotelsPerPage >= hotels.length}
+                            onClick={() => setCurrentIndex((prev) =>
+                                prev + 4 < hotels.length ? prev + 4 : prev
+                            )}
+                            disabled={currentIndex + 4 >= hotels.length}
                         >
-                            Dalej {">"}
+                            Dalej <i className="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
 
                 <div className="section4">
-                    <HSection text1={"Pobierz aplikację TerraQuest"} text2={"Zyskaj wyjątkowe zniżki"} />
-
+                    <HSection text1="Pobierz aplikację TerraQuest" text2="Zyskaj wyjątkowe zniżki" />
                     <div className="explore_baner">
-                        <img src="/src/assets/terraquest_baner_promocja.webp" />
+                        <img src="/src/assets/terraquest_baner_promocja.webp" alt="Promocja TerraQuest" />
                     </div>
                 </div>
 
                 <div className="sectaion5">
-                    <HSection text1={"Oceny klientów"} text2={"Statystyki mówią same za siebie"} />
-
+                    <HSection text1="Oceny klientów" text2="Statystyki mówią same za siebie" />
                     <div className="card_review_section">
                         <ReviewCard reviews={reviewsData} />
                     </div>

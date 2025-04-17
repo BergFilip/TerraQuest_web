@@ -121,10 +121,10 @@
     font-family: roboto;
 
     img {
-      width: 100% !important;
       border-radius: 8px;
       margin-bottom: 0.5rem;
       height: 40rem !important;
+      overflow: hidden;
     }
     h4{
       font-size: 16px !important;
