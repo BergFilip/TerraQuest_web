@@ -1,4 +1,5 @@
-import "../styles/components/places_section.scss"
+import "../styles/components/places_section.scss";
+import { useNavigate } from "react-router-dom";
 
 type PlacesSection = {
     link: string;
@@ -7,15 +8,28 @@ type PlacesSection = {
     text3: string;
     text4: string;
     text5: string;
+    link_to: string;
 };
 
-const Places_5 = ({ link, text1, text2, text3, text4, text5 }: PlacesSection) => {
-        return <div className="Places_5">
-        <img src={link}/>
-        <h4>{text1}</h4>
-        <h4 className="descr_h4">{text2}</h4>
-        <p><span className="span1">{text3}</span> <span className="span2">{text4}</span> <span className="span3">{text5}</span> </p>
-    </div>
+const Places_5 = ({ link, text1, text2, text3, text4, text5, link_to }: PlacesSection) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(link_to);
+    };
+
+    return (
+        <div className="Places_5" onClick={handleClick}>
+            <img src={link} alt={text1} />
+            <h4>{text1}</h4>
+            <h4 className="descr_h4">{text2}</h4>
+            <p>
+                <span className="span1">{text3}</span>
+                <span className="span2">{text4}</span>
+                <span className="span3">{text5}</span>
+            </p>
+        </div>
+    );
 };
+
 export default Places_5;
-

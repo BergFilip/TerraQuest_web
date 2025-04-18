@@ -4,6 +4,26 @@ import { supabase } from "../supabaseClient";
 
 const router = express.Router();
 
+
+const getImageWithRetry = async (maxRetries: number = 3): Promise<string | null> => {
+    let retries = 0;
+    while (retries < maxRetries) {
+        try {
+            const userRes = await axios.get('https://randomuser.me/api/');
+            return userRes.data.results[0].picture.medium;
+        } catch (err) {
+            console.error('❌ Błąd podczas pobierania zdjęcia:', err);
+            retries++;
+            if (retries >= maxRetries) {
+                console.error('❌ Przekroczono maksymalną liczbę prób');
+
+                return '../../src/img/user_no.jpg';
+            }
+        }
+    }
+    return 'Backend/src/img';
+};
+
 router.get('/', async (req: Request, res: Response) => {
     try {
         const { data: reviews, error } = await supabase
@@ -16,14 +36,8 @@ router.get('/', async (req: Request, res: Response) => {
 
         const reviewsWithImages = await Promise.all(
             reviews.map(async (review: any) => {
-                try {
-                    const userRes = await axios.get('https://randomuser.me/api/');
-                    const image = userRes.data.results[0].picture.medium;
-                    return { ...review, image };
-                } catch (err) {
-                    console.error('❌ Błąd podczas pobierania zdjęcia:', err);
-                    return { ...review, image: null };
-                }
+                const image = await getImageWithRetry();
+                return { ...review, image };
             })
         );
 

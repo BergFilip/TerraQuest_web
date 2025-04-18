@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";  // Importujemy useNavigate do przekierowania
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/sites/Explore.scss";
 import HSection from "../components/h-section.tsx";
@@ -14,6 +14,7 @@ type Hotel = {
     MaxDiscountPercent: number;
     PropertyAddress: string;
     PropertyImageUrl: string;
+
 };
 
 type Review = {
@@ -24,30 +25,41 @@ type Review = {
     rating: number;
     image: string;
 };
+const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
+    return new Intl.DateTimeFormat("pl-PL", options).format(date);
+};
+
+
+const getDateRange = () => {
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + 7);
+    return { startDate, endDate };
+};
+const { startDate, endDate } = getDateRange();
+const formattedStartDate = formatDate(startDate);
+const formattedEndDate = formatDate(endDate);
 
 function Explore() {
     const [hotels, setHotels] = useState<Hotel[]>([]);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Nowe stany dla formularza
     const [destination, setDestination] = useState('');
     const [startDate, setStartDate] = useState('');
     const [numUsers, setNumUsers] = useState(1);
 
-    const navigate = useNavigate();  // Hook do przekierowania
+    const navigate = useNavigate();
 
-    // Funkcja do obsługi wysłania formularza
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Zapisujemy dane w localStorage
         localStorage.setItem('destination', destination);
         localStorage.setItem('startDate', startDate);
         localStorage.setItem('numUsers', numUsers.toString());
 
-        // Przekierowanie na stronę wyników
-        navigate('/results');
+        navigate('/search');
     };
 
     useEffect(() => {
@@ -109,7 +121,7 @@ function Explore() {
                 <div className="section3">
                     <HSection
                         text1="Często wyszukiwane "
-                        text2={`Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego`}
+                        text2={`Zaoszczędź na pobytach w okresie ${formattedStartDate} - ${formattedEndDate}`}
                     />
 
                     <div className="places_section_5">
@@ -127,6 +139,7 @@ function Explore() {
                                         text3={"1 noc"}
                                         text4={`${originalPrice.toFixed(2)} zł`}
                                         text5={`${discountedPrice.toFixed(2)} zł`}
+                                        link_to="/product"
                                     />
                                 );
                             })
@@ -164,7 +177,7 @@ function Explore() {
                     <HSection text1="Oceny klientów" text2="Statystyki mówią same za siebie" />
                     <div className="card_review_section">
                         {reviews.length > 0 ? (
-                            <ReviewCard reviews={reviews} />
+                            <ReviewCard reviews={reviews.slice(0, 9)} />
                         ) : (
                             <p>Ładowanie recenzji...</p>
                         )}

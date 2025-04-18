@@ -1,5 +1,19 @@
-import { useState } from "react";
 import "../styles/sites/Product.scss";
+import HSection from "../components/h-section.tsx";
+import ReviewCard from "../components/ReviewCard.tsx";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+
+type Review = {
+    title: string;
+    description: string;
+    reviewer: string;
+    date: string;
+    rating: number;
+    image: string;
+};
+
 
 function Product() {
     const images = [
@@ -10,70 +24,24 @@ function Product() {
         "/src/assets/kompas.webp",
     ];
 
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        const fetchReview = async () => {
+            try {
+                const res = await axios.get("/api/reviews");
+                if (Array.isArray(res.data)) setReviews(res.data);
+            } catch (error) {
+                console.error("❌ Błąd ładowania recenzji:", error);
+            }
+        };
+
+        fetchReview();
+    }, []);
+
+
     const [mainImage, setMainImage] = useState(images[0]);
 
-    const allReviews = Array.from({ length: 17 }, (_, i) => ({
-        id: i,
-        title: `Tytuł opinii #${i + 1}`,
-        body: `To jest przykładowa treść opinii numer ${i + 1}.`,
-        reviewer: `Użytkownik ${i + 1}`,
-        date: `2024-0${(i % 12) + 1}-01`,
-    }));
-
-    const reviewsPerPage = 3;
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
-
-    const [ratings, setRatings] = useState(Array(allReviews.length).fill(0));
-
-    const handleStarClick = (reviewIndex, starIndex) => {
-        const newRatings = [...ratings];
-        newRatings[reviewIndex] = starIndex + 1;
-        setRatings(newRatings);
-    };
-
-    const paginatedReviews = allReviews.slice(
-        (currentPage - 1) * reviewsPerPage,
-        currentPage * reviewsPerPage
-    );
-
-    const renderPagination = () => {
-        const pages = [];
-
-        if (totalPages <= 5) {
-            for (let i = 1; i <= totalPages; i++) {
-                pages.push(i);
-            }
-        } else {
-            if (currentPage <= 3) {
-                pages.push(1, 2, 3, "...", totalPages);
-            } else if (currentPage >= totalPages - 2) {
-                pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-            } else {
-                pages.push(1, "...", currentPage, "...", totalPages);
-            }
-        }
-
-        return (
-            <>
-                <span onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>←</span>
-                {pages.map((page, idx) =>
-                    page === "..." ? (
-                        <span key={idx}>...</span>
-                    ) : (
-                        <span
-                            key={idx}
-                            onClick={() => setCurrentPage(page)}
-                            className={currentPage === page ? "active-page" : ""}
-                        >
-                            {page}
-                        </span>
-                    )
-                )}
-                <span onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}>→</span>
-            </>
-        );
-    };
 
     return (
         <section className="product_site">
@@ -81,7 +49,7 @@ function Product() {
                 <div className="product_box">
                     <div className="product_header">
                         <div className="product_main-image">
-                            <img src={mainImage} alt="Wybrane zdjęcie" />
+                            <img src={mainImage} alt="Wybrane zdjęcie"/>
                         </div>
                         <div className="product_info">
                             <h2>Madryt <span>(Hiszpania)</span></h2>
@@ -120,38 +88,15 @@ function Product() {
                         <p>Willa z basenem. 5 sypialni, kuchnia i kort tenisowy.</p>
                     </div>
                 </div>
-
-                <div className="product_reviews">
-                    <h3>Opinie klientów</h3>
-                    <div className="reviews_list">
-                        {paginatedReviews.map((review) => (
-                            <div className="review_card" key={review.id}>
-                                <div className="review_stars">
-                                    {[1, 2, 3, 4, 5].map((starIndex) => (
-                                        <span
-                                            key={starIndex}
-                                            className={`star ${starIndex < ratings[review.id] ? "filled" : ""}`}
-                                            onClick={() => handleStarClick(review.id, starIndex)}
-                                        >
-                                            ★
-                                        </span>
-                                    ))}
-                                </div>
-                                <h4>{review.title}</h4>
-                                <p>{review.body}</p>
-                                <div className="review_user">
-                                    <div className="avatar">
-                                        <img src="/src/assets/terraquest.webp" alt="avatar"></img>
-                                    </div>
-                                    <div>
-                                        <p>{review.reviewer}</p>
-                                        <p>{review.date}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                <div className="sectaion5">
+                    <HSection text1="Oceny klientów" text2="Statystyki mówią same za siebie"/>
+                    <div className="card_review_section">
+                        {reviews.length > 0 ? (
+                            <ReviewCard reviews={reviews.slice(9, 17)}/>
+                        ) : (
+                            <p>Ładowanie recenzji...</p>
+                        )}
                     </div>
-                    <div className="pagination">{renderPagination()}</div>
                 </div>
             </div>
         </section>
