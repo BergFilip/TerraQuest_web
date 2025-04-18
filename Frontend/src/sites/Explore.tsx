@@ -5,15 +5,6 @@ import HSection from "../components/h-section.tsx";
 import Places_5 from "../components/places_section_5.tsx";
 import ReviewCard from "../components/ReviewCard.tsx";
 
-const reviewsData = [
-    { title: "Great Product", description: "I really loved this product.", reviewer: "John", date: "2025-04-10", rating: 5 },
-    { title: "Good, but could be better", description: "It's okay, but has some issues.", reviewer: "Jane", date: "2025-04-09", rating: 3 },
-    { title: "Not worth the price", description: "The product didn't meet my expectations.", reviewer: "Mike", date: "2025-04-08", rating: 2 },
-    { title: "Excellent!", description: "Totally worth the money.", reviewer: "Anna", date: "2025-04-07", rating: 5 },
-    { title: "Very good", description: "I'm happy with the purchase.", reviewer: "Chris", date: "2025-04-06", rating: 4 },
-    { title: "Not bad", description: "It works fine, but nothing special.", reviewer: "Sam", date: "2025-04-05", rating: 3 },
-];
-
 type Hotel = {
     PropertyId: number;
     PropertyName: string;
@@ -23,26 +14,42 @@ type Hotel = {
     PropertyImageUrl: string;
 };
 
+type Review = {
+    title: string;
+    description: string;
+    reviewer: string;
+    date: string;
+    rating: number;
+    image: string;
+};
+
 function Explore() {
     const [hotels, setHotels] = useState<Hotel[]>([]);
+    const [reviews, setReviews] = useState<Review[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
+
         const fetchHotels = async () => {
             try {
                 const res = await axios.get("/api/hotels?city=paris");
-                if (!res.data || !Array.isArray(res.data)) {
-                    console.error("❌ Nieprawidłowa odpowiedź:", res.data);
-                    return;
-                }
-
-                setHotels(res.data);
+                if (Array.isArray(res.data)) setHotels(res.data);
             } catch (error) {
                 console.error("❌ Błąd ładowania hoteli:", error);
             }
         };
 
+        const fetchReview = async () => {
+            try {
+                const res = await axios.get("/api/reviews");
+                if (Array.isArray(res.data)) setReviews(res.data);
+            } catch (error) {
+                console.error("❌ Błąd ładowania recenzji:", error);
+            }
+        };
+
         fetchHotels();
+        fetchReview();
     }, []);
 
     const currentHotels = hotels.slice(currentIndex, currentIndex + 4);
@@ -66,7 +73,7 @@ function Explore() {
                 <div className="section3">
                     <HSection
                         text1="Często wyszukiwane "
-                        text2="Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego"
+                        text2={`Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego`}
                     />
 
                     <div className="places_section_5">
@@ -84,7 +91,6 @@ function Explore() {
                                         text3={"1 noc"}
                                         text4={`${originalPrice.toFixed(2)} zł`}
                                         text5={`${discountedPrice.toFixed(2)} zł`}
-
                                     />
                                 );
                             })
@@ -121,7 +127,11 @@ function Explore() {
                 <div className="sectaion5">
                     <HSection text1="Oceny klientów" text2="Statystyki mówią same za siebie" />
                     <div className="card_review_section">
-                        <ReviewCard reviews={reviewsData} />
+                        {reviews.length > 0 ? (
+                            <ReviewCard reviews={reviews} />
+                        ) : (
+                            <p>Ładowanie recenzji...</p>
+                        )}
                     </div>
                 </div>
             </div>
