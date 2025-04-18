@@ -141,6 +141,7 @@
     border:1px solid #dfdfdf;
     font-family: roboto;
     cursor: pointer;
+    box-shadow: 5px 5px 10px rgba(165, 165, 165, 0.4);
 
     img {
       border-radius: 8px;
@@ -270,7 +271,6 @@
     font-family: roboto;
     border: 1px solid #D9D9D9;
     padding: 25px;
-    cursor: pointer;
 
     .icon{
       margin-right: 25px;

@@ -1,4 +1,6 @@
 import "../styles/sites/Home.scss"
+import { useEffect, useState } from "react";
+import axios from "axios";
 import HSection from "../components/h-section.tsx";
 import Card from "../components/card.tsx";
 import Places_1 from "../components/places_section_1.tsx";
@@ -11,7 +13,55 @@ import Places_7 from "../components/places_section_7.tsx";
 import FaqSection from "../components/help_section.tsx";
 
 
+type Hotel = {
+    PropertyId: number;
+    PropertyName: string;
+    ReferencePrice: number;
+    MaxDiscountPercent: number;
+    PropertyAddress: string;
+    PropertyImageUrl: string;
+};
+
+const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
+    return new Intl.DateTimeFormat("pl-PL", options).format(date);
+};
+
+const getDateRange = () => {
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + 7);
+    return { startDate, endDate };
+};
+
+const { startDate, endDate } = getDateRange();
+const formattedStartDate = formatDate(startDate);
+const formattedEndDate = formatDate(endDate);
+
+
+
+
 function Home() {
+
+    const [hotels, setHotels] = useState<Hotel[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const fetchHotels = async () => {
+            try {
+                const res = await axios.get("/api/hotels?city=tokio");
+                if (Array.isArray(res.data)) setHotels(res.data);
+            } catch (error) {
+                console.error("❌ Błąd ładowania hoteli:", error);
+            }
+        };
+
+        fetchHotels();
+    }, []);
+
+    const currentHotels = hotels.slice(currentIndex, currentIndex + 4);
+
+
     return(
         <div className="home">
             <div className="section1">
@@ -105,27 +155,50 @@ function Home() {
                     </div>
                 </div>
                 <div className="section6">
-                    <HSection text1={"Oferty na weekend "}
-                              text2={"Zaoszczędź na pobytach w okresie 31 stycznia - 2 lutego"}></HSection>
+                    <HSection
+                        text1="Często wyszukiwane "
+                        text2={`Zaoszczędź na pobytach w okresie ${formattedStartDate} - ${formattedEndDate}`}
+                    />
 
                     <div className="places_section_5">
-                        <Places_5
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"}
-                            text5={"785zł"}></Places_5>
+                        {currentHotels.length > 0 ? (
+                            currentHotels.map((hotel) => {
+                                const originalPrice = hotel.ReferencePrice;
+                                const discountedPrice = (originalPrice * (100 - hotel.MaxDiscountPercent)) / 100;
 
-                        <Places_5
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"}
-                            text5={"785zł"}></Places_5>
-                        <Places_5
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"}
-                            text5={"785zł"}></Places_5>
-                        <Places_5
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Hotel Super Star"} text2={"Polska, Warszawa"} text3={"2 noce"} text4={"1432zł"}
-                            text5={"785zł"}></Places_5>
+                                return (
+                                    <Places_5
+                                        key={hotel.PropertyId}
+                                        link={`https:${hotel.PropertyImageUrl}`}
+                                        text1={hotel.PropertyName}
+                                        text2={hotel.PropertyAddress}
+                                        text3={"1 noc"}
+                                        text4={`${originalPrice.toFixed(2)} zł`}
+                                        text5={`${discountedPrice.toFixed(2)} zł`}
+                                        link_to="/product"
+                                    />
+                                );
+                            })
+                        ) : (
+                            <p>Ładowanie danych o hotelach...</p>
+                        )}
+                    </div>
+
+                    <div className="pagination-controls">
+                        <button
+                            onClick={() => setCurrentIndex((prev) => Math.max(prev - 4, 0))}
+                            disabled={currentIndex === 0}
+                        >
+                            Wstecz <i className="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <button
+                            onClick={() => setCurrentIndex((prev) =>
+                                prev + 4 < hotels.length ? prev + 4 : prev
+                            )}
+                            disabled={currentIndex + 4 >= hotels.length}
+                        >
+                            Dalej <i className="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
                 <div className="section7">
