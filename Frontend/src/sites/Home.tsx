@@ -50,13 +50,13 @@ function Home() {
                     <HSection text1={"Popularne cele podróży"}
                               text2={"Najpopularniejsze cele podróży wśród gości z Polski"}></HSection>
                     <div className="places_section_1">
-                        <Places_1 text1={"Warszawa"} text2={"PL"}></Places_1>
-                        <Places_1 text1={"Warszawa"} text2={"PL"}></Places_1>
+                        <Places_1 text1={"Warszawa"} text2={""} backgroundImage={'/src/assets/cities/warsaw.webp'} link_to="/explore"></Places_1>
+                        <Places_1 text1={"Kraków"} text2={""} backgroundImage={'/src/assets/cities/krakow.webp'} link_to="/explore"></Places_1>
                     </div>
                     <div className="places_section_2">
-                        <Places_2 text1={"Poznań"} text2={"PL"}></Places_2>
-                        <Places_2 text1={"Kraków"} text2={"PL"}></Places_2>
-                        <Places_2 text1={"Karpacz"} text2={"PL"}></Places_2>
+                        <Places_2 text1={"Poznań"} text2={""} backgroundImage={'/src/assets/cities/poznan.webp'} link_to="/explore"></Places_2>
+                        <Places_2 text1={"Gdańsk"} text2={""} backgroundImage={'/src/assets/cities/gdansk.webp'} link_to="/explore"></Places_2>
+                        <Places_2 text1={"Karpacz"} text2={""} backgroundImage={'/src/assets/cities/karpacz.webp'} link_to="/explore"></Places_2>
                     </div>
                 </div>
                 <div className="section4">
@@ -64,17 +64,17 @@ function Home() {
                               text2={""}></HSection>
                     <div className="places_section_3">
                         <Places_3
-                            link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"}
-                            text2={"Hotele"}></Places_3>
+                            link={"/src/assets/home_section/hotels.webp"}
+                            text2={"Hotele"} link_to="/explore"></Places_3>
                         <Places_3
-                            link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"}
-                            text2={"Ośrodki wypoczynkowe"}></Places_3>
+                            link={"/src/assets/home_section/resort.webp"}
+                            text2={"Ośrodki wypoczynkowe"} link_to="/explore"></Places_3>
                         <Places_3
-                            link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"}
-                            text2={"Apartamenty"}></Places_3>
+                            link={"/src/assets/home_section/apartament.webp"}
+                            text2={"Apartamenty"} link_to="/explore"></Places_3>
                         <Places_3
-                            link={"https://u.profitroom.pl/2020-andersiahotel-pl/thumb/2560x1440/uploads/Zdjecia/IBBAndersiaHotel_1.jpg"}
-                            text2={"Wille"}></Places_3>
+                            link={"/src/assets/home_section/willa.webp"}
+                            text2={"Wille"} link_to="/explore"></Places_3>
                     </div>
                 </div>
                 <div className="section5">
@@ -83,25 +83,25 @@ function Home() {
                     <div className="places_section_4">
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Gdańsk"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Gdańsk"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Warszawa"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Warszawa"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Poznań"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Poznań"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Kołobrzeg"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Kołobrzeg"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Kraków"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Kraków"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Karpacz"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Karpacz"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                         <Places_4
                             link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Wrocław"} text2={"1 000 obiektów"}></Places_4>
+                            text1={"Wrocław"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
                     </div>
                 </div>
                 <div className="section6">
@@ -135,19 +135,19 @@ function Home() {
                     <div className="places_section_6">
                         <div className="inspiration_big">
                             <img
-                                src="https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"/>
+                                src="/src/assets/home_section/austria.webp"/>
                             <h4>{"6 niepowtarzalnych domów wakacyjnych w Austrii"}</h4>
                             <h4 className="descr_h4">{"Wakacje z wiekszą ekipą? Trafiłeś idealnie!"}</h4>
                         </div>
                         <div className="other_palce">
                             <Places_6
-                                link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                                link={"/src/assets/home_section/spain.webp"}
                                 text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
-                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}></Places_6>
+                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."} link_to="/explore"></Places_6>
                             <Places_6
-                                link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
+                                link={"/src/assets/home_section/treehouses.webp"}
                                 text1={"Najlepsze domki na drzewie na świecie"}
-                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}></Places_6>
+                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."} link_to="/explore"></Places_6>
 
                         </div>
 

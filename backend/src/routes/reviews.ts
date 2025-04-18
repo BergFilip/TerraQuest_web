@@ -17,11 +17,11 @@ const getImageWithRetry = async (maxRetries: number = 3): Promise<string | null>
             if (retries >= maxRetries) {
                 console.error('❌ Przekroczono maksymalną liczbę prób');
 
-                return '../../src/img/user_no.jpg';
+                return '../img/user_no.jpg';
             }
         }
     }
-    return 'Backend/src/img';
+    return '../img/user_no.jpg';
 };
 
 router.get('/', async (req: Request, res: Response) => {
