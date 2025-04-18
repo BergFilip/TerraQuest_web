@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";  // Importujemy useNavigate do przekierowania
 import axios from "axios";
 import "../styles/sites/Explore.scss";
 import HSection from "../components/h-section.tsx";
 import Places_5 from "../components/places_section_5.tsx";
 import ReviewCard from "../components/ReviewCard.tsx";
+
 
 type Hotel = {
     PropertyId: number;
@@ -28,8 +30,27 @@ function Explore() {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
+    // Nowe stany dla formularza
+    const [destination, setDestination] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [numUsers, setNumUsers] = useState(1);
 
+    const navigate = useNavigate();  // Hook do przekierowania
+
+    // Funkcja do obsługi wysłania formularza
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Zapisujemy dane w localStorage
+        localStorage.setItem('destination', destination);
+        localStorage.setItem('startDate', startDate);
+        localStorage.setItem('numUsers', numUsers.toString());
+
+        // Przekierowanie na stronę wyników
+        navigate('/results');
+    };
+
+    useEffect(() => {
         const fetchHotels = async () => {
             try {
                 const res = await axios.get("/api/hotels?city=paris");
@@ -59,10 +80,25 @@ function Explore() {
             <div className="section1">
                 <h1>Zaoszczędzisz do 40% na następnym pobycie w hotelu</h1>
                 <p className="s1_baner">Porównujemy ceny pokoi hotelowych na ponad 100 stronach</p>
-                <form>
-                    <input type="text" placeholder="Miejsce docelowe" />
-                    <input type="date" placeholder="Data wyjazdu i powrotu" />
-                    <input type="number" placeholder="Ilość uczestników" />
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Miejsce docelowe"
+                        value={destination}
+                        onChange={(e) => setDestination(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder="Data wyjazdu"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Ilość uczestników"
+                        value={numUsers}
+                        onChange={(e) => setNumUsers(Number(e.target.value))}
+                    />
                     <input type="submit" value="Wyszukaj" className="alert-button" />
                 </form>
             </div>
