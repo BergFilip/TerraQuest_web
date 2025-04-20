@@ -343,6 +343,101 @@
   }
 }
 
+@media (max-width: 906px) {
+  .user {
+    padding: 25px;
+
+    .container {
+      gap: 16px;
+    }
+
+    .user-card {
+      width: 17rem;
+      height: 28rem;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      .user-avatar {
+        width: 6.5rem;
+        height: 6.5rem;
+      }
+
+      .email {
+        font-size: 11px;
+        margin-bottom: 30px;
+      }
+
+      .settings {
+        .setting-item {
+          padding: 6px 0;
+          font-size: 11px;
+
+          i {
+            font-size: 12px;
+            margin-right: 6px;
+          }
+
+          p {
+            padding: 6px;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+
+    .booking-history {
+      width: 30rem;
+      height: 28rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      .booking-list-container {
+        max-height: 300px;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        margin-bottom: 25px;
+      }
+
+      .booking-list {
+        .booking-item {
+          .booking-header {
+            padding: 10px;
+          }
+
+          .expand-btn {
+            font-size: 14px;
+          }
+
+          .booking-details {
+            padding: 0 8px;
+
+            p {
+              font-size: 12px;
+            }
+          }
+
+          &.expanded .booking-details {
+            padding: 8px 8px;
+          }
+        }
+      }
+
+      .empty-state {
+        font-size: 18px;
+        padding: 12px;
+      }
+    }
+  }
+}
+
 
   /*Tablet*/
  @media (max-width: 835px) {
@@ -571,6 +666,7 @@
           display: flex;
           height: 1.5rem;
           align-items: center;
+          margin: 10px;
           padding: 8px 0; /* Zmniejszenie paddingu */
           font-size: 12px;
           cursor: pointer;
@@ -734,6 +830,7 @@
       .settings {
         .setting-item {
           padding: 22px 0;
+          margin: 0;
           border-bottom: 1px solid #ddd;
 
           i {
