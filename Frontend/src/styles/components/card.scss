@@ -1,0 +1,54 @@
+.card{
+  font-family: poppins !important;
+  width: 49.5%;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #dfdfdf;
+  margin-top: 1.5rem;
+  h3{
+    font-size: 24px !important;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  h6{
+    font-size: 16px !important;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5) !important;
+    margin-bottom: 1.5rem;
+  }
+  button{
+    font-size: 16px !important;
+    padding: 0.7rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+}
+
+@media (max-width: 1250px) {
+  .card{
+    font-family: poppins !important;
+    width: 49%;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #dfdfdf;
+    margin-top: 1.5rem;
+    h3{
+      font-size: 18px !important;
+    }
+    h6{
+      font-size: 14px !important;
+    }
+    button{
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media (max-width: 535px) {
+  .card{
+    width: 100%;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+
+  }
+}

@@ -1,0 +1,30 @@
+.h-section{
+  font-family: roboto !important;
+  margin-top: 3rem;
+  h3{
+    font-size: 24px !important;
+    font-weight: 500;
+  }
+  h6{
+    font-size: 16px !important;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+@media (max-width: 1250px) {
+  .h-section{
+    h3{
+      font-size: 20px !important;
+    }
+    h6{
+      font-size: 14px !important;
+    }
+  }
+
+}
+@media (max-width: 535px) {
+  .h-section{
+    margin-top: 2rem !important;
+  }
+
+}
