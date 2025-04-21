@@ -67,12 +67,8 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img
-                        src="src/assets/terraquest.webp"
-                        alt="Jan Kowalski"
-                        className="user-avatar"
-                    />
-                    <h2>Jan Kowalski</h2>
+                    <img src="src/assets/terraquest.webp" alt="Obraz profilu" className="user-avatar"/>
+                    <h2><i>Zaktualizuj profil</i></h2>
                     <p className="email">({userEmail})</p>
                     <hr></hr>
 
@@ -84,15 +80,7 @@ function User() {
                         </div>
 
                         <div className="setting-item">
-                            <i className="fa-solid fa-globe"></i> <p><strong>Język </strong> (Polski)</p>
-                        </div>
-
-                        <div className="setting-item">
-                            <i className="fa-solid fa-moon"></i> <p><strong>Motyw </strong> (ciemny)</p>
-                        </div>
-
-                        <div className="setting-item">
-                            <i className="fa-solid fa-download"></i> <p><strong>Aktualizacja</strong></p>
+                            <i className="fa-solid fa-download"></i> <p><strong>Aktualizacja profilu</strong></p>
                         </div>
                     </div>
                 </div>
