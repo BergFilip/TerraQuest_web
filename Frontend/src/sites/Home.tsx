@@ -27,6 +27,11 @@ const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("pl-PL", options).format(date);
 };
 
+const getRandomPlacesNumber = () => {
+    return `${Math.floor(Math.random() * (1500 - 200 + 1)) + 200} obiektów`;
+};
+
+
 const getDateRange = () => {
     const startDate = new Date();
     const endDate = new Date();
@@ -83,7 +88,8 @@ function Home() {
                               text2={"Urlop za granicą taniej niż nad Polskim morzem lub w górach? Tylko u nas specjalne oferty zagraniczne."}
                               text3={"Dowiedz się więcej"}
                               colorB={"#e1e1e1"}
-                              colorT={"black"}>
+                              colorT={"black"}
+                              route_to={"/explore"}>
 
                         </Card>
 
@@ -91,7 +97,8 @@ function Home() {
                               text2={"Wyjeżdżasz na wakacje, a  tam tylko deszcz i musisz zostać w hotelu? Gwarantujemy udaną pogodę albo częściowy zwrot kosztów."}
                               text3={"Dowiedz się więcej"}
                               colorB={"#FFAD00"}
-                              colorT={"white"}>
+                              colorT={"white"}
+                              route_to={"/weather"}>
 
                         </Card>
                     </div>
@@ -132,26 +139,26 @@ function Home() {
                               text2={"Te popularne miejsca mają wiele do zaoferowania"}></HSection>
                     <div className="places_section_4">
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Gdańsk"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/gdansk2.webp"}
+                            text1={"Gdańsk"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Warszawa"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/warsaw2.webp"}
+                            text1={"Warszawa"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Poznań"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/poznan2.webp"}
+                            text1={"Poznań"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Kołobrzeg"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/kolobrzeg2.webp"}
+                            text1={"Kołobrzeg"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Kraków"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/krakow2.webp"}
+                            text1={"Kraków"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Karpacz"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/karpacz2.webp"}
+                            text1={"Karpacz"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                         <Places_4
-                            link={"https://cf.bstatic.com/static/img/theme-index/bg_luxury/869918c9da63b2c5685fce05965700da5b0e6617.jpg"}
-                            text1={"Wrocław"} text2={"1 000 obiektów"} link_to="/explore"></Places_4>
+                            link={"/src/assets/cities/wroclaw2.webp"}
+                            text1={"Wrocław"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
                     </div>
                 </div>
                 <div className="section6">
@@ -243,6 +250,8 @@ function Home() {
                             colorT2={"white"}
                             colorB={"#e1e1e1"}
                             colorT={"black"}
+                            link_to1={"/login"}
+                            link_to2={"/register"}
                         ></Places_7>
                     </div>
                 </div>

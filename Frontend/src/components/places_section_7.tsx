@@ -11,9 +11,11 @@ type PlacesSection = {
     colorT: string;
     colorB2: string;
     colorT2: string;
+    link_to1:string;
+    link_to2:string;
 };
 
-const Places_7 = ({ link, text1, text2,text3, text4, colorB, colorT,colorT2, colorB2}: PlacesSection) => {
+const Places_7 = ({ link, text1, text2,text3, text4, colorB, colorT,colorT2, colorB2, link_to1, link_to2}: PlacesSection) => {
     return <div className="Places_7">
         <div className="icon">
             <i className={link}></i>
@@ -22,8 +24,8 @@ const Places_7 = ({ link, text1, text2,text3, text4, colorB, colorT,colorT2, col
             <p className="title"> {text1}</p>
             <p className="desc"> {text2}</p>
             <div className="buttons">
-                <Btn_LR text={text3} colorB={colorB} colorT={colorT}></Btn_LR>
-                <Btn_LR text={text4} colorB={colorB2} colorT={colorT2}></Btn_LR>
+                <Btn_LR text={text3} colorB={colorB} colorT={colorT} route={link_to1}></Btn_LR>
+                <Btn_LR text={text4} colorB={colorB2} colorT={colorT2} route={link_to2}></Btn_LR>
             </div>
         </div>
     </div>
