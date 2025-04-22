@@ -21,7 +21,6 @@ import Search from "./sites/Search.tsx";
 
 function App() {
     return(
-        <Router>
             <div className="container">
                 <main className="main-container">
                     <Header></Header>
@@ -48,7 +47,6 @@ function App() {
                 </main>
                 <Footer></Footer>
             </div>
-        </Router>
     )
 }
 export default App

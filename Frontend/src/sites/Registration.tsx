@@ -1,52 +1,64 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { supabase } from "../supabaseClient"; // Klient Supabase
 import '../styles/sites/Register.scss';
 import Alert from "../components/Alert.tsx";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [autoLogin, setAutoLogin] = useState<boolean>(false);
     const [showAlert, setShowAlert] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        setError(null);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        try {
+            const res = await fetch('http://localhost:4000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({email, password}),
+            });
 
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-            email,
-            password,
-        });
+            const data = await res.json();
 
-        if (signUpError) {
-            setError(signUpError.message);
-            return;
-        }
+            if (res.ok) {
+                if (autoLogin) {
+                    const loginRes = await fetch('http://localhost:4000/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({email, password}),
+                    });
 
-
-        const { error: insertError } = await supabase
-            .from('users_terraQuest')
-            .insert([
-                {
-                    pass: password,
-                    email: email,
-                    created_at: new Date().toISOString(),
+                    if (loginRes.ok) {
+                        await login(email);
+                        navigate('/user');
+                    } else {
+                        setError("Rejestracja ok, ale logowanie się nie udało.");
+                    }
                 }
-            ]);
-
-        if (insertError) {
-            setError(insertError.message);
-            return;
+                else {
+                    setShowAlert(true);
+                }
+            }
+            else {
+                setError(data.message || 'Wystąpił błąd');
+            }
         }
-
-        setShowAlert(true);
-        setTimeout(() => {
-            navigate('/login');
-        }, 20000);
+        catch(err){
+            console.error(err);
+            setError('Coś poszło nie tak');
+        }
     };
 
     return (
@@ -75,9 +87,9 @@ function Register() {
                     />
 
                     <div className="checkbox-container">
-                        <input type="checkbox" id="stay-logged" />
+                        <input type="checkbox" id="stay-logged" checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}/>
                         <label htmlFor="stay-logged">
-                            <p>Nie wylogowuj</p>
+                            <p>Zaloguj automatycznie</p>
                         </label>
                     </div>
 
@@ -88,6 +100,7 @@ function Register() {
                             title="Dziękujemy za założenie konta"
                             message="Kliknij przycisk, aby przejść do logowania i zaloguj się na swoje konto."
                             onClose={() => setShowAlert(false)}
+                            onOk={() => navigate("/login")}
                         />
                     )}
 

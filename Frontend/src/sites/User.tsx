@@ -1,5 +1,8 @@
 import "../styles/sites/User.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import Update_Alert from "../components/Update_Alert";
 
 function User() {
     const [expanded, setExpandedIndex] = useState<number | null>(null);
@@ -9,6 +12,31 @@ function User() {
         { id: 3, date: "06.02.2025", route: "Gdańsk - Katowice", price: "410zł" },
         { id: 4, date: "07.02.2025", route: "Łódź - Szczecin", price: "350zł" },
     ]);
+
+    const [currentTime, setCurrentTime] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+    const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const verifyAuth = async () => {
+            const isAuthenticated = await checkAuth();
+            if (!isAuthenticated) {
+                navigate('/login');
+            } else {
+                setLoading(false);
+            }
+        };
+        verifyAuth();
+
+        const interval = setInterval(() => {
+            const now = new Date();
+            setCurrentTime(now.toLocaleTimeString());
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [checkAuth, navigate]);
 
     const toggleExpand = (index: number) => {
         setExpandedIndex(expanded === index ? null : index);
@@ -28,38 +56,38 @@ function User() {
         setBookings([...bookings, newBooking]);
     };
 
+    const handleProfileUpdate = () => {
+        setShowAlert(true);
+    };
+
+    if (loading || !isLoggedIn) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Weryfikacja sesji...</p>
+            </div>
+        );
+    }
+
     return (
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img
-                        src="src/assets/terraquest.webp"
-                        alt="Jan Kowalski"
-                        className="user-avatar"
-                    />
-                    <h2>Jan Kowalski</h2>
-                    <p className="email">(jankowalski@gmail.com)</p>
+                    <img src="src/assets/terraquest.webp" alt="Obraz profilu" className="user-avatar"/>
+                    <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Zaktualizuj profil"}</h2>
+                    <p className="email">({userEmail})</p>
                     <hr></hr>
 
                     <div className="settings">
-                        <div className="setting-item">
-                            <i className="fa-solid fa-eye-slash"></i> <p><strong>Pokaż hasło</strong></p>
-                        </div>
 
                         <div className="setting-item">
-                            <i className="fa-solid fa-clock"></i> <p><strong>Czas i godzina </strong> (PM)</p>
+                            <i className="fa-solid fa-clock"></i>
+                            <p><strong>Czas i godzina </strong> {currentTime}</p>
                         </div>
 
-                        <div className="setting-item">
-                            <i className="fa-solid fa-globe"></i> <p><strong>Język </strong> (Polski)</p>
-                        </div>
-
-                        <div className="setting-item">
-                            <i className="fa-solid fa-moon"></i> <p><strong>Motyw </strong> (ciemny)</p>
-                        </div>
-
-                        <div className="setting-item">
-                            <i className="fa-solid fa-download"></i> <p><strong>Aktualizacja</strong></p>
+                        <div className="setting-item" onClick={handleProfileUpdate}>
+                            <i className="fa-solid fa-download"></i>
+                            <p><strong>Aktualizacja profilu</strong></p>
                         </div>
                     </div>
                 </div>
@@ -104,6 +132,13 @@ function User() {
                     </div>
                 </div>
             </div>
+            {showAlert && (
+                <Update_Alert
+                    title="Aktualizacja profilu"
+                    onClose={() => setShowAlert(false)}
+                    onOk={() => setShowAlert(false)}
+                />
+            )}
         </main>
     );
 }

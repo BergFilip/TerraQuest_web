@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../supabaseClient";
 import '../styles/sites/Login.scss';
+import { useAuth } from "../context/AuthContext.tsx";
 
 function Login() {
     const [email, setEmail] = useState<string>('');
@@ -9,6 +9,7 @@ function Login() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -16,31 +17,23 @@ function Login() {
         setLoading(true);
 
         try {
-            // Szukamy użytkownika o podanym email
-            const { data: userData, error: fetchError } = await supabase
-                .from('users_terraQuest')
-                .select('email, pass')
-                .eq('email', email)
-                .single(); // zakładamy że email jest unikalny
+            const res = await fetch('http://localhost:4000/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ email, password }),
+            });
 
-            if (fetchError) {
-                setError("Nie znaleziono użytkownika lub wystąpił błąd.");
-                setLoading(false);
-                return;
+            const data = await res.json();
+
+            if (res.ok) {
+                await login(email);
+                navigate('/user');
+            } else {
+                setError(data.message || 'Login failed');
             }
-
-            if (!userData || userData.pass !== password) {
-                setError("Nieprawidłowy email lub hasło.");
-                setLoading(false);
-                return;
-            }
-
-
-            navigate('/user');
-
         } catch (err) {
-            console.error("Błąd podczas logowania:", err);
-            setError("Wystąpił błąd. Spróbuj ponownie.");
+            setError('Login failed');
         } finally {
             setLoading(false);
         }
@@ -70,7 +63,15 @@ function Login() {
                         required
                     />
 
-                    <button type="submit" disabled={loading}>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{
+                            backgroundColor: loading ? 'gray' : '',
+                            color: 'white',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                    >
                         {loading ? 'Logowanie...' : 'Zaloguj się'}
                     </button>
 

@@ -33,7 +33,7 @@ const Footer = () => {
                         <li><a href="/explore">Planer podróży</a></li>
                         <li><Link to="/weather">Pogoda</Link></li>
                         <li><Link to="/newsletter">Newsletter</Link></li>
-                        <li><a href="https://www.figma.com/proto/VAEeMmg1rGRkZhTuEwuFnK/Platforma-do-Planowania-Podr%C3%B3%C5%BCy-i-Rezerwacji-TerraQuest?node-id=0-1&p=f&t=tY3MevuZcr4uMUzy-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=354%3A3719&show-proto-sidebar=1">Specjalne oferty</a></li>
+                        <li><a href="#">Specjalne oferty</a></li>
                     </ul>
                 </div>
 
@@ -43,10 +43,10 @@ const Footer = () => {
                 >
                     <p className="footer_p">Nasze produkty</p>
                     <ul>
-                        <li><a href="https://github.com/BergFilip/TerraQuest_web">Website App</a></li>
-                        <li><a href="https://github.com/KolegaTatar/TerraQuest_mobile">Mobile App</a></li>
-                        <li><a href="https://github.com/KolegaTatar/SkyVision_desktop">Desktop App</a></li>
-                        <li><a href="#">Project</a></li>
+                        <li><a href="https://github.com/BergFilip/TerraQuest_web" target="_blank">Website App</a></li>
+                        <li><a href="https://github.com/KolegaTatar/TerraQuest_mobile" target="_blank">Mobile App</a></li>
+                        <li><a href="https://github.com/KolegaTatar/SkyVision_desktop" target="_blank">Desktop App</a></li>
+                        <li><a href="https://www.figma.com/proto/VAEeMmg1rGRkZhTuEwuFnK/Platforma-do-Planowania-Podr%C3%B3%C5%BCy-i-Rezerwacji-TerraQuest?node-id=0-1&p=f&t=tY3MevuZcr4uMUzy-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=354%3A3719&show-proto-sidebar=1" target="_blank">Project</a></li>
                     </ul>
                 </div>
 

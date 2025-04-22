@@ -66,6 +66,24 @@
           text-align: left;
         }
 
+        .alert-body form{
+          input{
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            width:70%;
+            color: #B3B3B3;
+          }
+          label{
+            margin: 10px 10px 10px 0px;
+            font-size: 16px;
+            width:70%;
+            margin-top: 30px;
+          }
+        }
+
 
       }
       .info{
