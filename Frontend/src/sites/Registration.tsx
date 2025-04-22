@@ -2,14 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import '../styles/sites/Register.scss';
 import Alert from "../components/Alert.tsx";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [autoLogin, setAutoLogin] = useState<boolean>(false);
     const [showAlert, setShowAlert] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -20,17 +23,39 @@ function Register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                credentials: 'include',
+                body: JSON.stringify({email, password}),
             });
 
             const data = await res.json();
 
             if (res.ok) {
-                setShowAlert(true);
-            } else {
+                if (autoLogin) {
+                    const loginRes = await fetch('http://localhost:4000/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({email, password}),
+                    });
+
+                    if (loginRes.ok) {
+                        await login(email);
+                        navigate('/user');
+                    } else {
+                        setError("Rejestracja ok, ale logowanie się nie udało.");
+                    }
+                }
+                else {
+                    setShowAlert(true);
+                }
+            }
+            else {
                 setError(data.message || 'Wystąpił błąd');
             }
-        } catch (err) {
+        }
+        catch(err){
             console.error(err);
             setError('Coś poszło nie tak');
         }
@@ -62,7 +87,7 @@ function Register() {
                     />
 
                     <div className="checkbox-container">
-                        <input type="checkbox" id="stay-logged" />
+                        <input type="checkbox" id="stay-logged" checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}/>
                         <label htmlFor="stay-logged">
                             <p>Zaloguj automatycznie</p>
                         </label>
