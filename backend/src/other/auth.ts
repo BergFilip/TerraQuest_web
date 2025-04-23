@@ -16,7 +16,7 @@ const validatePassword = (password: string): boolean => {
     return password.length >= minLength && passwordRegex.test(password);
 };
 
-router.post("/register", async (req: Request, res: Response, next) => {
+router.post("/register", async (req: Request, res: Response) => {
     const  { email, password } = req.body;
 
     if (!validateEmail(email)) {
@@ -87,8 +87,8 @@ router.post("/register", async (req: Request, res: Response, next) => {
     });
 })
 
-
 router.post('/login', async (req: Request, res: Response) => {
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -96,41 +96,56 @@ router.post('/login', async (req: Request, res: Response) => {
         return
     }
 
-    const { data, error } = await supabase
-        .from('users_terraQuest')
-        .select('*')
-        .eq('email', email)
-        .single();
+    try{
 
-    if (error || !data) {
-        res.status(401).json({ message: 'Invalid credentials' });
+        const response = await supabase
+            .from('users_terraQuest')
+            .select('*')
+            .eq('email', email)
+            .single();
+
+        if (response.error) {
+            res.status(401).json({ message: 'Invalid credentials' });
+            return
+        }
+
+        if (!response.data) {
+            res.status(401).json({ message: 'Invalid credentials' });
+            return
+        }
+
+        const { data } = response;
+
+        const passwordMatches = await bcrypt.compare(password, data.pass);
+
+        if (!passwordMatches) {
+            res.status(401).json({ message: 'Invalid credentials' });
+            return
+        }
+
+        const token = jwt.sign(
+            { id: data.id, email: data.email },
+            process.env.JWT_SECRET || 'secret',
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 3600 * 1000,
+        });
+
+        res.status(200).json({
+            message: 'Login successful',
+            user: { email: data.email }
+        });
+    }
+    catch (err: unknown) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Internal server error' });
         return
     }
-
-    const passwordMatches = await bcrypt.compare(password, data.pass);
-
-    if (!passwordMatches) {
-        res.status(401).json({ message: 'Invalid credentials' });
-        return
-    }
-
-    const token = jwt.sign(
-        { id: data.id, email: data.email },
-        process.env.JWT_SECRET || 'secret',
-        { expiresIn: '1h' }
-    );
-
-    res.cookie('token', token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'strict',
-        maxAge: 3600 * 1000,
-    });
-
-    res.status(200).json({
-        message: 'Login successful',
-        user: { email: data.email }
-    });
 });
 
 router.get('/user', async (req: Request, res: Response) => {
@@ -225,4 +240,5 @@ router.put('/updateProfile', async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Dane zostały zaktualizowane pomyślnie' });
 });
 
+export { validateEmail, validatePassword };
 export default router;

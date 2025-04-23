@@ -7,7 +7,8 @@ router.get("/", async (req, res) => {
     const { city } = req.query;
 
     if (!city) {
-        return res.status(400).json({ error: "Brakuje parametrów: city" });
+        res.status(400).json({ error: "Brakuje parametrów: city" });
+        return
     }
 
     try {
@@ -22,7 +23,8 @@ router.get("/", async (req, res) => {
         const locationId = locationResponse.data?.[0]?.LocationId;
 
         if (!locationId) {
-            return res.status(404).json({ error: "Nie znaleziono locationId dla podanego miasta" });
+            res.status(404).json({ error: "Nie znaleziono locationId dla podanego miasta" });
+            return
         }
 
         const hotelsResponse = await axios.get("https://api.travsrv.com/Content.aspx", {
