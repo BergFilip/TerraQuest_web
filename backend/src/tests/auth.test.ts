@@ -138,13 +138,22 @@ describe('POST /api/auth/register', () => {
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-jest.mock('../../supabaseClient');
+// Mock the modules
+jest.mock('../utils/supabase'); // Same path as above
 jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
 
 describe('POST /api/auth/login', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        // Reset all mocks to default implementations
+        (supabase.from as jest.Mock).mockImplementation(() => ({
+            select: jest.fn().mockImplementation(() => ({
+                eq: jest.fn().mockImplementation(() => ({
+                    single: jest.fn().mockResolvedValue({ data: null, error: null })
+                }))
+            }))
+        }));
     });
 
     it('should return 400 if email or password is missing', async () => {
@@ -155,10 +164,16 @@ describe('POST /api/auth/login', () => {
     });
 
     it('should return 401 if credentials are invalid', async () => {
-        (supabase.from().select().eq().single as jest.Mock).mockResolvedValue({
-            error: { message: 'User not found' },
-            data: null
-        });
+        (supabase.from as jest.Mock).mockImplementation(() => ({
+            select: jest.fn().mockImplementation(() => ({
+                eq: jest.fn().mockImplementation(() => ({
+                    single: jest.fn().mockResolvedValue({
+                        error: { message: 'User not found' },
+                        data: null
+                    })
+                }))
+            }))
+        }));
 
         const res = await request(app)
             .post('/api/auth/login')
@@ -169,10 +184,17 @@ describe('POST /api/auth/login', () => {
     });
 
     it('should return 401 if password is incorrect', async () => {
-        (supabase.from().select().eq().single as jest.Mock).mockResolvedValue({
-            error: null,
-            data: { id: 1, email: 'test@example.com', pass: 'hashedPassword' }
-        });
+        (supabase.from as jest.Mock).mockImplementation(() => ({
+            select: jest.fn().mockImplementation(() => ({
+                eq: jest.fn().mockImplementation(() => ({
+                    single: jest.fn().mockResolvedValue({
+                        error: null,
+                        data: { id: 1, email: 'test@example.com', pass: 'hashedPassword' }
+                    })
+                }))
+            }))
+        }));
+
         (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
         const res = await request(app)
@@ -184,16 +206,34 @@ describe('POST /api/auth/login', () => {
     });
 
     it('should return 200 and user info if credentials are correct', async () => {
-        (supabase.from().select().eq().single as jest.Mock).mockResolvedValue({
-            error: null,
-            data: { id: 1, email: 'test@example.com', pass: 'hashedPassword' }
+        // Mock Supabase response
+        (supabase.from as jest.Mock).mockReturnValue({
+            select: jest.fn().mockReturnValue({
+                eq: jest.fn().mockReturnValue({
+                    single: jest.fn().mockResolvedValue({
+                        error: null,
+                        data: {
+                            id: 1,
+                            email: 'test@example.com',
+                            pass: '$2b$10$n0jy4wP9cxE/iLBJjAiAZ.0Bq.d5qN1mQpwTO9UjJTo22eSag5H/y' // mock hashed password
+                        }
+                    })
+                })
+            })
         });
+
+        // Mock bcrypt to return true for comparison
         (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+        // Mock JWT sign
         (jwt.sign as jest.Mock).mockReturnValue('mockToken');
 
         const res = await request(app)
             .post('/api/auth/login')
             .send({ email: 'test@example.com', password: 'ValidPassword123!' });
+
+        console.log('Response:', res.body); // Add this for debugging
+        console.log('Status:', res.status); // Add this for debugging
 
         expect(res.status).toBe(200);
         expect(res.body.message).toBe('Login successful');
