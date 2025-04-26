@@ -13,7 +13,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 - **Frontend:** React.js, SCSS
 - **Backend:** Node.js, Express.js
-- **Testy:** Jest, React Testing Library, TypeScript, ts-jest
+- **Testy:** Jest, React Testing Library, TypeScript, ts-jest, Supertest
 - **Baza danych:** 
 
 ---

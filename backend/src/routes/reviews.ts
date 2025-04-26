@@ -31,7 +31,8 @@ router.get('/', async (req: Request, res: Response) => {
             .select('title, description, reviewer, date, rating');
 
         if (error || !reviews || reviews.length === 0) {
-            return res.status(404).json({ error: 'Brak recenzji w bazie' });
+            res.status(404).json({ error: 'Brak recenzji w bazie' });
+            return
         }
 
         const reviewsWithImages = await Promise.all(
