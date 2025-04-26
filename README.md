@@ -14,7 +14,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Frontend:** React.js, SCSS
 - **Backend:** Node.js, Express.js
 - **Testy:** Jest, React Testing Library, TypeScript, ts-jest, Supertest
-- **Baza danych:** 
+- **Baza danych:** Supabase
 
 ---
 
@@ -77,17 +77,17 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
   ```
 **📦 Krok 7 – Instalacja zależności**
    ```bash
-      npm i
+      npm install
    ```
 **▶️ Krok 8 – Uruchomienie Backendu**
    ```bash
-      npx ts-node src/main.ts
+      npm run dev
    ```
 ---
 
 # Podział pracy w projekcie TerraQuest
 
-## Frontend
+## Frontend:
 
 ### `src`
 
@@ -103,11 +103,11 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Explore.tsx**: [Wiktor]
 - **Help.tsx**: [Filip]
 - **Home.tsx**: [Wiktor]
-- **Login.tsx**: [Wiktor]
+- **Login.tsx**: [Wiktor/Filip]
 - **Newsletter.tsx**: [Filip]
 - **Privacy_policy.tsx**: [Wiktor]
 - **Product.tsx**: [Jacek]
-- **Registration.tsx**: [Wiktor]
+- **Registration.tsx**: [Wiktor/Filip]
 - **Search.tsx**: [Jacek]
 - **User.tsx**: [Jacek]
 - **Weather.tsx**: [Filip]
@@ -129,34 +129,50 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-## Backend
+## Backend:
 
-
+- **auth.ts**: [Filip]
+- **explore.ts**: [Wiktor]
+- **locations.ts**: [Wiktor]
+- **reviews.ts**: [Wiktor]
+- **supabase.ts**: [Każdy]
 
 ---
 
 ## Baza danych
 
+- **Supabase** [Każdy] <br><br>
 
+# ZAKTUALIZOWAĆ SCHEMAT BAZY
+<img src="backend/src/img/Database.png" alt="Schemat bazy danych">
 
 ---
 
 ## Testowanie
 
+### Frontend
 - **About.test.tsx**: [Filip]
 - **Contact.test.tsx**: [Filip]
 - **Error.test.tsx**: [Filip]
-- **Explore.tsx**: []
-- **Help.test.tsx**: [Filip]
-- **Home.tsx**: []
-- **Login.tsx**: []
+- **Explore.test.tsx**: [Wiktor]
+- **Help.test.test.tsx**: [Filip]
+- **Home.test.tsx**: [Wiktor]
+- **Login.test.tsx**: [Wiktor]
 - **Newsletter.test.tsx**: [Filip]
-- **Privacy_policy.tsx**: []
-- **Product.tsx**: []
-- **Registration.tsx**: []
-- **Search.tsx**: []
-- **User.tsx**: []
+- **Privacy_policy.test.tsx**: [Wiktor]
+- **Product.test.tsx**: [Jacek]
+- **Registration.test.tsx**: [Wiktor]
+- **Search.test.tsx**: [Jacek]
+- **User.test.tsx**: [Jacek]
 - **Weather.test.tsx**: [Filip]
+
+### Backend
+
+- **auth.test.ts**: [Filip]
+- **explore.test.ts**: [Wiktor]
+- **locations.test.ts**: [Wiktor]
+- **reviews.test.ts**: [Wiktor]
+- **supabase.test.ts**: [Każdy]
 
 ---
 
@@ -166,11 +182,11 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-# 🌐 Opis podstron
+# 🌐 Opis podstron / backendu
 
-# Dodać dokładnieszy opis podstron tak jak jest przy testach
+## Frontend:
 
-### 🧩 `App.tsx` – [Każdy]
+### 🧩 `App.tsx`
 - **Opis**:  
   Główny komponent aplikacji. Odpowiada za strukturę routingu i layout globalny.
 - **Funkcje**:
@@ -180,7 +196,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🌐 `main.tsx` – [Każdy]
+### 🌐 `main.tsx`
 - **Opis**:  
   Punkt wejściowy aplikacji. Renderuje aplikację do DOM.
 - **Funkcje**:
@@ -189,14 +205,14 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 📘 `About.tsx` – [Filip]
+### 📘 `About.tsx`
 - **Opis**:  
   Strona informacyjna o projekcie lub firmie.
 - **Zawiera**: tekst + ilustracje
 
 ---
 
-### 📩 `Contact.tsx` – [Filip]
+### 📩 `Contact.tsx`
 - **Opis**:  
   Formularz kontaktowy + dane kontaktowe
 - **Funkcje**:
@@ -205,7 +221,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🚧 `Error.tsx` – [Filip]
+### 🚧 `Error.tsx`
 - **Opis**:  
   Strona błędu 404 lub innego – wyświetlana gdy trasa nie istnieje
 - **Funkcje**:
@@ -214,7 +230,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🔍 `Explore.tsx` – [Wiktor]
+### 🔍 `Explore.tsx`
 - **Opis**:  
   Strona eksploracji miejsc – propozycje podróży, ciekawe lokalizacje
 - **Funkcje**:
@@ -223,7 +239,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### ❓ `Help.tsx` – [Filip]
+### ❓ `Help.tsx`
 - **Opis**:  
   FAQ lub sekcja z pomocą dla użytkownika
 - **Funkcje**:
@@ -232,7 +248,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🏠 `Home.tsx` – [Wiktor]
+### 🏠 `Home.tsx`
 - **Opis**:  
   Strona główna, landing page projektu
 - **Zawiera**:
@@ -242,7 +258,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🔐 `Login.tsx` – [Wiktor]
+### 🔐 `Login.tsx`
 - **Opis**:  
   Formularz logowania
 - **Funkcje**:
@@ -251,7 +267,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 📬 `Newsletter.tsx` – [Filip]
+### 📬 `Newsletter.tsx`
 - **Opis**:  
   Subskrypcja newslettera
 - **Funkcje**:
@@ -260,7 +276,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🛡️ `Privacy_policy.tsx` – [Wiktor]
+### 🛡️ `Privacy_policy.tsx`
 - **Opis**:  
   Polityka prywatności
 - **Zawiera**:
@@ -269,7 +285,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 📦 `Product.tsx` – [Jacek]
+### 📦 `Product.tsx`
 - **Opis**:  
   Widok konkretnego produktu/oferty
 - **Funkcje**:
@@ -278,7 +294,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 📝 `Registration.tsx` – [Wiktor]
+### 📝 `Registration.tsx`
 - **Opis**:  
   Rejestracja nowego użytkownika
 - **Funkcje**:
@@ -287,7 +303,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 🔎 `Search.tsx` – [Imię]
+### 🔎 `Search.tsx`
 - **Opis**:  
   Strona wyszukiwania miejsc/ofert
 - **Funkcje**:
@@ -297,7 +313,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### 👤 `User.tsx` – [Jacek]
+### 👤 `User.tsx`
 - **Opis**:  
   Profil użytkownika
 - **Funkcje**:
@@ -306,14 +322,19 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ---
 
-### ☀️ `Weather.tsx` – [Filip]
+### ☀️ `Weather.tsx`
 - **Opis**:  
   Praca wtoku
 
 ---
+
+## Backend:
+
 # 🌐 Opis testów
 
-## 🧪 About.test.tsx – [Testy komponentu About]
+## Frontend:
+
+### 🧪 About.test.tsx – [Testy komponentu About]
 
 **Opis:**  
 Testy jednostkowe dla komponentu `About`. Sprawdzają poprawność renderowania treści, obecność kluczowych sekcji oraz integrację z komponentem `Button`.
@@ -334,7 +355,7 @@ Testy jednostkowe dla komponentu `About`. Sprawdzają poprawność renderowania 
 
 ---
 
-## 🧪 Contact.test.tsx – [Testy komponentu Contact]
+### 🧪 Contact.test.tsx – [Testy komponentu Contact]
 
 **Opis:**  
 Zestaw testów jednostkowych dla komponentu `Contact`. Testy skupiają się na poprawnym renderowaniu, strukturze DOM oraz integracji z komponentem `ContactForm`.
@@ -353,7 +374,7 @@ Zestaw testów jednostkowych dla komponentu `Contact`. Testy skupiają się na p
 
 ---
 
-## 🧪 Error.test.tsx – [Testy komponentu Error]
+### 🧪 Error.test.tsx – [Testy komponentu Error]
 
 **Opis:**  
 Testy jednostkowe dla komponentu `Error`, który odpowiada za wyświetlenie komunikatu o błędzie 404 oraz przycisku powrotu na stronę główną.
@@ -372,7 +393,7 @@ Testy jednostkowe dla komponentu `Error`, który odpowiada za wyświetlenie komu
 
 ---
 
-## 🧪 Help.test.tsx – [Testy komponentu Help]
+### 🧪 Help.test.tsx – [Testy komponentu Help]
 
 **Opis:**  
 Testy jednostkowe dla komponentu `Help`, odpowiadającego za interfejs pomocy i sekcję FAQ z możliwością wyszukiwania.
@@ -392,7 +413,7 @@ Testy jednostkowe dla komponentu `Help`, odpowiadającego za interfejs pomocy i 
 
 ---
 
-## 🧪 Newsletter.test.tsx – [Testy komponentu Newsletter]
+### 🧪 Newsletter.test.tsx – [Testy komponentu Newsletter]
 
 **Opis:**  
 Zestaw testów jednostkowych dla komponentu `Newsletter`, który umożliwia zapis do newslettera i wyświetla alert potwierdzający.
@@ -415,7 +436,7 @@ Zestaw testów jednostkowych dla komponentu `Newsletter`, który umożliwia zapi
 
 ---
 
-## 🌤️ Weather.test.tsx – [Testy komponentu Weather]
+### 🌤️ Weather.test.tsx – [Testy komponentu Weather]
 
 **Opis:**  
 Zestaw testów jednostkowych dla komponentu `Weather`, który wyświetla komunikat o niedostępności oraz przycisk powrotu do strony głównej.
@@ -436,104 +457,6 @@ Zestaw testów jednostkowych dla komponentu `Weather`, który wyświetla komunik
 
 ---
 
-## 📂 Struktura projektu
-
-<pre>
-TerraQuest
-├── eslint.config.js
-├── index.html
-├── node_modules
-├── package-lock.json
-├── package.json
-├── public
-├── README.md
-├── src
-│     ├── App.scss
-│     ├── App.tsx
-│     ├── assets
-│     │       ├── 404_error.webp
-│     │       ├── about.webp
-│     │       ├── baner_explore.webp
-│     │       ├── baner_search.webp
-│     │       ├── baner_weather.webp
-│     │       ├── home.webp
-│     │       ├── kompas.webp
-│     │       ├── kontakt.webp
-│     │       ├── logowanie.webp
-│     │       ├── miesiace.webp
-│     │       ├── newsletter.webp
-│     │       ├── react.svg
-│     │       ├── rejestracja.webp
-│     │       ├── terraquest.webp
-│     │       └── terraquest_baner_promocja.webp
-│     ├── components
-│     │       ├── Alert.tsx
-│     │       ├── Button.tsx
-│     │       ├── card.tsx
-│     │       ├── Communicats.tsx
-│     │       ├── ContactForm.tsx
-│     │       ├── Footer.tsx
-│     │       ├── h-section.tsx
-│     │       ├── Header.tsx
-│     │       ├── help_section.tsx
-│     │       ├── logo.tsx
-│     │       ├── Nav.tsx
-│     │       ├── places_section_1.tsx
-│     │       ├── places_section_2.tsx
-│     │       ├── places_section_3.tsx
-│     │       ├── places_section_4.tsx
-│     │       ├── places_section_5.tsx
-│     │       ├── places_section_6.tsx
-│     │       ├── places_section_7.tsx
-│     │       └── regis_log_btn.tsx
-│     ├── index.scss
-│     ├── main.tsx
-│     ├── sites
-│     │    ├── About.tsx
-│     │    ├── Contact.tsx
-│     │    ├── Error.tsx
-│     │    ├── Explore.tsx
-│     │    ├── Help.tsx
-│     │    ├── Home.tsx
-│     │    ├── Login.tsx
-│     │    ├── Newsletter.tsx
-│     │    ├── Privacy_policy.tsx
-│     │    ├── Product.tsx
-│     │    ├── Registration.tsx
-│     │    ├── Search.tsx
-│     │    ├── User.tsx
-│     │    └── Weather.tsx
-│     ├── styles
-│     │    ├── components
-│     │    │      ├── Alert.scss
-│     │    │      ├── button.scss
-│     │    │      ├── card.scss
-│     │    │      ├── ContactForm.module.scss
-│     │    │      ├── footer.scss
-│     │    │      ├── h-section.scss
-│     │    │      ├── header.scss
-│     │    │      ├── help_section.scss
-│     │    │      └── places_section.scss
-│     │    └── sites
-│     │          ├── About.scss
-│     │          ├── Contact.scss
-│     │          ├── Error.scss
-│     │          ├── Help.scss
-│     │          ├── Home.scss
-│     │          ├── Login.scss
-│     │          ├── Newsletter.scss
-│     │          ├── Privacy_policy.scss
-│     │          ├── Product.scss
-│     │          ├── Register.scss
-│     │          └── User.scss
-│     └── vite-env.d.ts
-├── structure.txt
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
-
-</pre>
+## Backend:
 
 ---
-
