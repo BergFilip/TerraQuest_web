@@ -45,8 +45,9 @@ function Login() {
             <div className="auth-form">
                 <h2>Zaloguj</h2>
                 <form onSubmit={handleSubmit}>
-                    <label>Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
+                        id="email"
                         type="email"
                         placeholder="Uzupełnij"
                         value={email}
@@ -54,8 +55,9 @@ function Login() {
                         required
                     />
 
-                    <label>Hasło</label>
+                    <label htmlFor="password">Hasło</label>
                     <input
+                        id="password"
                         type="password"
                         placeholder="Uzupełnij"
                         value={password}

@@ -5,7 +5,7 @@ import React from "react";
 
 type ButtonProps = {
     text: string | React.ReactNode;
-    route: string;
+    route?: string;
     onClick?: () => void;
 };
 

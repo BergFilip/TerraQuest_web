@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import Weather from '../sites/Weather.tsx';
-import Button from '../components/Button.tsx';
+import Button from '@components/Button.tsx';
 
-jest.mock('../components/Button.tsx', () => ({
+jest.mock('@components/Button.tsx', () => ({
     __esModule: true,
     default: jest.fn(({ text, route }: { text: string; route: string }) => (
         <button data-testid="mock-button" data-route={route}>

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import Contact from '../sites/Contact.tsx';
-import ContactForm from '../components/ContactForm.tsx';
+import ContactForm from '@components/ContactForm.tsx';
 
-jest.mock('../components/ContactForm.tsx', () => ({
+jest.mock('@components/ContactForm.tsx', () => ({
     __esModule: true,
     default: jest.fn(() => <div data-testid="contact-form-mock" />)
 }));

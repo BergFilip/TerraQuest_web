@@ -83,9 +83,11 @@ function PrivacyPolicies() {
                     lub e-mailem.</p>
 
                 <h2>10. Kontakt</h2>
-                <p>📧 E-mail: <a href="mailto:kontakt@travelquest.pl">kontakt@travelquest.pl</a></p>
-                <p>📞 Telefon: +48 123 456 789</p>
-                <p>🏢 Adres: TravelQuest Sp. z o.o., ul. Światowa 12, 00-123 Warszawa</p>
+                <section data-testid="contact-section">
+                    <p>📧 E-mail: <a href="mailto:kontakt@travelquest.pl">kontakt@travelquest.pl</a></p>
+                    <p>📞 Telefon: +48 123 456 789</p>
+                    <p>🏢 Adres: TravelQuest Sp. z o.o., ul. Światowa 12, 00-123 Warszawa</p>
+                </section>
             </div>
         </div>
     );

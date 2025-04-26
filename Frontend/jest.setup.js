@@ -4,3 +4,6 @@ document.body.innerHTML = `
     <i class="fa-solid fa-magnifying-glass" data-testid="search-icon"></i>
   </div>
 `;
+const { TextEncoder, TextDecoder } = require('util');
+
+Object.assign(globalThis, { TextEncoder, TextDecoder });

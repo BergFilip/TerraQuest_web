@@ -6,7 +6,7 @@ interface AlertProps {
     title: string;
     message: string;
     onClose: () => void;
-    onOk: () => void;
+    onOk?: () => void;
 }
 
 const Alert: React.FC<AlertProps> = ({ title, message, onClose, onOk }) => {

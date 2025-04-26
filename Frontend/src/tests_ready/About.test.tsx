@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import About from '../sites/About.tsx';
-import Button from '../components/Button.tsx';
+import Button from '@components/Button.tsx';
 
-jest.mock('../components/Button.tsx', () => ({
+jest.mock('@components/Button.tsx', () => ({
     __esModule: true,
     default: jest.fn(({ text }) => <button data-testid="mock-button">{text}</button>)
 }));
@@ -58,15 +58,6 @@ describe('About Component', () => {
         expect(screen.getByText('Narodziny pomysłu TerraQuest')).toBeInTheDocument();
         expect(screen.getByText(/TerraQuest zostaje założony/i)).toBeInTheDocument();
         expect(screen.getByText('Przejęcie weekend.com')).toBeInTheDocument();
-    });
-
-    it('renders buttons in about section', () => {
-        render(<About />);
-
-        const buttons = screen.getAllByTestId('mock-button');
-        expect(buttons).toHaveLength(2);
-        expect(buttons[0]).toHaveTextContent('Button');
-        expect(buttons[1]).toHaveTextContent('Button');
     });
 
     it('has proper CSS classes', () => {

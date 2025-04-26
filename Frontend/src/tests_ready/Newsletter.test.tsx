@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Newsletter from '../sites/Newsletter.tsx';
-import Alert from '../components/Alert.tsx';
+import Alert from '@components/Alert.tsx';
 import { useState } from 'react';
 
-jest.mock('../components/Alert.tsx', () => ({
+jest.mock('@components/Alert.tsx', () => ({
     __esModule: true,
     default: jest.fn(() => null)
 }));

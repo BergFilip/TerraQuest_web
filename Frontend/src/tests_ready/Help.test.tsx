@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Help from '../sites/Help.tsx';
-import FaqSection from '../components/help_section.tsx';
-import Button from '../components/Button.tsx';
+import FaqSection from '@components/help_section.tsx';
+import Button from '@components/Button.tsx';
 
-jest.mock('../components/help_section.tsx', () => ({
+jest.mock('@components/help_section.tsx', () => ({
     __esModule: true,
     default: jest.fn(() => <div data-testid="faq-mock" />)
 }));
 
-jest.mock('../components/Button.tsx', () => ({
+jest.mock('@components/Button.tsx', () => ({
     __esModule: true,
     default: jest.fn(({ text }) => <button data-testid="mock-button">{text}</button>)
 }));

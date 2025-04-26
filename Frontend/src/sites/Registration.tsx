@@ -9,7 +9,8 @@ function Register() {
     const [password, setPassword] = useState<string>('');
     const [autoLogin, setAutoLogin] = useState<boolean>(false);
     const [showAlert, setShowAlert] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -44,7 +45,8 @@ function Register() {
                         await login(email);
                         navigate('/user');
                     } else {
-                        setError("Rejestracja ok, ale logowanie się nie udało.");
+                        setError(true);
+                        setErrorMessage('Rejestracja się udała, ale automatyczne logowanie nie powiodło się.');
                     }
                 }
                 else {
@@ -52,12 +54,15 @@ function Register() {
                 }
             }
             else {
-                setError(data.message || 'Wystąpił błąd');
+                const errorMessage = data.message || 'User with this email already exists';
+                setErrorMessage(errorMessage);
+                setError(true);
             }
         }
         catch(err){
             console.error(err);
-            setError('Coś poszło nie tak');
+            setError(true)
+            setErrorMessage('Coś poszło nie tak. Spróbuj ponownie.');
         }
     };
 
@@ -66,8 +71,9 @@ function Register() {
             <div className="auth-form">
                 <h2>Zarejestruj się</h2>
                 <form onSubmit={handleSubmit}>
-                    <label>Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
+                        id="email"
                         type="email"
                         placeholder="Uzupełnij"
                         className="input_from_register"
@@ -76,8 +82,9 @@ function Register() {
                         required
                     />
 
-                    <label>Hasło</label>
+                    <label htmlFor="password">Hasło</label>
                     <input
+                        id="password"
                         type="password"
                         placeholder="Uzupełnij"
                         className="input_from_register"
@@ -104,7 +111,7 @@ function Register() {
                         />
                     )}
 
-                    {error && <p className="error_alert">{error}</p>}
+                    {errorMessage && <p className="error_alert">{errorMessage}</p>}
 
                     <div className="auth-footer">
                         <div className="separator"><span>lub</span></div>
