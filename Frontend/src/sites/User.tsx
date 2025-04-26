@@ -16,7 +16,7 @@ function User() {
     const [currentTime, setCurrentTime] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [showAlert, setShowAlert] = useState<boolean>(false);
-    const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth } = useAuth();
+    const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth, logout } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,6 +44,11 @@ function User() {
 
     const clearBookings = () => {
         setBookings([]);
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
     };
 
     const addBooking = () => {
@@ -88,6 +93,11 @@ function User() {
                         <div className="setting-item" onClick={handleProfileUpdate}>
                             <i className="fa-solid fa-download"></i>
                             <p><strong>Aktualizacja profilu</strong></p>
+                        </div>
+
+                        <div className="setting-item" onClick={handleLogout}>
+                            <i className="fa-solid fa-right-from-bracket"></i>
+                            <p><strong>Wyloguj</strong></p>
                         </div>
                     </div>
                 </div>

@@ -29,11 +29,6 @@ function App() {
                                 wycieczek.
                             </li>
                         </ul>
-
-                    <div className="buttons">
-                        <Button text={"Button"}></Button>
-                        <Button text={"Button"}></Button>
-                    </div>
                 </div>
                 <div className="image">
                     <img src="src/assets/kompas.webp" alt="Kompas"/>
