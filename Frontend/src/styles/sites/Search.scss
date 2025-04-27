@@ -152,7 +152,7 @@
 
 .search_content {
   display: flex;
-  align-items: center;
+  align-items: flex-start !important;
   gap: 20px;
   margin: 2rem;
   padding: 5rem;
@@ -197,10 +197,14 @@
 
 .results {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
 
 .sorting {
   display: flex;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 20px;
 }
@@ -211,6 +215,7 @@
   border-radius: 6px;
   background: #f0f0f0;
   cursor: pointer;
+  margin-right: 1rem;
 }
 
 .sorting input {
@@ -243,6 +248,7 @@
   height: 13.75rem;
   border-radius: 8px;
   object-fit: cover;
+  overflow: hidden;
 }
 
 .hotel_info{
@@ -392,7 +398,7 @@
 
   .search_content {
     display: flex;
-    align-items: center;
+    align-items: flex-start !important;
     gap: 20px;
     margin: 2rem;
     padding: 5rem;

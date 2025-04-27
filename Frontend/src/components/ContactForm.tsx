@@ -9,24 +9,24 @@ const ContactForm = () => {
 
                 <div className={styles.contactItem}>
                     <i className="fa-solid fa-phone-volume"></i>
-                    <div>
-                        <strong>Telefon</strong><br />
+                    <div className="icons_contact">
+                        <strong>Telefon</strong>
                         +48 849 583 521
                     </div>
                 </div>
 
                 <div className={styles.contactItem}>
                     <i className="fa-solid fa-envelope"></i>
-                    <div>
-                        <strong>EMAIL</strong><br />
+                    <div className="icons_contact">
+                        <strong>EMAIL</strong>
                         jan.kowalski@gmail.com
                     </div>
                 </div>
 
                 <div className={styles.contactItem}>
                     <i className="fa-solid fa-map"></i>
-                    <div>
-                        <strong>Lokalizacja</strong><br />
+                    <div className="icons_contact">
+                        <strong>Lokalizacja</strong>
                         Warszawa ul. Powstańców 21A
                     </div>
                 </div>
@@ -40,7 +40,7 @@ const ContactForm = () => {
                     <input type="text" placeholder="Imię" />
                     <input type="text" placeholder="Nazwisko" />
                     <input type="email" placeholder="Email" />
-                    <textarea placeholder="Wiadomosc" />
+                    <textarea placeholder="Wiadomość" />
                     <button type="submit">Wyślij</button>
                 </form>
             </div>

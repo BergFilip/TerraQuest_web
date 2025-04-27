@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from './other/auth';
 import hotelsRouter from './routes/explore';
 import reviewsRouter from './routes/reviews';
+import productsRouter from './routes/product';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/hotels', hotelsRouter);
+app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
 
 // Base route

@@ -6,7 +6,6 @@ import HSection from "../components/h-section.tsx";
 import Places_5 from "../components/places_section_5.tsx";
 import ReviewCard from "../components/ReviewCard.tsx";
 
-
 type Hotel = {
     PropertyId: number;
     PropertyName: string;
@@ -14,7 +13,7 @@ type Hotel = {
     MaxDiscountPercent: number;
     PropertyAddress: string;
     PropertyImageUrl: string;
-
+    ReferencePriceCurrency: string;
 };
 
 type Review = {
@@ -25,11 +24,11 @@ type Review = {
     rating: number;
     image: string;
 };
+
 const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
     return new Intl.DateTimeFormat("pl-PL", options).format(date);
 };
-
 
 const getDateRange = () => {
     const startDate = new Date();
@@ -37,6 +36,7 @@ const getDateRange = () => {
     endDate.setDate(startDate.getDate() + 7);
     return { startDate, endDate };
 };
+
 const { startDate, endDate } = getDateRange();
 const formattedStartDate = formatDate(startDate);
 const formattedEndDate = formatDate(endDate);
@@ -51,6 +51,20 @@ function Explore() {
     const [numUsers, setNumUsers] = useState(1);
 
     const navigate = useNavigate();
+
+    const exchangeRates = {
+        USD: 4,
+        EUR: 4.5,
+    };
+
+    const convertPriceToPLN = (price: number, currency: string) => {
+        if (currency === "USD") {
+            return price * exchangeRates.USD;
+        } else if (currency === "EUR") {
+            return price * exchangeRates.EUR;
+        }
+        return price;
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -127,8 +141,8 @@ function Explore() {
                     <div className="places_section_5">
                         {currentHotels.length > 0 ? (
                             currentHotels.map((hotel) => {
-                                const originalPrice = hotel.ReferencePrice;
-                                const discountedPrice = (originalPrice * (100 - hotel.MaxDiscountPercent)) / 100;
+                                const originalPricePLN = convertPriceToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency);
+                                const discountedPricePLN = (originalPricePLN * (100 - hotel.MaxDiscountPercent)) / 100;
 
                                 return (
                                     <Places_5
@@ -137,8 +151,8 @@ function Explore() {
                                         text1={hotel.PropertyName}
                                         text2={hotel.PropertyAddress}
                                         text3={"1 noc"}
-                                        text4={`${originalPrice.toFixed(2)} zł`}
-                                        text5={`${discountedPrice.toFixed(2)} zł`}
+                                        text4={`${originalPricePLN.toFixed(2)} zł`} // Wyświetlanie ceny w PLN
+                                        text5={`${discountedPricePLN.toFixed(2)} zł`} // Wyświetlanie ceny po zniżce w PLN
                                         link_to="/product"
                                     />
                                 );

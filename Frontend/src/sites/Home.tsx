@@ -1,4 +1,4 @@
-import "../styles/sites/Home.scss"
+import "../styles/sites/Home.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import HSection from "../components/h-section.tsx";
@@ -11,7 +11,7 @@ import Places_5 from "../components/places_section_5.tsx";
 import Places_6 from "../components/places_section_6.tsx";
 import Places_7 from "../components/places_section_7.tsx";
 import FaqSection from "../components/help_section.tsx";
-
+import { useNavigate } from "react-router-dom";
 
 type Hotel = {
     PropertyId: number;
@@ -31,7 +31,6 @@ const getRandomPlacesNumber = () => {
     return `${Math.floor(Math.random() * (1500 - 200 + 1)) + 200} obiektów`;
 };
 
-
 const getDateRange = () => {
     const startDate = new Date();
     const endDate = new Date();
@@ -39,17 +38,27 @@ const getDateRange = () => {
     return { startDate, endDate };
 };
 
+const convertToPLN = (price: number, currency: "USD" | "EUR"): number => {
+    const exchangeRates = {
+        USD: 4.5,
+        EUR: 4.7,
+    };
+    return price * exchangeRates[currency];
+};
+
 const { startDate, endDate } = getDateRange();
 const formattedStartDate = formatDate(startDate);
 const formattedEndDate = formatDate(endDate);
 
-
-
-
 function Home() {
-
     const [hotels, setHotels] = useState<Hotel[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    const [destination, setDestination] = useState('');
+    const [startDateInput, setStartDateInput] = useState('');
+    const [numUsers, setNumUsers] = useState(1);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchHotels = async () => {
@@ -66,17 +75,41 @@ function Home() {
 
     const currentHotels = hotels.slice(currentIndex, currentIndex + 4);
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
 
-    return(
+        localStorage.setItem('destination', destination);
+        localStorage.setItem('startDate', startDateInput);
+        localStorage.setItem('numUsers', numUsers.toString());
+
+        navigate('/search');
+    };
+
+    return (
         <div className="home">
             <div className="section1">
                 <h1>Odkryj następną przygodę</h1>
                 <p className={"s1_baner"}>planuj, rezerwuj i podróżuj z łatwością</p>
-                <form>
-                    <input type="text" placeholder={"Miejsce docelowe"}/>
-                    <input type="date" placeholder={"Data wyjazdu i powrotu"}/>
-                    <input type="number" placeholder={"Ilość uczestników"}/>
-                    <input type="submit" value="Wyszukaj" className="alert-button"/>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder={"Miejsce docelowe"}
+                        value={destination}
+                        onChange={(e) => setDestination(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder={"Data wyjazdu i powrotu"}
+                        value={startDateInput}
+                        onChange={(e) => setStartDateInput(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        placeholder={"Ilość uczestników"}
+                        value={numUsers}
+                        onChange={(e) => setNumUsers(Number(e.target.value))}
+                    />
+                    <input type="submit" value="Wyszukaj" className="alert-button" />
                 </form>
             </div>
             <div className="main_home_section">
@@ -89,31 +122,27 @@ function Home() {
                               text3={"Dowiedz się więcej"}
                               colorB={"#e1e1e1"}
                               colorT={"black"}
-                              route_to={"/explore"}>
-
-                        </Card>
+                              route_to={"/explore"} />
 
                         <Card text1={"Deszcz, śnieg, mgły - to nie znami !"}
-                              text2={"Wyjeżdżasz na wakacje, a  tam tylko deszcz i musisz zostać w hotelu? Gwarantujemy udaną pogodę albo częściowy zwrot kosztów."}
+                              text2={"Wyjeżdżasz na wakacje, a tam tylko deszcz i musisz zostać w hotelu? Gwarantujemy udaną pogodę albo częściowy zwrot kosztów."}
                               text3={"Dowiedz się więcej"}
                               colorB={"#FFAD00"}
                               colorT={"white"}
-                              route_to={"/weather"}>
-
-                        </Card>
+                              route_to={"/weather"} />
                     </div>
                 </div>
                 <div className="section3">
                     <HSection text1={"Popularne cele podróży"}
                               text2={"Najpopularniejsze cele podróży wśród gości z Polski"}></HSection>
                     <div className="places_section_1">
-                        <Places_1 text1={"Warszawa"} text2={""} backgroundImage={'/src/assets/cities/warsaw.webp'} link_to="/explore"></Places_1>
-                        <Places_1 text1={"Kraków"} text2={""} backgroundImage={'/src/assets/cities/krakow.webp'} link_to="/explore"></Places_1>
+                        <Places_1 text1={"Warszawa"} text2={""} backgroundImage={'/src/assets/cities/warsaw.webp'} link_to="/explore" />
+                        <Places_1 text1={"Kraków"} text2={""} backgroundImage={'/src/assets/cities/krakow.webp'} link_to="/explore" />
                     </div>
                     <div className="places_section_2">
-                        <Places_2 text1={"Poznań"} text2={""} backgroundImage={'/src/assets/cities/poznan.webp'} link_to="/explore"></Places_2>
-                        <Places_2 text1={"Gdańsk"} text2={""} backgroundImage={'/src/assets/cities/gdansk.webp'} link_to="/explore"></Places_2>
-                        <Places_2 text1={"Karpacz"} text2={""} backgroundImage={'/src/assets/cities/karpacz.webp'} link_to="/explore"></Places_2>
+                        <Places_2 text1={"Poznań"} text2={""} backgroundImage={'/src/assets/cities/poznan.webp'} link_to="/explore" />
+                        <Places_2 text1={"Gdańsk"} text2={""} backgroundImage={'/src/assets/cities/gdansk.webp'} link_to="/explore" />
+                        <Places_2 text1={"Karpacz"} text2={""} backgroundImage={'/src/assets/cities/karpacz.webp'} link_to="/explore" />
                     </div>
                 </div>
                 <div className="section4">
@@ -173,6 +202,8 @@ function Home() {
                                 const originalPrice = hotel.ReferencePrice;
                                 const discountedPrice = (originalPrice * (100 - hotel.MaxDiscountPercent)) / 100;
 
+                                const originalPricePLN = convertToPLN(originalPrice, "USD");
+                                const discountedPricePLN = convertToPLN(discountedPrice, "USD");
                                 return (
                                     <Places_5
                                         key={hotel.PropertyId}
@@ -180,8 +211,8 @@ function Home() {
                                         text1={hotel.PropertyName}
                                         text2={hotel.PropertyAddress}
                                         text3={"1 noc"}
-                                        text4={`${originalPrice.toFixed(2)} zł`}
-                                        text5={`${discountedPrice.toFixed(2)} zł`}
+                                        text4={`${originalPricePLN.toFixed(2)} zł`}
+                                        text5={`${discountedPricePLN.toFixed(2)} zł`}
                                         link_to="/product"
                                     />
                                 );
@@ -215,7 +246,7 @@ function Home() {
                     <div className="places_section_6">
                         <div className="inspiration_big">
                             <img
-                                src="/src/assets/home_section/austria.webp"/>
+                                src="/src/assets/home_section/austria.webp" />
                             <h4>{"6 niepowtarzalnych domów wakacyjnych w Austrii"}</h4>
                             <h4 className="descr_h4">{"Wakacje z wiekszą ekipą? Trafiłeś idealnie!"}</h4>
                         </div>
@@ -223,15 +254,12 @@ function Home() {
                             <Places_6
                                 link={"/src/assets/home_section/spain.webp"}
                                 text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
-                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."} link_to="/explore"></Places_6>
+                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."} link_to="/explore" />
                             <Places_6
                                 link={"/src/assets/home_section/treehouses.webp"}
                                 text1={"Najlepsze domki na drzewie na świecie"}
-                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."} link_to="/explore"></Places_6>
-
+                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."} link_to="/explore" />
                         </div>
-
-
                     </div>
                 </div>
 
@@ -251,8 +279,7 @@ function Home() {
                             colorB={"#e1e1e1"}
                             colorT={"black"}
                             link_to1={"/login"}
-                            link_to2={"/register"}
-                        ></Places_7>
+                            link_to2={"/register"} />
                     </div>
                 </div>
 
@@ -263,13 +290,10 @@ function Home() {
                     <div className="places_section_8">
                         <FaqSection></FaqSection>
                     </div>
-
-
                 </div>
             </div>
         </div>
     );
 }
-
 
 export default Home;
