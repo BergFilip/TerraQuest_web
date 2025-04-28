@@ -8,6 +8,7 @@ import authRouter from './other/auth';
 import hotelsRouter from './routes/explore';
 import reviewsRouter from './routes/reviews';
 import productsRouter from './routes/product';
+import helpRouter from './routes/help1';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/hotels', hotelsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
+app.use('/api/help1', helpRouter);
 
 // Base route
 app.get('/', (req: Request, res: Response) => {

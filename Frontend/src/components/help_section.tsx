@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/components/help_section.scss";
 
 type FaqProps = {
@@ -25,27 +25,53 @@ const FaqItem = ({ title, content, colorB, colorT }: FaqProps) => {
 };
 
 const FaqSection = () => {
-    const faqs = [
-        {
-            title: "Tytuł",
-            content:
-                "Odpowiedz na często zadawane pytanie w prostym zdaniu, dłuższym akapicie lub nawet w formie listy.",
-            colorB: "#f5f5f5",
-            colorT: "#000",
-        },
-        { title: "Tytuł", content: "Treść dla drugiego pytania.", colorB: "#fff", colorT: "#333" },
-        { title: "Tytuł", content: "Treść dla trzeciego pytania.", colorB: "#eee", colorT: "#111" },
-        { title: "Tytuł", content: "Treść dla czwartego pytania.", colorB: "#ddd", colorT: "#222" },
-    ];
+    const [faqs, setFaqs] = useState<FaqProps[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // Funkcja do mieszania tablicy
+    const shuffleArray = (array: FaqProps[]) => {
+        return array
+            .map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+    };
+
+    useEffect(() => {
+        const fetchFaqs = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/help1/faq');
+
+                if (!response.ok) {
+                    throw new Error(`Błąd serwera: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const shuffledFaqs = shuffleArray(data); // <-- Tutaj mieszamy
+                setFaqs(shuffledFaqs.slice(0, 4));      // <-- I bierzemy tylko 4 losowe
+            } catch (err) {
+                console.error("Błąd podczas pobierania FAQ:", err);
+                setError("Nie udało się załadować FAQ.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFaqs();
+    }, []);
+
+    if (loading) return <div>Ładowanie...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="faq-section">
             {faqs.map((faq, index) => (
                 <FaqItem key={index} {...faq} />
             ))}
-            <p className="end"><a className="faq-more" href="">Więcej</a></p>
+            <p className="end"><a className="faq-more" href="/help">Więcej</a></p>
         </div>
     );
 };
+
 
 export default FaqSection;
