@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // <-- dodane
 import "../styles/components/help_section.scss";
 
 type FaqProps = {
@@ -25,11 +26,13 @@ const FaqItem = ({ title, content, colorB, colorT }: FaqProps) => {
 };
 
 const FaqSection = () => {
+    const location = useLocation(); // <-- aktualna ścieżka
     const [faqs, setFaqs] = useState<FaqProps[]>([]);
+    const [allFaqs, setAllFaqs] = useState<FaqProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [showAll, setShowAll] = useState(false);
 
-    // Funkcja do mieszania tablicy
     const shuffleArray = (array: FaqProps[]) => {
         return array
             .map(value => ({ value, sort: Math.random() }))
@@ -47,8 +50,10 @@ const FaqSection = () => {
                 }
 
                 const data = await response.json();
-                const shuffledFaqs = shuffleArray(data); // <-- Tutaj mieszamy
-                setFaqs(shuffledFaqs.slice(0, 4));      // <-- I bierzemy tylko 4 losowe
+                const shuffledFaqs = shuffleArray(data);
+
+                setAllFaqs(shuffledFaqs); // <-- zapisujemy wszystkie
+                setFaqs(shuffledFaqs.slice(0, 4)); // <-- domyślnie pokazujemy 4
             } catch (err) {
                 console.error("Błąd podczas pobierania FAQ:", err);
                 setError("Nie udało się załadować FAQ.");
@@ -60,18 +65,36 @@ const FaqSection = () => {
         fetchFaqs();
     }, []);
 
+    const handleShowMore = () => {
+        setShowAll(true);
+    };
+
     if (loading) return <div>Ładowanie...</div>;
     if (error) return <div>{error}</div>;
 
+    const visibleFaqs = showAll ? allFaqs : faqs;
+    const isHelpPage = location.pathname === '/help'; // <-- sprawdzenie ścieżki
+
     return (
         <div className="faq-section">
-            {faqs.map((faq, index) => (
+            {visibleFaqs.map((faq, index) => (
                 <FaqItem key={index} {...faq} />
             ))}
-            <p className="end"><a className="faq-more" href="/help">Więcej</a></p>
+            <p className="end">
+                {isHelpPage ? (
+                    !showAll && (
+                        <button className="faq-more" onClick={handleShowMore}>
+                            Więcej
+                        </button>
+                    )
+                ) : (
+                    <a className="faq-more" href="/help">
+                        Więcej
+                    </a>
+                )}
+            </p>
         </div>
     );
 };
-
 
 export default FaqSection;
