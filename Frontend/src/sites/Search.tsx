@@ -13,15 +13,23 @@ type Hotel = {
     PropertyRating: string;
     TripAdvisorRating: number;
     ReferencePriceCurrency: string;
+    DealsFound: number;
+    DealWeight: number;
+    AvgDiscountPercent: number;
+    LocationId: number;
+    PropertyLatitude: number;
+    PropertyLongitude: number;
+    PropertyImageUrlHighRes: string;
+    RatingImageUrl: string;
+    CheckIn: string | null;
+    CheckOut: string | null;
 };
 
 function Search() {
     const navigate = useNavigate();
 
-    const [activeSorts, setActiveSorts] = useState<string[]>([]);
-    const [rangeValue, setRangeValue] = useState(100);
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-    const [availableDiscountRanges, setAvailableDiscountRanges] = useState<string[]>(["0-10%", "11-20%", "21-50%", "51-75%", "76-100%"]);
+    const [activeSort, setActiveSort] = useState<string>('');
+    const [rangeValue, setRangeValue] = useState(1000);
     const [selectedDiscounts, setSelectedDiscounts] = useState<string[]>([]);
     const [selectedStars, setSelectedStars] = useState<number[]>([]);
     const [destination, setDestination] = useState('');
@@ -31,10 +39,12 @@ function Search() {
     const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const [currencyRates, setCurrencyRates] = useState({
+    const [currencyRates] = useState({
         USD: 4.3,
         EUR: 4.5,
     });
+
+    const availableDiscountRanges = ["0-10%", "11-20%", "21-50%", "51-75%", "76-100%"];
 
     const fetchHotels = async (city: string) => {
         try {
@@ -79,46 +89,40 @@ function Search() {
     };
 
     const handleFilterStars = (checked: boolean, starCount: number) => {
-        let newSelectedStars = [...selectedStars];
-        if (checked) {
-            newSelectedStars.push(starCount);
-        } else {
-            newSelectedStars = newSelectedStars.filter((star) => star !== starCount);
-        }
-        setSelectedStars(newSelectedStars);
+        setSelectedStars(prev =>
+            checked ? [...prev, starCount] : prev.filter((star) => star !== starCount)
+        );
     };
 
     const handleFilterDiscounts = (discountRange: string) => {
-        const newSelectedDiscounts = [...selectedDiscounts];
-        if (newSelectedDiscounts.includes(discountRange)) {
-            setSelectedDiscounts(newSelectedDiscounts.filter(d => d !== discountRange));
-        } else {
-            newSelectedDiscounts.push(discountRange);
-        }
-        setSelectedDiscounts(newSelectedDiscounts);
+        setSelectedDiscounts(prev =>
+            prev.includes(discountRange)
+                ? prev.filter(d => d !== discountRange)
+                : [...prev, discountRange]
+        );
     };
 
     useEffect(() => {
         let filtered = [...hotels];
 
         if (selectedStars.length > 0) {
-            filtered = filtered.filter((hotel) => selectedStars.includes(parseInt(hotel.PropertyRating[0], 10)));
+            filtered = filtered.filter((hotel) =>
+                selectedStars.includes(parseInt(hotel.PropertyRating[0], 10))
+            );
         }
 
         filtered = filtered.filter((hotel) => {
-            const discountedPrice = hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100);
+            const discountedPrice = convertToPLN(hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100), hotel.ReferencePriceCurrency);
             return discountedPrice <= rangeValue;
         });
 
-
         if (selectedDiscounts.length > 0) {
-            filtered = filtered.filter((hotel) => {
-                const discountedPrice = hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100);
-                return selectedDiscounts.some((range) => {
+            filtered = filtered.filter((hotel) =>
+                selectedDiscounts.some((range) => {
                     const [min, max] = range.split('-').map((value) => parseInt(value.replace('%', ''), 10));
                     return hotel.MaxDiscountPercent >= min && hotel.MaxDiscountPercent <= max;
-                });
-            });
+                })
+            );
         }
 
         setFilteredHotels(filtered);
@@ -126,24 +130,27 @@ function Search() {
 
     const sortHotels = (label: string) => {
         let sortedHotels = [...filteredHotels];
-        if (label === "Price ascending") {
-            sortedHotels = sortedHotels.sort((a, b) => {
-                const discountedPriceA = a.ReferencePrice * (1 - a.MaxDiscountPercent / 100);
-                const discountedPriceB = b.ReferencePrice * (1 - b.MaxDiscountPercent / 100);
-                return discountedPriceA - discountedPriceB;
+
+        if (label === "Cena rosnąco") {
+            sortedHotels.sort((a, b) => {
+                const aPrice = convertToPLN(a.ReferencePrice * (1 - a.MaxDiscountPercent / 100), a.ReferencePriceCurrency);
+                const bPrice = convertToPLN(b.ReferencePrice * (1 - b.MaxDiscountPercent / 100), b.ReferencePriceCurrency);
+                return aPrice - bPrice;
             });
-        } else if (label === "Price descending") {
-            sortedHotels = sortedHotels.sort((a, b) => {
-                const discountedPriceA = a.ReferencePrice * (1 - a.MaxDiscountPercent / 100);
-                const discountedPriceB = b.ReferencePrice * (1 - b.MaxDiscountPercent / 100);
-                return discountedPriceB - discountedPriceA;
+        } else if (label === "Cena malejąco") {
+            sortedHotels.sort((a, b) => {
+                const aPrice = convertToPLN(a.ReferencePrice * (1 - a.MaxDiscountPercent / 100), a.ReferencePriceCurrency);
+                const bPrice = convertToPLN(b.ReferencePrice * (1 - b.MaxDiscountPercent / 100), b.ReferencePriceCurrency);
+                return bPrice - aPrice;
             });
-        } else if (label === "Rating") {
-            sortedHotels = sortedHotels.sort((a, b) => b.TripAdvisorRating - a.TripAdvisorRating);
-        } else if (label === "New") {
-            sortedHotels = sortedHotels.sort((a, b) => b.PropertyId - a.PropertyId);
+        } else if (label === "Najlepsze") {
+            sortedHotels.sort((a, b) => b.TripAdvisorRating - a.TripAdvisorRating);
+        } else if (label === "Nowe") {
+            sortedHotels.sort((a, b) => b.PropertyId - a.PropertyId);
         }
+
         setFilteredHotels(sortedHotels);
+        setActiveSort(label);
     };
 
     const convertToPLN = (price: number, currency: string) => {
@@ -161,7 +168,11 @@ function Search() {
     };
 
     const handleSeeOffer = (hotelId: number) => {
-        navigate(`/product/${hotelId}`);
+        const selectedHotel = hotels.find(hotel => hotel.PropertyId === hotelId);
+        if (selectedHotel) {
+            localStorage.setItem('selectedHotel', JSON.stringify(selectedHotel));
+            navigate(`/product/${hotelId}`);
+        }
     };
 
     return (
@@ -178,13 +189,12 @@ function Search() {
                     />
                     <input
                         type="date"
-                        placeholder="Data wyjazdu"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                     />
                     <input
                         type="number"
-                        placeholder="Ilość uczestników"
+                        min="1"
                         value={numUsers}
                         onChange={(e) => setNumUsers(Number(e.target.value))}
                     />
@@ -215,7 +225,7 @@ function Search() {
                             className="range"
                             type="range"
                             min="0"
-                            max="1000"
+                            max="10000"
                             value={rangeValue}
                             onChange={(e) => setRangeValue(Number(e.target.value))}
                         />
@@ -231,7 +241,7 @@ function Search() {
                                     checked={selectedStars.includes(stars)}
                                     onChange={(e) => handleFilterStars(e.target.checked, stars)}
                                 />
-                                {stars} gwiazdek
+                                {stars} {stars === 1 ? "gwiazdka" : "gwiazdek"}
                             </label>
                         ))}
                     </div>
@@ -244,10 +254,10 @@ function Search() {
                             {["Nowe", "Cena rosnąco", "Cena malejąco", "Najlepsze"].map((label) => (
                                 <button
                                     key={label}
-                                    className={`results_button ${activeSorts.includes(label) ? "active" : ""}`}
+                                    className={`results_button ${activeSort === label ? "active" : ""}`}
                                     onClick={() => sortHotels(label)}
                                 >
-                                    {label} {activeSorts.includes(label) && "✔"}
+                                    {label} {activeSort === label && "✔"}
                                 </button>
                             ))}
                         </div>
@@ -257,7 +267,8 @@ function Search() {
                         <p>Ładowanie hoteli...</p>
                     ) : filteredHotels.length > 0 ? (
                         filteredHotels.map((hotel) => {
-                            const discountedPrice = hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100);
+                            const discountedPricePLN = convertToPLN(hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100), hotel.ReferencePriceCurrency);
+
                             return (
                                 <div className="hotel_card" key={hotel.PropertyId}>
                                     <img src={`https:${hotel.PropertyImageUrl}`} alt={hotel.PropertyName} />
@@ -272,7 +283,7 @@ function Search() {
                                             <span className="old_price">
                                                 {convertToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency).toFixed(2)} zł
                                             </span>
-                                            <span className="new_price">{discountedPrice.toFixed(2)} zł</span>
+                                            <span className="new_price">{discountedPricePLN.toFixed(2)} zł</span>
                                         </p>
                                         <button onClick={() => handleSeeOffer(hotel.PropertyId)}>Zobacz ofertę</button>
                                     </div>

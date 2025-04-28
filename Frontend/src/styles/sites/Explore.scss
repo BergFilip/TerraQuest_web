@@ -60,9 +60,7 @@
       font-family: poppins !important;
       background-color: rgba(217, 217, 217, 0.7);
       padding: 8px;
-
       border-radius: 15px;
-
 
       input[type="text"], input[type="date"], input[type="number"] {
         padding: 20px 15px;
@@ -100,7 +98,6 @@
   .explore_home_section {
     padding: 0rem 7rem 5rem 7rem;
 
-
     .section4 {
       margin-top: 6rem !important;
       .explore_baner {
@@ -111,25 +108,50 @@
         }
       }
     }
-    .section5{
-      margin-top:5rem !important;
-      .card_review_section{
+
+    .section5 {
+      margin-top: 5rem !important;
+      .card_review_section {
         margin-top: 2rem !important;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
       }
     }
-    .pagination-controls{
+
+    .pagination-controls {
       display: flex;
       justify-content: center;
       margin-top: 1rem;
     }
   }
+
+  // Animacja przejścia hoteli
+  .hotel-transition-enter {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  .hotel-transition-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 500ms, transform 500ms;
+  }
+
+  .hotel-transition-exit {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .hotel-transition-exit-active {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 500ms, transform 500ms;
+  }
+
 }
 
-
-
+// Media Queries dla różnych rozdzielczości
 
 @media (max-width: 1250px) {
   .explore_site {
@@ -151,7 +173,6 @@
 
         input {
           height: 38px;
-
         }
 
         input::placeholder {
@@ -174,11 +195,11 @@
         }
       }
     }
-
   }
 }
+
 @media (max-width: 850px) {
-  .explore_site{
+  .explore_site {
     .section1 {
       h1 {
         font-size: 20px !important;
@@ -186,27 +207,24 @@
         padding-left: 4rem;
       }
 
-      .s1_baner{
+      .s1_baner {
         font-size: 16px !important;
         padding-left: 4rem;
       }
 
       form {
-
         input[type="number"] {
           width: 60% !important;
-
         }
 
         input[type="submit"] {
           width: 20% !important;
-
         }
       }
     }
+
     .explore_home_section {
       padding: 0rem 3rem 2rem 3rem !important;
-
     }
   }
 }
@@ -230,7 +248,6 @@
   }
 }
 
-
 @media (max-width: 535px) {
   .explore_site {
     .section1 {
@@ -248,11 +265,8 @@
       }
 
       form {
-
-
         input {
           height: 20px !important;
-
         }
 
         input::placeholder {
@@ -275,15 +289,15 @@
         }
       }
     }
-    .section4{
-      img{
+
+    .section4 {
+      img {
       }
     }
   }
 }
 
 @media (max-width: 450px) {
-
   .explore_site .section1 {
     background-size: 100% 150% !important;
     background-repeat: no-repeat;
@@ -292,7 +306,6 @@
     h1 {
       height: 5rem !important;
       padding-left: 1rem !important;
-
     }
 
     .s1_baner {
@@ -306,7 +319,6 @@
       padding-bottom: 2rem;
       input {
         height: 20px !important;
-
       }
 
       input::placeholder {
@@ -332,17 +344,14 @@
 
   .explore_home_section {
     padding: 0rem 2rem 2rem 2rem !important;
-
   }
 }
 
-
 @media (max-width: 405px) {
   .explore_site .section1 {
-    height: 29rem !important; ;
+    height: 29rem !important;
     h1 {
       margin-bottom: 3rem;
-
     }
   }
 }
