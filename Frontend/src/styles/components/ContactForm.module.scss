@@ -195,6 +195,15 @@
     }
   }
 }
+.errorInput {
+  border: 2px solid #ff4d4f !important;
+  background-color: #fff0f0;
+}
+
+.errorInput::placeholder {
+  color: #d03a3a;
+  font-style: italic;
+}
 
 @media (max-width: 405px) {
   .contactContainer{

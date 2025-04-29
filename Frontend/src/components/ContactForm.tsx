@@ -1,6 +1,50 @@
 import styles from '../styles/components/ContactForm.module.scss';
+import { useState } from 'react';
 
 const ContactForm = () => {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: ''
+    });
+
+    const [errors, setErrors] = useState({
+        firstName: false,
+        lastName: false,
+        email: false,
+        message: false
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [name]: false })); // Usuwamy błąd po wpisaniu
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors = {
+            firstName: !formData.firstName.trim(),
+            lastName: !formData.lastName.trim(),
+            email: !formData.email.trim(),
+            message: !formData.message.trim()
+        };
+
+        setErrors(newErrors);
+
+        const hasErrors = Object.values(newErrors).some(Boolean);
+        if (!hasErrors) {
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                message: ''
+            });
+        }
+    };
+
     return (
         <div className={styles.contactContainer}>
             <div className={styles.left}>
@@ -36,11 +80,38 @@ const ContactForm = () => {
                 <h2>Masz pytanie?</h2>
                 <p>Odpowiemy Ci na wszystko</p>
 
-                <form>
-                    <input type="text" placeholder="Imię" />
-                    <input type="text" placeholder="Nazwisko" />
-                    <input type="email" placeholder="Email" />
-                    <textarea placeholder="Wiadomość" />
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="firstName"
+                        placeholder="Imię"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className={errors.firstName ? styles.errorInput : ''}
+                    />
+                    <input
+                        type="text"
+                        name="lastName"
+                        placeholder="Nazwisko"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className={errors.lastName ? styles.errorInput : ''}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={errors.email ? styles.errorInput : ''}
+                    />
+                    <textarea
+                        name="message"
+                        placeholder="Wiadomość"
+                        value={formData.message}
+                        onChange={handleChange}
+                        className={errors.message ? styles.errorInput : ''}
+                    />
                     <button type="submit">Wyślij</button>
                 </form>
             </div>

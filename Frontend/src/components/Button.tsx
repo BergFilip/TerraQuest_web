@@ -7,6 +7,7 @@ type ButtonProps = {
     text: string | React.ReactNode;
     route?: string;
     onClick?: () => void;
+    type: "button" | "submit";
 };
 
 const Button = ({ text, route, onClick }: ButtonProps) => {

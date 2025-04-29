@@ -82,11 +82,12 @@ const FaqSection = () => {
             ))}
             <p className="end">
                 {isHelpPage ? (
-                    !showAll && (
-                        <button className="faq-more" onClick={handleShowMore}>
-                            Więcej
-                        </button>
-                    )
+                    <button
+                        className="faq-more"
+                        onClick={showAll ? () => setShowAll(false) : handleShowMore}
+                    >
+                        {showAll ? "Mniej" : "Więcej"}
+                    </button>
                 ) : (
                     <a className="faq-more" href="/help">
                         Więcej
