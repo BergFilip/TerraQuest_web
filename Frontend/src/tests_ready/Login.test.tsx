@@ -10,7 +10,6 @@ jest.mock('../context/AuthContext', () => ({
 const mockLogin = jest.fn();
 const mockNavigate = jest.fn();
 
-// mockowanie useNavigate
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockNavigate,

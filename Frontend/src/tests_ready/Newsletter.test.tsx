@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-// Mock modules
 jest.mock('../context/AuthContext');
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

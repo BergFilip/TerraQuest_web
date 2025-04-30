@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// Mockowanie modułów
 jest.mock('../context/AuthContext');
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

@@ -37,13 +37,13 @@ describe('PrivacyPolicies', () => {
 
     test('powinna renderować telefon kontaktowy', () => {
         render(<PrivacyPolicies />);
-        const phoneNumber = screen.getByText(/📞 Telefon: \+48 123 456 789/i);
+        const phoneNumber = screen.getByText(/Telefon: \+48 123 456 789/i);
         expect(phoneNumber).toBeInTheDocument();
     });
 
     test('powinna renderować adres fizyczny firmy', () => {
         render(<PrivacyPolicies />);
-        const address = screen.getByText(/🏢 Adres: TravelQuest Sp. z o.o., ul. Światowa 12, 00-123 Warszawa/i);
+        const address = screen.getByText(/Adres: TravelQuest Sp. z o.o., ul. Światowa 12, 00-123 Warszawa/i);
         expect(address).toBeInTheDocument();
     });
 

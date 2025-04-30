@@ -1,4 +1,3 @@
-// Explore.test.tsx
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import Explore from '../sites/Explore.tsx';
@@ -6,7 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-// Mock axios and react-router-dom
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedNavigate = jest.fn();
@@ -16,7 +14,6 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate,
 }));
 
-// Mock localStorage
 const localStorageMock = (function() {
     let store: Record<string, string> = {};
 
@@ -198,28 +195,23 @@ describe('Explore Component', () => {
             render(<Explore />);
         });
 
-        // Initially shows first 4 hotels
         expect(screen.getByText(mockHotels[0].PropertyName)).toBeInTheDocument();
         expect(screen.getByText(mockHotels[3].PropertyName)).toBeInTheDocument();
         expect(screen.queryByText(mockHotels[4].PropertyName)).not.toBeInTheDocument();
 
-        // Click next button
         const nextButton = screen.getByText('Dalej');
         await act(async () => {
             fireEvent.click(nextButton);
         });
 
-        // Now shows last hotel
         expect(screen.queryByText(mockHotels[0].PropertyName)).not.toBeInTheDocument();
         expect(screen.getByText(mockHotels[4].PropertyName)).toBeInTheDocument();
 
-        // Click previous button
         const prevButton = screen.getByText('Wstecz');
         await act(async () => {
             fireEvent.click(prevButton);
         });
 
-        // Back to first 4 hotels
         expect(screen.getByText(mockHotels[0].PropertyName)).toBeInTheDocument();
         expect(screen.getByText(mockHotels[3].PropertyName)).toBeInTheDocument();
     });
@@ -239,12 +231,10 @@ describe('Explore Component', () => {
         expect(prevButton).toBeDisabled();
         expect(nextButton).not.toBeDisabled();
 
-        // Click next to go to last page
         await act(async () => {
             fireEvent.click(nextButton);
         });
 
-        // Now next button should be disabled
         expect(prevButton).not.toBeDisabled();
         expect(nextButton).toBeDisabled();
     });
@@ -268,9 +258,6 @@ describe('Explore Component', () => {
             render(<Explore />);
         });
 
-        // USD 100 with 20% discount
-        // 100 * 4.3 = 430 PLN original
-        // 430 * 0.8 = 344 PLN discounted
         expect(screen.getByText('430.00 zł')).toBeInTheDocument();
         expect(screen.getByText('344.00 zł')).toBeInTheDocument();
     });

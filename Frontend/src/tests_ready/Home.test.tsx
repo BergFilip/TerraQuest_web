@@ -7,7 +7,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 Object.assign(globalThis, { TextEncoder, TextDecoder });
 
-// Mockujemy axios
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -31,7 +30,6 @@ describe('Home page', () => {
     });
 
     it('fetches and displays hotels', async () => {
-        // Przykładowe dane które axios powinien zwrócić
         const hotels = [
             {
                 PropertyId: 1,
@@ -51,7 +49,6 @@ describe('Home page', () => {
             </MemoryRouter>
         );
 
-        // Czekamy na pojawienie się hotelu
         expect(await screen.findByText('Hotel Testowy')).toBeInTheDocument();
         expect(screen.getByText('Testowa 123')).toBeInTheDocument();
     });
@@ -84,14 +81,12 @@ describe('Home page', () => {
             </MemoryRouter>
         );
 
-        // Poczekaj na załadowanie hoteli
         await waitFor(() => {
             expect(screen.getByText('Hotel 0')).toBeInTheDocument();
         });
 
         const nextButton = screen.getByRole('button', { name: /dalej/i });
 
-        // Klikamy "Dalej"
         fireEvent.click(nextButton);
 
         await waitFor(() => {

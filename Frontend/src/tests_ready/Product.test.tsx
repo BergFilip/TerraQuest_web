@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import '@testing-library/jest-dom';
 
-// Mock modules
 jest.mock('../context/AuthContext');
 jest.mock('axios');
 
@@ -35,10 +34,8 @@ describe('Product Component', () => {
     ];
 
     beforeEach(() => {
-        // Mock localStorage
         Storage.prototype.getItem = jest.fn(() => JSON.stringify(mockHotel));
 
-        // Mock auth context
         mockUseAuth.mockReturnValue({
             isLoggedIn: true,
             userEmail: 'test@example.com',
@@ -53,7 +50,6 @@ describe('Product Component', () => {
             login: jest.fn()
         });
 
-        // Mock API responses
         mockAxios.get.mockImplementation((url) => {
             if (url.includes('/api/reviews')) {
                 return Promise.resolve({ data: mockReviews });
@@ -163,9 +159,7 @@ describe('Product Component', () => {
         render(<Product />);
 
         await waitFor(() => {
-            // Original price: 100 USD * 4.3 = 430 PLN
             expect(screen.getByText('430.00 PLN')).toBeInTheDocument();
-            // Discounted price: 100 USD * 0.9 * 4.3 = 387 PLN
             expect(screen.getByText('387.00 PLN')).toBeInTheDocument();
         });
     });
