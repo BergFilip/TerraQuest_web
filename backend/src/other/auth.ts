@@ -10,6 +10,7 @@ const validateEmail = (email: string): boolean => {
     return emailRegex.test(email);
 };
 
+d
 const validatePassword = (password: string): boolean => {
     const minLength = 8;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
