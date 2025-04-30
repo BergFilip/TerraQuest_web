@@ -9,6 +9,10 @@ import hotelsRouter from './routes/explore';
 import reviewsRouter from './routes/reviews';
 import productsRouter from './routes/product';
 
+import helpRouter from './routes/help1';
+import path from "path";
+
+
 dotenv.config();
 
 const app = express();
@@ -25,8 +29,12 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/hotels', hotelsRouter);
-app.use('/api/products', productsRouter);
+app.use('/api/products', productsRouter);  // Upewnij się, że ścieżka jest poprawna
 app.use('/api/reviews', reviewsRouter);
+app.use('/api/help1', helpRouter);
+
+app.use('/img', express.static(path.resolve(__dirname, 'img')));
+
 
 // Base route
 app.get('/', (req: Request, res: Response) => {

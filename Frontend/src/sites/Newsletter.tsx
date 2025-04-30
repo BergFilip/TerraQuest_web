@@ -1,38 +1,120 @@
-import "../styles/sites/Newsletter.scss"
-import Alert from "../components/Alert"
+import "../styles/sites/Newsletter.scss";
 import { useState } from "react";
-
+import Alert from "../components/Alert";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Newsletter() {
-    return(
-        <Main></Main>
-    )
-}
-
-const Main = () => {
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [alertData, setAlertData] = useState({
+        title: "",
+        message: ""
+    });
 
-    const handleClick = (event) => {
-        event.preventDefault();
-        setShowAlert(true);
+    const { isLoggedIn, checkAuth } = useAuth();
+    const navigate = useNavigate();
+
+    const validateEmail = (email: string) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     };
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        setIsSubmitting(true);
+        setEmailError("");
+
+        // Walidacja emaila
+        if (!email.trim()) {
+            setEmailError("Email jest wymagany");
+            setIsSubmitting(false);
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setEmailError("Proszę podać poprawny adres email");
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            // Sprawdź czy użytkownik jest zalogowany
+            const isAuthenticated = await checkAuth();
+
+            if (!isAuthenticated) {
+                setAlertData({
+                    title: "Wymagane logowanie",
+                    message: "Musisz być zalogowany, aby zapisać się do newslettera"
+                });
+                setShowAlert(true);
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Symulacja wysyłania danych
+            console.log(`Wysłano zapis na newsletter: ${email}`);
+
+            setAlertData({
+                title: "Zapisano pomyślnie!",
+                message: "Dziękujemy za zapisanie się do naszego newslettera"
+            });
+            setShowAlert(true);
+            setEmail("");
+
+        } catch (error) {
+            setAlertData({
+                title: "Błąd!",
+                message: "Wystąpił błąd podczas zapisywania. Spróbuj ponownie."
+            });
+            setShowAlert(true);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <main className={"Main_Newsletter"}>
             <h1>Zapisz się do Newslettera</h1>
             <p className={"p_main"}>nie pozwól, aby ominęły cię promocje i nowe atrakcje</p>
-                <form>
-                    <input type="email" placeholder={"jan.kowalski@wp.pl"}/>
-                    <input type="submit" value="Zapisz się" onClick={handleClick} className="alert-button"/>
-                    {showAlert && (
-                        <Alert
-                            title="Zgłoszono pomyślnie"
-                            message="Dziękujemy za zapisanie się do naszego Newslettera. Sprawdź wiadomość e-mail."
-                            onClose={() => setShowAlert(false)}
-                        />
-                    )}
-                </form>
-        </main>
-    )
-};
 
-export default Newsletter
+            <form onSubmit={handleSubmit}>
+                <div className="input-wrapper">
+                    <input
+                        type="email"
+                        placeholder={"jan.kowalski@wp.pl"}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={emailError ? "error_N" : ""}
+                        disabled={isSubmitting}
+                    />
+                    {emailError && <span className="error-message_N">{emailError}</span>}
+                </div>
+
+                <input
+                    type="submit"
+                    value={isSubmitting ? "Wysyłanie..." : "Zapisz się"}
+                    className="alert-button"
+                    disabled={isSubmitting}
+                />
+            </form>
+
+            {showAlert && (
+                <Alert
+                    title={alertData.title}
+                    message={alertData.message}
+                    onClose={() => {
+                        setShowAlert(false);
+                        if (alertData.title === "Wymagane logowanie") {
+                            navigate('/login');
+                        }
+                    }}
+                />
+            )}
+        </main>
+    );
+}
+
+export default Newsletter;

@@ -50,14 +50,37 @@
     justify-content: center;
     font-family: poppins !important;
 
+    .input-wrapper {
+      width: 20%;
+      position: relative;
+    }
+
     input[type="email"] {
       padding: 10px;
       font-size: 1rem;
       border: none;
       border-radius: 5px;
       outline: none;
-      width: 20%;
+      width: 100%;
       font-family: poppins !important;
+
+      &.error_N {
+        border: 2px solid #ff4444;
+      }
+    }
+
+    .error-message_N {
+      position: absolute;
+      bottom: -35px;
+      left: 0;
+      color: #ff4444;
+      font-size: 0.8rem;
+      padding-left: 5px;
+      background-color: rgba(32, 32, 32, 0.6);
+      text-align: center;
+      border-radius: 8px;
+      width: 100%;
+      padding: 5px 10px;
     }
 
     input[type="submit"] {
@@ -71,12 +94,19 @@
       transition: background 0.3s;
       font-family: poppins !important;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: #333;
+      }
+
+      &:disabled {
+        background: #555;
+        cursor: not-allowed;
+        opacity: 0.8;
       }
     }
   }
 }
+
 @media (max-width: 1250px) {
   .Main_Newsletter{
     background-size: 120% !important;
@@ -86,26 +116,23 @@
       margin-bottom: 0rem !important;
       height: 4.5rem !important;
     }
-    p_main{
+    .p_main{
       font-size: 22px !important;
       margin-bottom: 2.5rem !important;
     }
     form{
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      justify-content: center;
+      .input-wrapper {
+        width: 30% !important;
+      }
 
       input{
         height: 38px;
-
       }
       input::placeholder{
         font-size: 14px !important;
       }
 
       input[type="email"]{
-        width: 30% !important;
         font-size: 14px !important;
       }
 
@@ -119,76 +146,42 @@
 
 @media (max-width: 850px) {
   .Main_Newsletter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     height: 23.313rem;
-    background: url('src/assets/newsletter.webp') center/cover no-repeat;
-    color: white;
-    padding: 20px;
-    position: relative;
-    font-family: poppins !important;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
 
     form{
-      input[type="email"]{
+      .input-wrapper {
         width: 40% !important;
-
       }
       input[type="submit"]{
         width: 20% !important;
       }
     }
 
-
     h1 {
-      font-weight: bold;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
-      color: #181818;
       font-size: 40px;
       height: 5rem !important;
     }
 
     .p_main {
-      margin-bottom: 20px;
-      height: 2.375rem;
-      position: relative;
-      z-index: 1;
-      font-size: 20px;
+      font-size: 17px;
     }
-
   }
 }
+
 @media (max-width: 740px) {
   .Main_Newsletter{
     background-size: 100% 150% !important;
-    background-repeat: no-repeat;
 
     h1{
       font-size: 35px !important;
       height: 3.2rem !important;
     }
-    p_main{
-      font-size: 18px !important;
+    .p_main{
+      font-size: 17px !important;
     }
     form{
-      input[type="email"]{
+      .input-wrapper {
         width: 50% !important;
-
       }
       input[type="submit"]{
         width: 20% !important;
@@ -200,7 +193,6 @@
 @media (max-width: 535px) {
   .Main_Newsletter{
     background-size: 100% 150% !important;
-    background-repeat: no-repeat;
     height: 25rem !important;
 
     h1{
@@ -209,16 +201,15 @@
       line-height: 2.5rem !important;
       margin-bottom: 1rem !important;
     }
-    p_main{
-      font-size: 17px !important;
+    .p_main{
+      font-size: 16px !important;
       margin-bottom: 3rem !important;
       padding: 0rem 1rem;
     }
     form{
       padding-bottom: 4rem !important;
-      input[type="email"]{
+      .input-wrapper {
         width: 80% !important;
-
       }
       input[type="submit"]{
         width: 40% !important;
@@ -227,21 +218,16 @@
   }
 }
 
-
 @media (max-width: 405px) {
   .Main_Newsletter {
     form{
       padding-bottom: 4rem !important;
-      input[type="email"]{
+      .input-wrapper {
         width: 90% !important;
-
       }
       input[type="submit"]{
         width: 50% !important;
       }
     }
-
-
   }
 }
-

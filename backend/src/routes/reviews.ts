@@ -1,27 +1,27 @@
 import express, { Request, Response } from 'express';
-import axios from 'axios';
 import { supabase } from "../supabaseClient";
 
 const router = express.Router();
 
+// Tablica wszystkich obrazków
+const localImages = [
+    'http://localhost:5000/img/u1k.webp',
+    'http://localhost:5000/img/u2m.webp',
+    'http://localhost:5000/img/u3m.webp',
+    'http://localhost:5000/img/u4k.webp',
+    'http://localhost:5000/img/u5m.webp',
+    'http://localhost:5000/img/u6k.webp',
+    'http://localhost:5000/img/u7k.webp',
+    'http://localhost:5000/img/u8m.webp',
+    'http://localhost:5000/img/u9m.webp',
+    'http://localhost:5000/img/u10k.webp',
+];
 
-const getImageWithRetry = async (maxRetries: number = 3): Promise<string | null> => {
-    let retries = 0;
-    while (retries < maxRetries) {
-        try {
-            const userRes = await axios.get('https://randomuser.me/api/');
-            return userRes.data.results[0].picture.medium;
-        } catch (err) {
-            console.error('❌ Błąd podczas pobierania zdjęcia:', err);
-            retries++;
-            if (retries >= maxRetries) {
-                console.error('❌ Przekroczono maksymalną liczbę prób');
-
-                return '../img/user_no.jpg';
-            }
-        }
-    }
-    return '../img/user_no.jpg';
+// Funkcja do wyboru losowego zdjęcia kobiety lub mężczyzny
+const getRandomImageByGender = (isFemale: boolean): string => {
+    const genderImages = localImages.filter(img => isFemale ? img.includes('k.webp') : img.includes('m.webp'));
+    const randomIndex = Math.floor(Math.random() * genderImages.length);
+    return genderImages[randomIndex];
 };
 
 router.get('/', async (req: Request, res: Response) => {
@@ -32,15 +32,15 @@ router.get('/', async (req: Request, res: Response) => {
 
         if (error || !reviews || reviews.length === 0) {
             res.status(404).json({ error: 'Brak recenzji w bazie' });
-            return
+            return;
         }
 
-        const reviewsWithImages = await Promise.all(
-            reviews.map(async (review: any) => {
-                const image = await getImageWithRetry();
-                return { ...review, image };
-            })
-        );
+        const reviewsWithImages = reviews.map((review: any) => {
+            const reviewerName = review.reviewer || '';
+            const isFemale = reviewerName.trim().slice(-1).toLowerCase() === 'a'; // Sprawdzenie końcówki imienia
+            const image = getRandomImageByGender(isFemale);
+            return { ...review, image };
+        });
 
         res.json(reviewsWithImages);
 

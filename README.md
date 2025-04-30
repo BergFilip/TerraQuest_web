@@ -133,7 +133,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 - **auth.ts**: [Filip]
 - **explore.ts**: [Wiktor]
-- **locations.ts**: [Wiktor]
+- **newsletter.ts**: [Wiktor]
 - **reviews.ts**: [Wiktor]
 - **supabase.ts**: [Każdy]
 
