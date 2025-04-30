@@ -11,6 +11,7 @@ interface AuthContextType {
     isLoggedIn: boolean;
     userEmail: string | null;
     userFirstName: string;
+    userId: string;
     userLastName: string;
     checkAuth: () => Promise<boolean>;
     setUserEmail: (email: string) => void;
@@ -27,6 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [userFirstName, setUserFirstName] = useState<string>('');
     const [userLastName, setUserLastName] = useState<string>('');
+    const [userId, setUserId] = useState<string>('');
 
     const checkAuth = async (): Promise<boolean> => {
         try {
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 setUserEmail(data.email);
                 setUserFirstName(data.firstName);
                 setUserLastName(data.lastName);
+                setUserId(data.id);
                 return true;
             }
             setIsLoggedIn(false);
@@ -80,6 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             userEmail,
             userFirstName,
             userLastName,
+            userId,
             login,
             logout,
             checkAuth,

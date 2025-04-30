@@ -46,14 +46,22 @@ function Product() {
         try {
             const reservationData = {
                 userEmail,
-                hotel,
+                hotel: hotel,
+                checkIn: new Date().toISOString().split('T')[0], // dzisiejsza data
+                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // data za 7 dni
             };
 
-            await axios.post("http://localhost:5000/api/reservations", reservationData, { withCredentials: true });
+            const response = await axios.post(
+                "http://localhost:5000/api/reservations",
+                reservationData,
+                { withCredentials: true }
+            );
+
+            console.log("Odpowiedź serwera:", response.data);
             alert("✅ Rezerwacja dodana!");
         } catch (error) {
-            console.error("❌ Błąd przy rezerwacji:", error);
-            alert("❌ Coś poszło nie tak przy rezerwacji.");
+            console.error("❌ Pełny błąd przy rezerwacji:", error);
+            alert(`❌ Błąd przy rezerwacji: ${error.response?.data?.message || error.message}`);
         }
     };
 

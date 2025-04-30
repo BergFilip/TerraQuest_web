@@ -164,6 +164,7 @@ router.get('/user', async (req: Request, res: Response) => {
         const { data, error } = await supabase
             .from('users_terraQuest')
             .select(`
+                id,
                 email,
                 users_info:users_info (
                     Name,
@@ -183,6 +184,7 @@ router.get('/user', async (req: Request, res: Response) => {
         const lastName = usersInfo.Surname || '';
 
         res.status(200).json({
+            id: data.id,
             email: data.email,
             firstName: firstName,
             lastName: lastName
