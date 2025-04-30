@@ -17,7 +17,6 @@ function Newsletter() {
     const { isLoggedIn, checkAuth, userEmail } = useAuth();
     const navigate = useNavigate();
 
-    // Pre-fill email if user is logged in
     useEffect(() => {
         if (userEmail) {
             setEmail(userEmail);
@@ -34,7 +33,6 @@ function Newsletter() {
         setIsSubmitting(true);
         setEmailError("");
 
-        // Email validation
         if (!email.trim()) {
             setEmailError("Email jest wymagany");
             setIsSubmitting(false);
@@ -48,7 +46,6 @@ function Newsletter() {
         }
 
         try {
-            // Check if user is logged in
             const isAuthenticated = await checkAuth();
 
             if (!isAuthenticated) {
@@ -71,7 +68,6 @@ function Newsletter() {
                 credentials: 'include'
             });
 
-            // Check response content type
             const contentType = response.headers.get('content-type');
             if (!contentType || !contentType.includes('application/json')) {
                 const text = await response.text();

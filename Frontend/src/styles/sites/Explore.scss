@@ -125,8 +125,6 @@
       margin-top: 1rem;
     }
   }
-
-  // Animacja przejścia hoteli
   .hotel-transition-enter {
     opacity: 0;
     transform: translateX(100%);
@@ -150,8 +148,6 @@
   }
 
 }
-
-// Media Queries dla różnych rozdzielczości
 
 @media (max-width: 1250px) {
   .explore_site {

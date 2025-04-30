@@ -104,7 +104,7 @@ function Explore() {
 
     const currentHotels = hotels.slice(currentIndex, currentIndex + 4);
 
-    // --- DODANE: Funkcja obsługująca kliknięcie hotelu ---
+
     const handleHotelClick = (hotel: Hotel) => {
         localStorage.setItem('selectedHotel', JSON.stringify(hotel));
         navigate(`/product/${hotel.PropertyId}`);
@@ -163,7 +163,7 @@ function Explore() {
                                         text4={`${originalPricePLN.toFixed(2)} zł`}
                                         text5={`${discountedPricePLN.toFixed(2)} zł`}
                                         link_to="#"
-                                        onClick={() => handleHotelClick(hotel)} // <<< DODANE kliknięcie
+                                        onClick={() => handleHotelClick(hotel)}
                                     />
                                 );
                             })

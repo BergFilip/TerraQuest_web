@@ -1,10 +1,8 @@
-// Help.test.tsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Help from '../sites/Help';
 import '@testing-library/jest-dom';
 
-// Mock the FaqSection component
 jest.mock('../components/help_section.tsx', () => {
     return function MockFaqSection(props: { searchTerm: string }) {
         return <div data-testid="faq-section">Mock FAQ Section - Search Term: {props.searchTerm}</div>;
@@ -44,7 +42,6 @@ describe('Help Component', () => {
 
     it('displays the search icon', () => {
         render(<Help />);
-        // Since we're using Font Awesome with class names, we can check for the element with the class
         const searchIcon = document.querySelector('.fa-magnifying-glass');
         expect(searchIcon).toBeInTheDocument();
     });

@@ -3,19 +3,19 @@ jest.mock('@supabase/supabase-js', () => ({
 }));
 
 jest.mock('dotenv', () => ({
-    config: jest.fn() // blokujemy ładowanie .env
+    config: jest.fn()
 }));
 
 describe('supabase client', () => {
     const OLD_ENV = process.env;
 
     beforeEach(() => {
-        jest.resetModules(); // Wyczyść cache modułów
-        process.env = { ...OLD_ENV }; // Zrób kopię środowiska
+        jest.resetModules();
+        process.env = { ...OLD_ENV };
     });
 
     afterEach(() => {
-        process.env = OLD_ENV; // Przywróć środowisko po każdym teście
+        process.env = OLD_ENV;
     });
 
     it('should throw error when env variables are missing', () => {
@@ -23,8 +23,8 @@ describe('supabase client', () => {
         delete process.env.SUPABASE_ANON_KEY;
 
         expect(() => {
-            // Dopiero teraz ładujemy moduł
-            require('../utils/supabase'); // Upewnij się, że ścieżka jest poprawna
+
+            require('../utils/supabase');
         }).toThrow(
             'Missing Supabase configuration: SUPABASE_URL and SUPABASE_ANON_KEY must be set'
         );
@@ -36,7 +36,7 @@ describe('supabase client', () => {
 
         const { createClient } = require('@supabase/supabase-js');
 
-        const { supabase } = require('../utils/supabase'); // Upewnij się, że ścieżka jest poprawna
+        const { supabase } = require('../utils/supabase');
 
         expect(createClient).toHaveBeenCalledWith(
             'https://example.supabase.co',

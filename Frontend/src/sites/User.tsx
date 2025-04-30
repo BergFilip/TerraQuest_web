@@ -50,7 +50,7 @@ function User() {
         EUR: 4.5,
     });
 
-    // Weryfikacja autentyczności i pobieranie danych użytkownika
+
     useEffect(() => {
         let isMounted = true;
 
@@ -65,13 +65,11 @@ function User() {
                     return;
                 }
 
-                // Poczekaj na userId - ważna zmiana!
                 if (!userId) {
                     console.log("Oczekiwanie na userId...");
                     return;
                 }
 
-                // Dopiero gdy mamy userId
                 if (isMounted) {
                     await Promise.all([
                         fetchUserBookings(),
@@ -105,17 +103,14 @@ function User() {
         }
     }, [userId]);
 
-    // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
     const fetchUserData = async () => {
         try {
             const response = await axios.get('/api/auth/user', {
                 withCredentials: true
             });
 
-            // Aktualizacja danych użytkownika w stanie
             setNewsletter(response.data.newsletter || false);
 
-            // Upewnij się, że backend zwraca firstName i lastName
             if (response.data.firstName) {
                 setUserFirstName(response.data.firstName);
             }
@@ -128,7 +123,6 @@ function User() {
         }
     };
 
-    // Funkcja do pobrania rezerwacji użytkownika
     const fetchUserBookings = async () => {
         if (!userId) {
             console.log("Brak userId - nie można pobrać rezerwacji");

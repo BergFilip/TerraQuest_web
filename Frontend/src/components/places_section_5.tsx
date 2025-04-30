@@ -9,7 +9,7 @@ type PlacesSection = {
     text4: string;
     text5: string;
     link_to: string;
-    onClick?: () => void; // <<< dodajemy onClick jako opcjonalny
+    onClick?: () => void;
 };
 
 const Places_5 = ({ link, text1, text2, text3, text4, text5, link_to, onClick }: PlacesSection) => {

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-// Typ dla recenzji
 type Review = {
     title: string;
     description: string;
@@ -15,7 +14,6 @@ type Review = {
     image: string;
 };
 
-// Typ dla hotelu
 type Hotel = {
     PropertyName: string;
     PropertyAddress: string;
@@ -29,9 +27,8 @@ type Hotel = {
 function Product() {
     const { isLoggedIn, userEmail } = useAuth();
     const [reviews, setReviews] = useState<Review[]>([]);
-    const [hotel, setHotel] = useState<Hotel | null>(null); // Poprawione tutaj
+    const [hotel, setHotel] = useState<Hotel | null>(null);
 
-    // Przykładowe kursy walut
     const [currencyRates] = useState({
         USD: 4.3,
         EUR: 4.5,
@@ -47,8 +44,8 @@ function Product() {
             const reservationData = {
                 userEmail,
                 hotel: hotel,
-                checkIn: new Date().toISOString().split('T')[0], // dzisiejsza data
-                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // data za 7 dni
+                checkIn: new Date().toISOString().split('T')[0],
+                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
             };
 
             const response = await axios.post(
@@ -65,7 +62,6 @@ function Product() {
         }
     };
 
-    // Pobieranie recenzji
     useEffect(() => {
         const fetchReview = async () => {
             try {

@@ -5,7 +5,7 @@ import { supabase } from '../utils/supabase';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Mockowanie modułów
+
 jest.mock('../utils/supabase', () => {
     const mockSingle = jest.fn();
     return {
