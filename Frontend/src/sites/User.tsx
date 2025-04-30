@@ -1,5 +1,5 @@
 import "../styles/sites/User.scss";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Update_Alert from "../components/Update_Alert";
@@ -50,8 +50,6 @@ function User() {
         USD: 4.3,
         EUR: 4.5,
     });
-
-
     useEffect(() => {
         let isMounted = true;
 
@@ -231,11 +229,11 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar" />
+                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar"/>
                     <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Brak nazwy użytkownika"}</h2>
                     <p className="email">({userEmail})</p>
                     <h6>Aby zmienić lub ustawić nazwę użytkownika kliknij w <b>Aktualizacja profilu</b></h6>
-                    <hr />
+                    <hr/>
 
                     <div className="settings">
                         <div className="setting-item">
@@ -278,8 +276,8 @@ function User() {
                                             <div className="main_booking_item">
                                                 <h3 className="booking-header">
                                                     {booking.PropertyName}
-                                                    <span className="booking-desc"> ({booking.PropertyAddress})</span>
                                                 </h3>
+                                                <p className="booking-desc"> ({booking.PropertyAddress})</p>
                                                 <p className="info_sec_booking">
                                 <span className="booking_price">
                                     <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
