@@ -42,12 +42,12 @@ const Header = () => {
             <div className="icons">
                 {isLoggedIn ? (
                     <>
-                        <i className="fa-solid fa-user user-icon"><Button text={""} route={"/user"}/></i>
+                        <Button text={""} route={"/user"} children={<i className="fa-solid fa-user user-icon"></i>}/>
                         <i className="fa-solid fa-bars menu-icon" onClick={() => setMenuOpen(!menuOpen)}></i>
                     </>
                 ) : (
                     <>
-                        <i className="fa-solid fa-user user-icon"><Button text={""} route={"/register"}/></i>
+                    <Button text={""} route={"/register"} children={<i className="fa-solid fa-user user-icon"></i>}/>
                         <i className="fa-solid fa-bars menu-icon" onClick={() => setMenuOpen(!menuOpen)}></i>
                     </>
                 )}

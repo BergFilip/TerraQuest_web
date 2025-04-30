@@ -20,6 +20,7 @@ interface Booking {
 function User() {
     const [expanded, setExpandedIndex] = useState<number | null>(null);
     const [bookings, setBookings] = useState<Booking[]>([]);
+
     const [currentTime, setCurrentTime] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -82,6 +83,9 @@ function User() {
         logout();
         navigate("/login");
     };
+    const onRedirect = () => {
+        navigate("/Newsletter");
+    };
 
     const handleProfileUpdate = () => {
         setShowAlert(true);
@@ -111,17 +115,10 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img
-                        src="src/assets/terraquest.webp"
-                        alt="Obraz profilu"
-                        className="user-avatar"
-                    />
-                    <h2>
-                        {userFirstName && userLastName
-                            ? `${userFirstName} ${userLastName}`
-                            : "Zaktualizuj profil"}
-                    </h2>
+                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar"/>
+                    <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Brak nazwy użytkownika"}</h2>
                     <p className="email">({userEmail})</p>
+                    <h6>Aby zmienić lub ustawić nazwę użytkownika kliknij w <b>Aktualizacja profilu</b></h6>
                     <hr></hr>
 
                     <div className="settings">
@@ -133,10 +130,18 @@ function User() {
                         </div>
 
                         <div className="setting-item" onClick={handleProfileUpdate}>
+                            <i className="fa-solid fa-square-check"></i>
+                            <p><strong>Aktywny Newsletter</strong></p>
+                        </div>
+
+                        <div className="setting-item" onClick={onRedirect}>
                             <i className="fa-solid fa-download"></i>
-                            <p>
-                                <strong>Aktualizacja profilu</strong>
-                            </p>
+                            <p><strong>Zapisz się do Newslettera</strong></p>
+                        </div>
+
+                        <div className="setting-item" onClick={handleProfileUpdate}>
+                            <i className="fa-solid fa-pen"></i>
+                            <p><strong>Aktualizacja profilu</strong></p>
                         </div>
 
                         <div className="setting-item" onClick={handleLogout}>
@@ -156,50 +161,37 @@ function User() {
                         <div className="booking-list-container">
                             <div className="booking-list">
                                 {bookings.map((booking) => (
-                                    <div
-                                        key={booking.id}
-                                        className={`booking-item ${
-                                            expanded === booking.id ? "expanded" : ""
-                                        }`}
-                                        onClick={() => toggleExpand(booking.id)}
-                                    >
-                                        <div className="booking-header">
-                                            <div className="date">
-                                                <strong>
-                                                    {formatDate(booking.CheckIn)} -{" "}
-                                                    {formatDate(booking.CheckOut)}
-                                                </strong>
+                                    <div className="booking_all" key={booking.id}
+                                         onClick={() => toggleExpand(booking.id)}>
+                                        <div className="booking-item">
+                                            <div className="main_booking_item">
+                                                <h3 className="booking-header">
+                                                    Hotel Trianon Rive Gauche
+                                                    <span
+                                                        className="booking-desc"> (3, Rue de Vaugirard, Paris, FR)</span>
+                                                </h3>
+                                                <p className="info_sec_booking">
+                                                <span className="booking_price"><del>793.26 PLN</del><span
+                                                    className="new_price_booking">261.78 PLN</span></span>
+                                                </p>
                                             </div>
-                                            <div className="route">{booking.PropertyName}</div>
-                                            <div className="price">
-                                                {calculatePrice(
-                                                    booking.ReferencePrice,
-                                                    booking.ReferencePriceCurrency,
-                                                    booking.MaxDiscountPercent
-                                                )}
+                                            <div className="icons_booking">
+                                                <i className="fa-solid fa-trash" onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setBookings(bookings.filter(b => b.id !== booking.id));
+                                                }}></i>
                                             </div>
-                                            <button className="expand-btn">
-                                                {expanded === booking.id ? "▲" : "▼"}
-                                            </button>
                                         </div>
                                         <div
-                                            className={`booking-details ${
-                                                expanded === booking.id ? "visible" : ""
-                                            }`}
-                                        >
-                                            <p>
-                                                <strong>Adres:</strong> {booking.PropertyAddress}
-                                            </p>
-                                            <p>
-                                                <strong>Cena podstawowa:</strong>{" "}
-                                                {booking.ReferencePrice} {booking.ReferencePriceCurrency}
-                                            </p>
-                                            <p>
-                                                <strong>Zniżka:</strong> {booking.MaxDiscountPercent}%
-                                            </p>
+                                            className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
+                                            <p>Hotel Trianon Rive Gauche to 3, Rue de Vaugirard, Paris, FR. Posiada
+                                                4 Stars gwiazdek i oferuje wyjątkowe udogodnienia, takie jak basen,
+                                                restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
+
                                 ))}
+
                             </div>
                         </div>
                     ) : (

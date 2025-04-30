@@ -34,8 +34,13 @@ app.use('/api/hotels', hotelsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/help1', helpRouter);
+<<<<<<< HEAD
 app.use('/api/reservations', reservation);
 app.use('/api/bookings', bookingsRouter);
+=======
+//app.use("/api/reservations",reservation);
+
+>>>>>>> user_up
 
 app.use('/img', express.static(path.resolve(__dirname, 'img')));
 
