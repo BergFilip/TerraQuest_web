@@ -1,5 +1,5 @@
 import "../styles/sites/User.scss";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Update_Alert from "../components/Update_Alert";
@@ -33,7 +33,6 @@ function User() {
         EUR: 4.5,
     });
 
-    // Weryfikacja autentyczności i pobieranie danych użytkownika
     useEffect(() => {
         let isMounted = true;
 
@@ -48,13 +47,11 @@ function User() {
                     return;
                 }
 
-                // Poczekaj na userId - ważna zmiana!
                 if (!userId) {
                     console.log("Oczekiwanie na userId...");
                     return;
                 }
 
-                // Dopiero gdy mamy userId
                 if (isMounted) {
                     await Promise.all([
                         fetchUserBookings(),
@@ -88,7 +85,6 @@ function User() {
         }
     }, [userId]);
 
-    // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
     const fetchUserData = async () => {
         try {
             const response = await axios.get('/api/auth/user', { withCredentials: true });
@@ -171,11 +167,11 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar" />
+                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar"/>
                     <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Brak nazwy użytkownika"}</h2>
                     <p className="email">({userEmail})</p>
                     <h6>Aby zmienić lub ustawić nazwę użytkownika kliknij w <b>Aktualizacja profilu</b></h6>
-                    <hr />
+                    <hr/>
 
                     <div className="settings">
                         <div className="setting-item">
@@ -213,20 +209,24 @@ function User() {
                         <div className="booking-list-container">
                             <div className="booking-list">
                                 {bookings.map((booking) => (
-                                    <div className="booking_all" key={booking.id} onClick={() => toggleExpand(booking.id)}>
-                                        <div className="booking-item">
+                                    <div className={`booking_all ${expanded === booking.id ? "expanded" : ""}`} key={booking.id}>
+                                        <div
+                                            className="booking-item"
+                                            onClick={() => toggleExpand(booking.id)}
+                                            aria-expanded={expanded === booking.id}
+                                        >
                                             <div className="main_booking_item">
                                                 <h3 className="booking-header">
                                                     {booking.PropertyName}
-                                                    <span className="booking-desc"> ({booking.PropertyAddress})</span>
                                                 </h3>
+                                                <p className="booking-desc"> ({booking.PropertyAddress})</p>
                                                 <p className="info_sec_booking">
-                                                    <span className="booking_price">
-                                                        <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
-                                                        <span className="new_price_booking">
-                                                            {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
-                                                        </span>
-                                                    </span>
+                                <span className="booking_price">
+                                    <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
+                                    <span className="new_price_booking">
+                                        {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
+                                    </span>
+                                </span>
                                                 </p>
                                             </div>
                                             <div className="icons_booking">
@@ -236,8 +236,10 @@ function User() {
                                                 }}></i>
                                             </div>
                                         </div>
-                                        <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
-                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
+                                        <div className="booking-details">
+                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe
+                                                udogodnienia, takie jak basen, restauracja i wiele innych. Idealne
+                                                miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
                                 ))}
