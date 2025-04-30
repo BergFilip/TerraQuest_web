@@ -1,5 +1,5 @@
 import "../styles/sites/Newsletter.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +14,15 @@ function Newsletter() {
         message: ""
     });
 
-    const { isLoggedIn, checkAuth } = useAuth();
+    const { isLoggedIn, checkAuth, userEmail } = useAuth();
     const navigate = useNavigate();
+
+    // Pre-fill email if user is logged in
+    useEffect(() => {
+        if (userEmail) {
+            setEmail(userEmail);
+        }
+    }, [userEmail]);
 
     const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,7 +34,7 @@ function Newsletter() {
         setIsSubmitting(true);
         setEmailError("");
 
-        // Walidacja emaila
+        // Email validation
         if (!email.trim()) {
             setEmailError("Email jest wymagany");
             setIsSubmitting(false);
@@ -41,7 +48,7 @@ function Newsletter() {
         }
 
         try {
-            // Sprawdź czy użytkownik jest zalogowany
+            // Check if user is logged in
             const isAuthenticated = await checkAuth();
 
             if (!isAuthenticated) {
@@ -54,20 +61,32 @@ function Newsletter() {
                 return;
             }
 
-            // Symulacja wysyłania danych
-            console.log(`Wysłano zapis na newsletter: ${email}`);
+            // Send request to update newsletter status
+            const response = await fetch('/api/newsletter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Błąd podczas zapisywania');
+            }
 
             setAlertData({
                 title: "Zapisano pomyślnie!",
-                message: "Dziękujemy za zapisanie się do naszego newslettera"
+                message: "Twój status newslettera został zaktualizowany"
             });
             setShowAlert(true);
-            setEmail("");
 
         } catch (error) {
             setAlertData({
                 title: "Błąd!",
-                message: "Wystąpił błąd podczas zapisywania. Spróbuj ponownie."
+                message: error instanceof Error ? error.message : "Wystąpił błąd podczas zapisywania. Spróbuj ponownie."
             });
             setShowAlert(true);
         } finally {
