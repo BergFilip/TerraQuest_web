@@ -20,6 +20,7 @@ type Hotel = {
     MaxDiscountPercent: number;
     PropertyAddress: string;
     PropertyImageUrl: string;
+    ReferencePriceCurrency: "USD" | "EUR";
 };
 
 const formatDate = (date: Date) => {
@@ -40,8 +41,8 @@ const getDateRange = () => {
 
 const convertToPLN = (price: number, currency: "USD" | "EUR"): number => {
     const exchangeRates = {
-        USD: 4.5,
-        EUR: 4.7,
+        USD: 4.3,
+        EUR: 4.5,
     };
     return price * exchangeRates[currency];
 };
@@ -64,7 +65,13 @@ function Home() {
         const fetchHotels = async () => {
             try {
                 const res = await axios.get("/api/hotels?city=tokio");
-                if (Array.isArray(res.data)) setHotels(res.data);
+                if (Array.isArray(res.data)) {
+                    const hotelsWithCurrency = res.data.map(hotel => ({
+                        ...hotel,
+                        ReferencePriceCurrency: hotel.ReferencePriceCurrency || "USD"
+                    }));
+                    setHotels(hotelsWithCurrency);
+                }
             } catch (error) {
                 console.error("❌ Błąd ładowania hoteli:", error);
             }
@@ -83,6 +90,19 @@ function Home() {
         localStorage.setItem('numUsers', numUsers.toString());
 
         navigate('/search');
+        window.scrollTo(0, 0);
+    };
+
+    const handleCityClick = (cityName: string) => {
+        localStorage.setItem('destination', cityName);
+        navigate('/search');
+        window.scrollTo(0, 0);
+    };
+
+    const handleHotelClick = (hotel: Hotel) => {
+        localStorage.setItem('selectedHotel', JSON.stringify(hotel));
+        navigate(`/product/${hotel.PropertyId}`);
+        window.scrollTo(0, 0);
     };
 
     return (
@@ -136,13 +156,43 @@ function Home() {
                     <HSection text1={"Popularne cele podróży"}
                               text2={"Najpopularniejsze cele podróży wśród gości z Polski"}></HSection>
                     <div className="places_section_1">
-                        <Places_1 text1={"Warszawa"} text2={""} backgroundImage={'/src/assets/cities/warsaw.webp'} link_to="/explore" />
-                        <Places_1 text1={"Kraków"} text2={""} backgroundImage={'/src/assets/cities/krakow.webp'} link_to="/explore" />
+                        <Places_1
+                            text1={"Warszawa"}
+                            text2={""}
+                            backgroundImage={'/src/assets/cities/warsaw.webp'}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Warszawa")}
+                        />
+                        <Places_1
+                            text1={"Kraków"}
+                            text2={""}
+                            backgroundImage={'/src/assets/cities/krakow.webp'}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Kraków")}
+                        />
                     </div>
                     <div className="places_section_2">
-                        <Places_2 text1={"Poznań"} text2={""} backgroundImage={'/src/assets/cities/poznan.webp'} link_to="/explore" />
-                        <Places_2 text1={"Gdańsk"} text2={""} backgroundImage={'/src/assets/cities/gdansk.webp'} link_to="/explore" />
-                        <Places_2 text1={"Karpacz"} text2={""} backgroundImage={'/src/assets/cities/karpacz.webp'} link_to="/explore" />
+                        <Places_2
+                            text1={"Poznań"}
+                            text2={""}
+                            backgroundImage={'/src/assets/cities/poznan.webp'}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Poznań")}
+                        />
+                        <Places_2
+                            text1={"Gdańsk"}
+                            text2={""}
+                            backgroundImage={'/src/assets/cities/gdansk.webp'}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Gdańsk")}
+                        />
+                        <Places_2
+                            text1={"Karpacz"}
+                            text2={""}
+                            backgroundImage={'/src/assets/cities/karpacz.webp'}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Karpacz")}
+                        />
                     </div>
                 </div>
                 <div className="section4">
@@ -151,16 +201,24 @@ function Home() {
                     <div className="places_section_3">
                         <Places_3
                             link={"/src/assets/home_section/hotels.webp"}
-                            text2={"Hotele"} link_to="/explore"></Places_3>
+                            text2={"Hotele"}
+                            link_to="/explore"
+                        />
                         <Places_3
                             link={"/src/assets/home_section/resort.webp"}
-                            text2={"Ośrodki wypoczynkowe"} link_to="/explore"></Places_3>
+                            text2={"Ośrodki wypoczynkowe"}
+                            link_to="/explore"
+                        />
                         <Places_3
                             link={"/src/assets/home_section/apartament.webp"}
-                            text2={"Apartamenty"} link_to="/explore"></Places_3>
+                            text2={"Apartamenty"}
+                            link_to="/explore"
+                        />
                         <Places_3
                             link={"/src/assets/home_section/willa.webp"}
-                            text2={"Wille"} link_to="/explore"></Places_3>
+                            text2={"Wille"}
+                            link_to="/explore"
+                        />
                     </div>
                 </div>
                 <div className="section5">
@@ -169,25 +227,46 @@ function Home() {
                     <div className="places_section_4">
                         <Places_4
                             link={"/src/assets/cities/gdansk2.webp"}
-                            text1={"Gdańsk"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Gdańsk"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Gdańsk")} />
                         <Places_4
                             link={"/src/assets/cities/warsaw2.webp"}
-                            text1={"Warszawa"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Warszawa"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Warszawa")} />
                         <Places_4
                             link={"/src/assets/cities/poznan2.webp"}
-                            text1={"Poznań"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Poznań"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Poznań")} />
                         <Places_4
                             link={"/src/assets/cities/kolobrzeg2.webp"}
-                            text1={"Kołobrzeg"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Kołobrzeg"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Kołobrzeg")} />
                         <Places_4
                             link={"/src/assets/cities/krakow2.webp"}
-                            text1={"Kraków"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Kraków"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Kraków")} />
                         <Places_4
                             link={"/src/assets/cities/karpacz2.webp"}
-                            text1={"Karpacz"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Karpacz"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Karpacz")} />
                         <Places_4
                             link={"/src/assets/cities/wroclaw2.webp"}
-                            text1={"Wrocław"} text2={getRandomPlacesNumber()} link_to="/explore"></Places_4>
+                            text1={"Wrocław"}
+                            text2={getRandomPlacesNumber()}
+                            link_to="/explore"
+                            onClick={() => handleCityClick("Wrocław")} />
                     </div>
                 </div>
                 <div className="section6">
@@ -199,11 +278,9 @@ function Home() {
                     <div className="places_section_5">
                         {currentHotels.length > 0 ? (
                             currentHotels.map((hotel) => {
-                                const originalPrice = hotel.ReferencePrice;
-                                const discountedPrice = (originalPrice * (100 - hotel.MaxDiscountPercent)) / 100;
+                                const originalPricePLN = convertToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency);
+                                const discountedPricePLN = (originalPricePLN * (100 - hotel.MaxDiscountPercent)) / 100;
 
-                                const originalPricePLN = convertToPLN(originalPrice, "USD");
-                                const discountedPricePLN = convertToPLN(discountedPrice, "USD");
                                 return (
                                     <Places_5
                                         key={hotel.PropertyId}
@@ -213,7 +290,8 @@ function Home() {
                                         text3={"1 noc"}
                                         text4={`${originalPricePLN.toFixed(2)} zł`}
                                         text5={`${discountedPricePLN.toFixed(2)} zł`}
-                                        link_to="/product"
+                                        link_to="#"
+                                        onClick={() => handleHotelClick(hotel)}
                                     />
                                 );
                             })
@@ -224,15 +302,13 @@ function Home() {
 
                     <div className="pagination-controls">
                         <button
-                            onClick={() => setCurrentIndex((prev) => Math.max(prev - 4, 0))}
+                            onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
                             disabled={currentIndex === 0}
                         >
                             Wstecz <i className="fa-solid fa-arrow-left"></i>
                         </button>
                         <button
-                            onClick={() => setCurrentIndex((prev) =>
-                                prev + 4 < hotels.length ? prev + 4 : prev
-                            )}
+                            onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, hotels.length - 4))}
                             disabled={currentIndex + 4 >= hotels.length}
                         >
                             Dalej <i className="fa-solid fa-arrow-right"></i>
@@ -254,11 +330,13 @@ function Home() {
                             <Places_6
                                 link={"/src/assets/home_section/spain.webp"}
                                 text1={"Nudzisz się w jednym miejscu? To może podróż przez Hiszpanie?"}
-                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."} link_to="/explore" />
+                                text2={"6 dni, 4 hotele i brak nudy. Idealne dla wszystkich poszukiwaczy przygód."}
+                                link_to="/explore" />
                             <Places_6
                                 link={"/src/assets/home_section/treehouses.webp"}
                                 text1={"Najlepsze domki na drzewie na świecie"}
-                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."} link_to="/explore" />
+                                text2={"Zwykłe hotele są dla ciebie już nudne? To może noc w łonie natury."}
+                                link_to="/explore" />
                         </div>
                     </div>
                 </div>

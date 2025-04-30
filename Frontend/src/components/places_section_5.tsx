@@ -17,10 +17,11 @@ const Places_5 = ({ link, text1, text2, text3, text4, text5, link_to, onClick }:
 
     const handleClick = () => {
         if (onClick) {
-            onClick(); // Jeśli przyszedł onClick z propsów - wywołaj go
+            onClick();
         } else {
-            navigate(link_to); // Jeśli NIE, wtedy domyślnie nawiguj
+            navigate(link_to);
         }
+        window.scrollTo(0, 0);
     };
 
     return (

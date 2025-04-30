@@ -19,6 +19,7 @@ const Button = ({ text, route, onClick }: ButtonProps) => {
         } else {
             navigate(route);
         }
+        window.scrollTo(0, 0);
     };
     return route ? (
         <Link to={route}>
