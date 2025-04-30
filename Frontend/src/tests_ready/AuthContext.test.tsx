@@ -3,7 +3,6 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from '../context/AuthContext.tsx';
 import '@testing-library/jest-dom';
 
-// Mock the fetch API
 global.fetch = jest.fn() as jest.Mock;
 
 const TestComponent = () => {
@@ -80,12 +79,10 @@ describe('AuthContext', () => {
 
         renderAuthProvider();
 
-        // First login
         act(() => {
             screen.getByText('Login').click();
         });
 
-        // Then logout
         await act(async () => {
             screen.getByText('Logout').click();
         });

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Update_Alert from "../components/Update_Alert";
 import axios from "axios";
+import Alert from "../components/Alert.tsx";
 
 interface Booking {
     id: number;
@@ -15,6 +16,7 @@ interface Booking {
     ReferencePriceCurrency: string;
     MaxDiscountPercent: number;
     created_at: string;
+    PropertyId: number;
 }
 
 function User() {
@@ -24,8 +26,23 @@ function User() {
     const [loading, setLoading] = useState<boolean>(true);
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [newsletter, setNewsletter] = useState<boolean>(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertTitle, setAlertTitle] = useState('');
+    const [showConfirmAlert, setShowConfirmAlert] = useState(false);
+    const [currentBookingToDelete, setCurrentBookingToDelete] = useState<number | null>(null);
 
-    const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth, logout, userId } = useAuth();
+    const {
+        isLoggedIn,
+        userEmail,
+        userFirstName,
+        userLastName,
+        checkAuth,
+        logout,
+        userId,
+        setUserFirstName,
+        setUserLastName
+    } = useAuth();
     const navigate = useNavigate();
 
     const [currencyRates] = useState({
@@ -33,7 +50,7 @@ function User() {
         EUR: 4.5,
     });
 
-    // Weryfikacja autentyczności i pobieranie danych użytkownika
+
     useEffect(() => {
         let isMounted = true;
 
@@ -48,13 +65,11 @@ function User() {
                     return;
                 }
 
-                // Poczekaj na userId - ważna zmiana!
                 if (!userId) {
                     console.log("Oczekiwanie na userId...");
                     return;
                 }
 
-                // Dopiero gdy mamy userId
                 if (isMounted) {
                     await Promise.all([
                         fetchUserBookings(),
@@ -88,17 +103,26 @@ function User() {
         }
     }, [userId]);
 
-    // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
     const fetchUserData = async () => {
         try {
-            const response = await axios.get('/api/auth/user', { withCredentials: true });
+            const response = await axios.get('/api/auth/user', {
+                withCredentials: true
+            });
+
             setNewsletter(response.data.newsletter || false);
+
+            if (response.data.firstName) {
+                setUserFirstName(response.data.firstName);
+            }
+            if (response.data.lastName) {
+                setUserLastName(response.data.lastName);
+            }
+
         } catch (error) {
             console.error('Błąd przy pobieraniu danych użytkownika', error);
         }
     };
 
-    // Funkcja do pobrania rezerwacji użytkownika
     const fetchUserBookings = async () => {
         if (!userId) {
             console.log("Brak userId - nie można pobrać rezerwacji");
@@ -157,6 +181,40 @@ function User() {
         const discountedPrice = price * (1 - discount / 100);
         const priceInPLN = convertToPLN(discountedPrice, currency);
         return `${priceInPLN.toFixed(2)} PLN`;
+    };
+
+    const handleDeleteClick = (propertyId: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setCurrentBookingToDelete(propertyId);
+        setAlertTitle('Potwierdź usunięcie');
+        setAlertMessage('Czy na pewno chcesz usunąć tę rezerwację?');
+        setShowConfirmAlert(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!currentBookingToDelete) return;
+        setShowConfirmAlert(false);
+
+        try {
+            setShowConfirmAlert(false);
+            await axios.delete(`http://localhost:5000/api/bookings/${currentBookingToDelete}`, {
+                withCredentials: true
+            });
+            setShowConfirmAlert(false);
+            setBookings(prev => prev.filter(b => b.PropertyId !== currentBookingToDelete));
+            setAlertTitle('Sukces!');
+            setAlertMessage('Rezerwacja usunięta pomyślnie');
+            setShowAlert(true);
+        } catch (error) {
+            setShowConfirmAlert(false);
+            console.error('Błąd usuwania:', error);
+            setAlertTitle('Błąd');
+            setAlertMessage('Nie udało się usunąć rezerwacji');
+            setShowAlert(true);
+        } finally {
+            setShowConfirmAlert(false);
+            setCurrentBookingToDelete(null);
+        }
     };
 
     if (loading || !isLoggedIn) {
@@ -231,10 +289,10 @@ function User() {
                                                 </p>
                                             </div>
                                             <div className="icons_booking">
-                                                <i className="fa-solid fa-trash" onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setBookings(bookings.filter(b => b.id !== booking.id));
-                                                }}></i>
+                                                <i
+                                                    className="fa-solid fa-trash"
+                                                    onClick={(e) => handleDeleteClick(booking.PropertyId, e)}
+                                                ></i>
                                             </div>
                                         </div>
                                         <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
@@ -257,6 +315,27 @@ function User() {
                     title="Aktualizacja profilu"
                     onClose={() => setShowAlert(false)}
                     onOk={() => setShowAlert(false)}
+                />
+            )}
+            {/* Alert potwierdzający usunięcie */}
+            {showConfirmAlert && (
+                <Alert
+                    title={alertTitle}
+                    message={alertMessage}
+                    onClose={() => {
+                        setShowConfirmAlert(false);
+                        setCurrentBookingToDelete(null);
+                    }}
+                    onOk={confirmDelete}
+                />
+            )}
+
+            {/* Alert z wynikiem operacji */}
+            {showAlert && (
+                <Alert
+                    title={alertTitle}
+                    message={alertMessage}
+                    onClose={() => setShowAlert(false)}
                 />
             )}
         </main>

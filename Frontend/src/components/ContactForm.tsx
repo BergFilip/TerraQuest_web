@@ -1,5 +1,6 @@
 import styles from '../styles/components/ContactForm.module.scss';
 import { useState } from 'react';
+import Alert from './Alert'
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ const ContactForm = () => {
         email: false,
         message: false
     });
+
+    const [showAlert, setShowAlert] = useState(false); // Stan dla alertu
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -36,12 +39,14 @@ const ContactForm = () => {
 
         const hasErrors = Object.values(newErrors).some(Boolean);
         if (!hasErrors) {
+            console.log('Formularz wysłany:', formData);
             setFormData({
                 firstName: '',
                 lastName: '',
                 email: '',
                 message: ''
             });
+            setShowAlert(true);
         }
     };
 
@@ -115,6 +120,14 @@ const ContactForm = () => {
                     <button type="submit">Wyślij</button>
                 </form>
             </div>
+            {showAlert && (
+                <Alert
+                    title="Sukces!"
+                    message="Wiadomość została wysłana"
+                    onClose={() => setShowAlert(false)}
+                    onOk={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 };

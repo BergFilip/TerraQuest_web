@@ -3,7 +3,6 @@ import { supabase } from "../supabaseClient";
 
 const router = express.Router();
 
-// Tablica wszystkich obrazków
 const localImages = [
     'http://localhost:5000/img/u1k.webp',
     'http://localhost:5000/img/u2m.webp',
@@ -17,7 +16,7 @@ const localImages = [
     'http://localhost:5000/img/u10k.webp',
 ];
 
-// Funkcja do wyboru losowego zdjęcia kobiety lub mężczyzny
+
 const getRandomImageByGender = (isFemale: boolean): string => {
     const genderImages = localImages.filter(img => isFemale ? img.includes('k.webp') : img.includes('m.webp'));
     const randomIndex = Math.floor(Math.random() * genderImages.length);
@@ -37,7 +36,7 @@ router.get('/', async (req: Request, res: Response) => {
 
         const reviewsWithImages = reviews.map((review: any) => {
             const reviewerName = review.reviewer || '';
-            const isFemale = reviewerName.trim().slice(-1).toLowerCase() === 'a'; // Sprawdzenie końcówki imienia
+            const isFemale = reviewerName.trim().slice(-1).toLowerCase() === 'a';
             const image = getRandomImageByGender(isFemale);
             return { ...review, image };
         });

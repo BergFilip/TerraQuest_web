@@ -31,7 +31,6 @@ describe('Error Component', () => {
     it('passes correct props to Button component', () => {
         render(<Error />);
 
-        // Pobieramy pierwsze wywołanie mocka i sprawdzamy tylko propsy
         const buttonProps = (Button as jest.Mock).mock.calls[0][0];
         expect(buttonProps).toEqual({
             text: 'Powrót',

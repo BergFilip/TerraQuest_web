@@ -33,10 +33,6 @@ describe('Contact Component', () => {
     it('passes no props to ContactForm', () => {
         render(<Contact />);
 
-        // Sprawdzamy tylko pierwszy argument (props)
         expect((ContactForm as jest.Mock).mock.calls[0][0]).toEqual({});
-
-        // Alternatywnie możesz sprawdzić całe wywołanie:
-        // expect(ContactForm).toHaveBeenCalledWith({}, undefined);
     });
 });

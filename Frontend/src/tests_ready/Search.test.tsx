@@ -1,4 +1,3 @@
-// Search.test.tsx
 import React from 'react';
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import Search from '../sites/Search.tsx';
@@ -6,7 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-// Mock axios and react-router-dom
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedNavigate = jest.fn();
@@ -16,7 +14,6 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate,
 }));
 
-// Mock localStorage
 const localStorageMock = (function() {
     let store: Record<string, string> = {};
 
@@ -159,11 +156,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Convert prices to PLN:
-        // Hotel 1: 100 USD * 4.3 * 0.8 = 344 PLN
-        // Hotel 2: 200 EUR * 4.5 * 0.7 = 630 PLN
-
-        // Set range to 500 PLN (should filter out Hotel 2)
         fireEvent.change(screen.getByRole('slider'), {
             target: { value: '500' }
         });
@@ -185,7 +177,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Toggle 5-star filter
         fireEvent.click(screen.getByLabelText('5 gwiazdek'));
 
         await waitFor(() => {
@@ -205,7 +196,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Click on "21-50%" discount filter
         const discountFilter = screen.getAllByText('21-50%')[0];
         fireEvent.click(discountFilter);
 
@@ -226,7 +216,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Click "Cena rosnąco" sort button
         fireEvent.click(screen.getByText('Cena rosnąco'));
 
         const hotelNames = screen.getAllByText(/Test Hotel/);
@@ -245,7 +234,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Click "Cena malejąco" sort button
         fireEvent.click(screen.getByText('Cena malejąco'));
 
         const hotelNames = screen.getAllByText(/Test Hotel/);
@@ -264,7 +252,6 @@ describe('Search Component', () => {
             fireEvent.click(screen.getByText('Wyszukaj'));
         });
 
-        // Click "Najlepsze" sort button
         fireEvent.click(screen.getByText('Najlepsze'));
 
         const hotelNames = screen.getAllByText(/Test Hotel/);
@@ -332,7 +319,6 @@ describe('Search Component', () => {
     });
 });
 
-// Type definition for Hotel to match your component
 type Hotel = {
     PropertyId: number;
     PropertyName: string;

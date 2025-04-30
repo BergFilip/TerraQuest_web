@@ -1,4 +1,3 @@
-// Updated Newsletter.ZROBIC.tsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Newsletter from '../sites/Newsletter';
@@ -6,14 +5,12 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
-// Mock the AuthContext and react-router-dom
 jest.mock('../context/AuthContext');
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: jest.fn(),
 }));
 
-// Mock the Alert component
 jest.mock('../components/Alert', () => (props: any) => (
     <div data-testid="alert-mock">
         <h3>{props.title}</h3>
@@ -60,8 +57,7 @@ describe('Newsletter Component', () => {
 
     it('shows error when submitting empty form', async () => {
         render(<Newsletter />);
-
-        // Get the form by its class or test id instead of role
+        
         const form = screen.getByTestId('newsletter-form') ||
             document.querySelector('form') as HTMLFormElement;
 
