@@ -33,6 +33,7 @@ function User() {
         EUR: 4.5,
     });
 
+    // Weryfikacja autentyczności i pobieranie danych użytkownika
     useEffect(() => {
         const verifyAuth = async () => {
             const isAuthenticated = await checkAuth();
@@ -40,7 +41,7 @@ function User() {
                 navigate("/login");
             } else {
                 fetchUserBookings();
-                fetchUserData();
+                fetchUserData(); // Pobierz dane użytkownika (newsletter)
             }
         };
 
@@ -59,6 +60,7 @@ function User() {
         }
     }, [userId]);
 
+    // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
     const fetchUserData = async () => {
         try {
             const response = await axios.get('/api/user', { withCredentials: true });
@@ -68,6 +70,7 @@ function User() {
         }
     };
 
+    // Funkcja do pobrania rezerwacji użytkownika
     const fetchUserBookings = async () => {
         if (!userId) {
             console.log("Brak userId - nie można pobrać rezerwacji");
@@ -155,7 +158,7 @@ function User() {
 
                         <div className="setting-item">
                             <i className="fa-solid fa-square-check"></i>
-                            <p><strong>Aktywny Newsletter</strong> {newsletter ? "Nie" : "Tak"}</p>
+                            <p><strong>Aktywny Newsletter</strong> {newsletter ? "Tak" : "Nie"}</p>
                         </div>
 
                         <div className="setting-item" onClick={onRedirect}>

@@ -10,7 +10,6 @@ const validateEmail = (email: string): boolean => {
     return emailRegex.test(email);
 };
 
-
 const validatePassword = (password: string): boolean => {
     const minLength = 8;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
@@ -18,7 +17,7 @@ const validatePassword = (password: string): boolean => {
 };
 
 router.post("/register", async (req: Request, res: Response) => {
-    const  { email, password } = req.body;
+    const { email, password } = req.body;
 
     if (!validateEmail(email)) {
         res.status(400).json({
@@ -34,7 +33,7 @@ router.post("/register", async (req: Request, res: Response) => {
         return;
     }
 
-    const { data, error: err} = await supabase
+    const { data, error: err } = await supabase
         .from('users_terraQuest')
         .select('*')
         .eq('email', email)
@@ -43,12 +42,12 @@ router.post("/register", async (req: Request, res: Response) => {
     if (data) {
         res.status(400).json({
             message: "Użytkownik z tym adresem e-mail już istnieje",
-        })
-        return
+        });
+        return;
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt)
+    const hashedPass = await bcrypt.hash(password, salt);
 
     type User = {
         id: string;
@@ -56,7 +55,7 @@ router.post("/register", async (req: Request, res: Response) => {
         pass: string;
     };
 
-    const { data: insertedUser , error: insertError } = await supabase.from("users_terraQuest").insert({
+    const { data: insertedUser, error: insertError } = await supabase.from("users_terraQuest").insert({
         email,
         pass: hashedPass
     }).select("*").single();
@@ -66,7 +65,7 @@ router.post("/register", async (req: Request, res: Response) => {
             message: 'Błąd przy rejestracji użytkownika',
             error: insertError?.message || 'Brak danych użytkownika po rejestracji',
         });
-        return
+        return;
     }
 
     const token = jwt.sign(
@@ -94,10 +93,10 @@ router.post('/login', async (req: Request, res: Response) => {
 
     if (!email || !password) {
         res.status(400).json({ message: 'Brak adresu e-mail lub hasła' });
-        return
+        return;
     }
 
-    try{
+    try {
 
         const response = await supabase
             .from('users_terraQuest')
@@ -107,12 +106,12 @@ router.post('/login', async (req: Request, res: Response) => {
 
         if (response.error) {
             res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
-            return
+            return;
         }
 
         if (!response.data) {
             res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
-            return
+            return;
         }
 
         const { data } = response;
@@ -121,7 +120,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
         if (!passwordMatches) {
             res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
-            return
+            return;
         }
 
         const token = jwt.sign(
@@ -145,7 +144,7 @@ router.post('/login', async (req: Request, res: Response) => {
     catch (err: unknown) {
         console.error('Login error:', err);
         res.status(500).json({ error: 'Wewnętrzny błąd serwera' });
-        return
+        return;
     }
 });
 
@@ -163,15 +162,7 @@ router.get('/user', async (req: Request, res: Response) => {
 
         const { data, error } = await supabase
             .from('users_terraQuest')
-            .select(`
-                id,
-                email,
-                newsletter,
-                users_info:users_info (
-                    Name,
-                    Surname
-                )
-            `)
+            .select('id, email, newsletter')
             .eq('id', userId)
             .single();
 
@@ -180,23 +171,14 @@ router.get('/user', async (req: Request, res: Response) => {
             return;
         }
 
-        const usersInfo = data.users_info as unknown as { Name: string; Surname: string} || {};
-        const firstName = usersInfo.Name || '';
-        const lastName = usersInfo.Surname || '';
-        const newsletter = data.newsletter !== undefined ? data.newsletter : false; // Zapewnia domyślną wartość false
-
         res.status(200).json({
-            id: data.id,
             email: data.email,
-            newsletter: newsletter,
-            firstName: firstName,
-            lastName: lastName
+            newsletter: data.newsletter,
         });
     } catch (err) {
-        res.status(401).json({ message: 'Token jest nieprawidłowy' });
+        res.status(500).json({ message: 'Błąd serwera' });
     }
 });
-
 
 router.post('/logout', (req: Request, res: Response) => {
     res.clearCookie('token');
