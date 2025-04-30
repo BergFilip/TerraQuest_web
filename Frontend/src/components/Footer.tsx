@@ -20,7 +20,6 @@ const Footer = () => {
                         </a>
                     </div>
                     <div className="f_up_icon_section">
-                        {/* Ikony */}
                     </div>
                 </div>
 

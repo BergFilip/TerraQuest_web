@@ -176,7 +176,7 @@
 
     .container {
       display: flex;
-      gap: 15px; /* Zmniejszenie odstępu między kontenerami */
+      gap: 15px;
     }
 
     .user-card,
@@ -188,12 +188,12 @@
     }
 
     .user-card {
-      width: 20rem; /* Zmniejszenie szerokości */
-      height: 30rem; /* Zmniejszenie wysokości */
+      width: 20rem;
+      height: 30rem;
       text-align: center;
 
       h2 {
-        font-size: 18px; /* Dostosowanie rozmiaru czcionki */
+        font-size: 18px;
       }
 
       .user-avatar {
@@ -205,7 +205,7 @@
 
       .email {
         color: gray;
-        font-size: 12px; /* Dostosowanie rozmiaru czcionki */
+        font-size: 12px;
         margin-bottom: 40px;
       }
 
@@ -214,7 +214,7 @@
           display: flex;
           height: 1.75rem;
           align-items: center;
-          padding: 10px 0; /* Zmniejszenie paddingu */
+          padding: 10px 0;
           font-size: 12px;
           cursor: pointer;
           transition: background 0.2s;
@@ -225,13 +225,13 @@
 
           i {
             margin-right: 8px;
-            font-size: 14px; /* Dostosowanie rozmiaru ikony */
+            font-size: 14px;
           }
 
           p {
             text-align: left;
-            padding: 8px; /* Zmniejszenie paddingu */
-            font-size: 12px; /* Dostosowanie rozmiaru czcionki */
+            padding: 8px;
+            font-size: 12px;
             border-bottom: black 1px solid;
             width: 100%;
           }
@@ -241,15 +241,15 @@
 
     .booking-history {
       flex: 1;
-      padding-left: 2rem; /* Zmniejszenie paddingu */
-      padding-right: 2rem; /* Zmniejszenie paddingu */
-      height: 30rem; /* Zmniejszenie wysokości */
-      width: 35rem; /* Zmniejszenie szerokości */
+      padding-left: 2rem;
+      padding-right: 2rem;
+      height: 30rem;
+      width: 35rem;
       text-align: center;
       font-family: "Roboto Light", sans-serif;
 
       h2 {
-        font-size: 18px; /* Dostosowanie rozmiaru czcionki */
+        font-size: 18px;
       }
 
       .booking-list-container {
@@ -260,7 +260,7 @@
 
       .subtitle {
         color: gray;
-        font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
+        font-size: 14px;
         margin-bottom: 30px;
       }
 
@@ -278,7 +278,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px; /* Zmniejszenie paddingu */
+            padding: 12px;
             cursor: pointer;
           }
 
@@ -298,7 +298,7 @@
           .expand-btn {
             border: none;
             background: none;
-            font-size: 16px; /* Zmniejszenie rozmiaru przycisku */
+            font-size: 16px;
             cursor: pointer;
           }
 
@@ -622,11 +622,11 @@
   .user {
     display: flex;
     justify-content: center;
-    padding: 20px; /* Zmniejszenie paddingu */
+    padding: 20px;
 
     .container {
       display: flex;
-      flex-direction: column; /* Zmiana na układ pionowy */
+      flex-direction: column;
       align-items: center;
       gap: 20px;
     }
@@ -635,17 +635,17 @@
     .booking-history {
       background: white;
       border-radius: 12px;
-      padding: 15px; /* Zmniejszenie paddingu */
+      padding: 15px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .user-card {
-      width: 24rem; /* Zmniejszenie szerokości */
-      height: 25rem; /* Zmniejszenie wysokości */
+      width: 24rem;
+      height: 25rem;
       text-align: center;
 
       h2 {
-        font-size: 16px; /* Zmniejszenie rozmiaru czcionki */
+        font-size: 16px;
       }
 
       .user-avatar {
@@ -657,7 +657,7 @@
 
       .email {
         color: gray;
-        font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+        font-size: 12px;
         margin-bottom: 30px;
       }
 
@@ -667,7 +667,7 @@
           height: 1.5rem;
           align-items: center;
           margin: 10px;
-          padding: 8px 0; /* Zmniejszenie paddingu */
+          padding: 8px 0;
           font-size: 12px;
           cursor: pointer;
           transition: background 0.2s;
@@ -683,7 +683,7 @@
 
           p {
             text-align: left;
-            padding: 6px; /* Zmniejszenie paddingu */
+            padding: 6px;
             font-size: 12px;
             border-bottom: black 1px solid;
             width:250px;
@@ -694,15 +694,15 @@
 
     .booking-history {
       flex: 1;
-      padding-left: 1rem; /* Zmniejszenie paddingu */
-      padding-right: 1rem; /* Zmniejszenie paddingu */
-      height: 25rem; /* Zmniejszenie wysokości */
-      width: 24rem; /* Zmniejszenie szerokości */
+      padding-left: 1rem;
+      padding-right: 1rem;
+      height: 25rem;
+      width: 24rem;
       text-align: center;
       font-family: "Roboto Light", sans-serif;
 
       h2 {
-        font-size: 16px; /* Zmniejszenie rozmiaru czcionki */
+        font-size: 16px;
       }
 
       .booking-list-container {
@@ -713,7 +713,7 @@
 
       .subtitle {
         color: gray;
-        font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+        font-size: 12px;
         margin-bottom: 20px;
       }
 
@@ -731,7 +731,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px; /* Zmniejszenie paddingu */
+            padding: 10px;
             cursor: pointer;
           }
 
@@ -751,7 +751,7 @@
           .expand-btn {
             border: none;
             background: none;
-            font-size: 16px; /* Zmniejszenie rozmiaru przycisku */
+            font-size: 16px;
             cursor: pointer;
           }
 
@@ -760,12 +760,12 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
-            padding: 0 8px; /* Zmniejszenie paddingu */
+            padding: 0 8px;
             background: transparent;
 
             p {
               margin: 0;
-              font-size: 12px; /* Zmniejszenie rozmiaru czcionki */
+              font-size: 12px;
               color: #555;
             }
           }
@@ -811,7 +811,7 @@
     .user-card,
     .booking-history {
       height: 27.063rem;
-      //max-width: 350px; // lub 100%, zależnie od paddingów kontenera
+      //max-width: 350px;
       width: 21rem;
 
       .user-avatar {
