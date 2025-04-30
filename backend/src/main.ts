@@ -33,7 +33,8 @@ app.use('/api/hotels', hotelsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/help1', helpRouter);
-app.use('/api/reservations', reservation);
+//app.use("/api/reservations",reservation);
+
 
 app.use('/img', express.static(path.resolve(__dirname, 'img')));
 
