@@ -675,6 +675,226 @@ Testy komponentu `Error`, który wyświetla komunikat o błędnej stronie oraz p
 - `@components/Button.tsx` – mockowany komponent przycisku
 
 ---
+### 📄 Explore.test.tsx – [Testy komponentu Explore]
+**Opis:**  
+Testy komponentu `Explore`, który wyświetla listę hoteli, sekcję recenzji oraz formularz wyszukiwania. Sprawdzane są stany ładowania, nawigacja, paginacja i przeliczanie cen.
+
+**Funkcje:**
+- Renderowanie komponentu z nagłówkiem
+- Pobieranie hoteli i recenzji z API (`axios`)
+- Obsługa formularza i zapis danych do `localStorage`
+- Przekierowanie użytkownika po wyszukaniu (`/search`)
+- Kliknięcie hotelu i przejście do strony produktu
+- Obsługa paginacji i blokowanie przycisków
+- Stany ładowania i błędów
+- Wyświetlanie przeliczonych cen (np. USD → PLN)
+- Formatowanie zakresu dat w nagłówku
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – renderowanie, selektory, asercje
+- `jest` – mockowanie `axios`, `useNavigate` z `react-router-dom`
+- `../sites/Explore.tsx` – testowany komponent
+
+---
+
+### 📄 Help.test.tsx – [Testy komponentu Help]
+**Opis:**  
+Testy komponentu `Help`, który zawiera wyszukiwarkę pytań i sekcję FAQ. Weryfikowana jest obsługa inputa, przekazywanie frazy do komponentu oraz struktura strony.
+
+**Funkcje:**
+- Renderowanie komponentu z nagłówkiem i inputem
+- Obsługa wpisywanego tekstu
+- Przekazywanie wartości inputa do zamockowanego `FaqSection`
+- Obecność ikony wyszukiwania
+- Weryfikacja klas CSS i struktury DOM
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – renderowanie, zdarzenia, selektory
+- `jest` – mock `../components/help_section.tsx`
+- `../sites/Help.tsx` – testowany komponent
+
+---
+
+### 📄 Home.test.tsx – [Testy komponentu Home]
+**Opis:**  
+Testy komponentu `Home`, zawierającego formularz wyszukiwania i listę promowanych hoteli. Sprawdzane jest ładowanie danych, paginacja oraz struktura formularza.
+
+**Funkcje:**
+- Renderowanie formularza z polami i przyciskiem
+- Pobieranie danych hoteli z API (`axios`)
+- Wyświetlanie komunikatu ładowania przed otrzymaniem danych
+- Obsługa przycisków paginacji i zmiana widocznych hoteli
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – testowanie komponentów i interakcji
+- `jest` – mock `axios`
+- `react-router-dom` – `MemoryRouter` do testowania routingu
+- `../sites/Home.tsx` – testowany komponent
+
+---
+
+### 📄 Login.test.tsx – [Testy komponentu Login]
+**Opis:**  
+Testy komponentu `Login`, odpowiedzialnego za logowanie użytkownika. Testowane są interakcje z formularzem, obsługa błędów oraz przekierowania po zalogowaniu.
+
+**Funkcje:**
+- Renderowanie inputów i przycisków formularza logowania
+- Wprowadzanie danych do pól formularza
+- Symulacja udanego logowania i przekierowania do `/user`
+- Obsługa niepoprawnych danych i wyświetlanie komunikatu o błędzie
+- Obsługa błędów sieci i wyświetlanie komunikatu ogólnego
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – testowanie renderowania i interakcji
+- `jest` – mockowanie `useAuth`, `useNavigate` z `react-router-dom`, `fetch`
+- `../sites/Login.tsx` – testowany komponent
+
+---
+
+### 📄 Newsletter.test.tsx – [Testy komponentu Newsletter]
+**Opis:**  
+Testy komponentu `Newsletter`, który umożliwia zapis do newslettera. Weryfikowane są atrybuty pól, stylizacja, stan początkowy oraz dostępność formularza.
+
+**Funkcje:**
+- Renderowanie formularza zapisu z etykietami i przyciskiem
+- Prefill pola e-mail, gdy użytkownik jest zalogowany
+- Sprawdzenie poprawnych atrybutów inputa i przycisku
+- Weryfikacja klas CSS kontenera głównego i wrappera inputa
+- Sprawdzenie dostępności formularza (aria-label)
+- Brak alertu przy początkowym renderze
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – renderowanie, selektory, atrybuty
+- `jest` – mockowanie `useAuth`, `useNavigate`, `fetch`
+- `../sites/Newsletter.tsx` – testowany komponent
+
+---
+
+### 📄 PrivacyPolicies.test.tsx – [Testy komponentu PrivacyPolicies]
+**Opis:**  
+Testy komponentu `PrivacyPolicies`, renderującego politykę prywatności. Sprawdzana jest obecność nagłówków, sekcji, danych kontaktowych i dat.
+
+**Funkcje:**
+- Renderowanie tytułu strony i nagłówka "Polityka Prywatności"
+- Wyświetlanie dat wejścia w życie i ostatniej aktualizacji
+- Renderowanie sekcji informacyjnych, np. "Postanowienia ogólne"
+- Wyświetlanie danych kontaktowych: e-mail, telefon, adres
+- Obecność sekcji dotyczącej plików cookies
+
+**Zależności:**
+- `@testing-library/react` – renderowanie i selektory
+- `@testing-library/jest-dom` – asercje
+- `../sites/Privacy_policy.tsx` – testowany komponent
+
+---
+
+### 📄 Product.test.tsx – [Testy komponentu Product]
+**Opis:**  
+Testy komponentu `Product`, który renderuje szczegóły hotelu, w tym informacje o hotelu, udogodnienia, recenzje, oraz obsługę rezerwacji. Testowane są funkcje związane z ładowaniem danych, wyświetlaniem informacji, oraz rezerwacją.
+
+**Funkcje:**
+- Renderowanie stanu ładowania danych hotelu i recenzji
+- Wyświetlanie szczegółów hotelu, w tym nazwa, adres, cena, i ocena
+- Renderowanie sekcji udogodnień hotelu
+- Wyświetlanie opisu hotelu
+- Ładowanie recenzji z API
+- Obsługa rezerwacji hotelu przez użytkownika
+- Wyświetlanie komunikatów o błędach przy nieudanej rezerwacji
+- Obliczanie cen po zniżkach
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – renderowanie, selektory, atrybuty
+- `jest` – mockowanie `useAuth`, `axios`, `Storage`, `fetch`
+- `../sites/Product.tsx` – testowany komponent
+- `../context/AuthContext` – mockowany kontekst autoryzacji
+- `axios` – mockowanie zapytań HTTP
+
+---
+
+### 📄 Register.test.tsx – [Testy komponentu Register]
+**Opis:**  
+Testy komponentu `Register`, który odpowiada za rejestrację użytkownika. Testowane są interakcje z formularzem rejestracyjnym, w tym pola input, checkbox i przycisk.
+
+**Funkcje:**
+- Renderowanie formularza rejestracyjnego z polami `email`, `hasło`, `checkbox` oraz przyciskiem
+- Weryfikacja możliwości wpisywania danych w polach email i hasło
+- Sprawdzenie stanu checkboxa (czy jest zaznaczony)
+- Testowanie renderowania formularza w kontekście routera i autoryzacji
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – testowanie interakcji i renderowania
+- `jest` – mockowanie funkcji `fetch`, `AuthProvider`, `BrowserRouter`
+- `../sites/Registration.tsx` – testowany komponent
+- `../context/AuthContext` – kontekst autoryzacji
+
+---
+# 📄 Search.test.tsx – [Testy komponentu Search]
+
+Opis:
+Testy komponentu Search, który odpowiada za wyszukiwanie hoteli. Testowane są interakcje z formularzem wyszukiwania, filtrowanie wyników oraz poprawność nawigacji.
+
+Funkcje:
+
+- Renderowanie formularza wyszukiwania z polami na miejsce docelowe, daty wyjazdu, liczby osób.
+- Testowanie wczytywania zapisanych parametrów wyszukiwania z localStorage.
+- Testowanie przesyłania formularza i wywoływania zapytań do API w celu pobrania wyników.
+- Sprawdzanie poprawności filtrów według ceny, oceny oraz rabatów.
+- Testowanie sortowania wyników według ceny (rosnąco/malejąco) oraz oceny.
+- Testowanie nawigacji do szczegółów oferty po kliknięciu przycisku "Zobacz ofertę".
+- Obsługa stanu ładowania oraz braku wyników.
+
+Zależności:
+
+- @testing-library/react, @testing-library/jest-dom – testowanie interakcji i renderowania
+- jest – mockowanie funkcji axios, localStorage i hooków
+- ../sites/Search.tsx – testowany komponent
+- axios – do mockowania zapytań HTTP
+- react-router-dom – do mockowania nawigacji
+
+---
+
+# 📄 User.test.tsx – [Testy komponentu User]
+
+Opis:
+Testy komponentu User, który odpowiada za wyświetlanie danych użytkownika oraz jego rezerwacji. Testowane są interakcje z danymi użytkownika, stan logowania oraz możliwość wylogowania.
+
+Funkcje:
+
+- Weryfikacja poprawności stanu użytkownika (zalogowany/niezalogowany).
+- Testowanie renderowania danych użytkownika (imię, nazwisko, email).
+- Testowanie wyświetlania rezerwacji użytkownika, w tym szczegóły rezerwacji.
+- Testowanie możliwości wylogowania i przekierowania na stronę logowania.
+- Testowanie stanu ładowania przy weryfikacji sesji.
+- Sprawdzanie, czy użytkownik, który nie jest zalogowany, zostaje przekierowany na stronę logowania.
+
+Zależności:
+
+- @testing-library/react, @testing-library/jest-dom – testowanie interakcji i renderowania
+- jest – mockowanie funkcji axios oraz hooków
+- ../sites/User.tsx – testowany komponent
+- ../context/AuthContext – kontekst autoryzacji
+- react-router-dom – do mockowania nawigacji
+- axios – do mockowania zapytań HTTP
+
+---
+
+# 📄 Weather.test.tsx – [Testy komponentu Weather]
+
+Opis:
+Testy komponentu Weather, który wyświetla informacje o dostępności strony z prognozą pogody. Testowane są interakcje z przyciskiem powrotu na stronę główną oraz renderowanie komunikatu o niedostępności strony.
+
+Funkcje:
+
+- Renderowanie komunikatu o niedostępności strony z prognozą pogody.
+- Testowanie renderowania przycisku powrotu na stronę główną.
+- Testowanie poprawności przekazywanych propsów do komponentu Button.
+
+Zależności:
+
+- @testing-library/react, @testing-library/jest-dom – testowanie interakcji i renderowania
+- jest – mockowanie przycisku powrotu
+- ../sites/Weather.tsx – testowany komponent
+- @components/Button.tsx – mockowany komponent przycisku
 
 ## Makieta projektu - Figma:
 
