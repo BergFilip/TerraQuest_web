@@ -7,11 +7,11 @@ router.post('/', async (req: Request, res: Response) => {
     const { email } = req.body;
 
     if (!email) {
-        res.status(400).json({
+         res.status(400).json({
             success: false,
             error: 'Email jest wymagany'
         });
-        return;
+        return
     }
 
     try {
@@ -47,7 +47,7 @@ router.post('/', async (req: Request, res: Response) => {
             .single();
 
         if (updateError) {
-            res.status(500).json({
+             res.status(500).json({
                 success: false,
                 error: 'Błąd bazy danych',
                 details: updateError.message
@@ -55,7 +55,7 @@ router.post('/', async (req: Request, res: Response) => {
             return
         }
 
-        res.status(200).json({
+         res.status(200).json({
             success: true,
             message: 'Zapisano do newslettera',
             data: updatedData

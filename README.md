@@ -23,6 +23,9 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - ✅ **Rejestracja i logowanie użytkownika**  
   Użytkownicy mogą się zarejestrować, zalogować i zarządzać swoimi danymi.
 
+- ✅ **Niezwykłe oferty promocyjne**  
+  Użytkownicy mogą się otrzymać spersonalizowaną ofertę promocyjną, poprzez zapisanie się do Newslettera.
+
 - ✅ **Wyszukiwanie dostępnych obiektów**  
   Użytkownicy mogą wyszukiwać dostępne hotele, apartamenty i inne obiekty według daty, lokalizacji, ceny i oceny.
 
@@ -30,16 +33,19 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
   Użytkownicy mogą dokonywać rezerwacji obiektów na określony czas.
 
 - ✅ **Zarządzanie rezerwacjami**  
-  Użytkownicy mogą przeglądać, edytować lub anulować swoje rezerwacje.
+  Użytkownicy mogą przeglądać lub anulować swoje rezerwacje.
 
 - ✅ **Ocenianie i recenzowanie obiektów**  
   Po zakończeniu pobytu użytkownicy mogą oceniać obiekty oraz zostawiać opinie.
 
 - ✅ **Filtrowanie obiektów po różnych kryteriach**  
-  Możliwość filtrowania obiektów np. po cenie, ocenie, dostępności, rodzaju obiektu (hotel, apartament, hostel).
+  Możliwość filtrowania obiektów np. po cenie, ocenie, rodzaju zniżki.
+
+- ✅ **Sortowanie obiektów po różnych kryteriach**  
+  Możliwość przyjrzystego i łatwego sortowania obiektów np. po cenie malejącej, ocenie rosnącej, nowe oferty oraz najlepsze oferty.
 
 - ✅ **Bezpieczne przechowywanie haseł (bcrypt)**  
-  Hasła użytkowników są bezpiecznie przechowywane przy pomocy algorytmu `????`.
+  Hasła użytkowników są bezpiecznie przechowywane przy pomocy algorytmu `bcryptjs`.
 
 - ✅ **Podstawowa administracja**  
   Administratorzy mogą zarządzać obiektami (dodawanie nowych, edytowanie, usuwanie).
@@ -55,33 +61,33 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
    ```bash
       cd TerraQuest
    ```
-**⬇️ Krok 3 – Przejście do frontendu**
-   ```bash
-      cd frontend
-   ```
+**⬇️ Krok 3 - Przejście do backendu**
+  ```bash
+    cd Backend
+  ```
 **📦 Krok 4 – Instalacja zależności**
    ```bash
       npm install
    ```
-**▶️ Krok 5 – Uruchomienie Frontendu**
+**▶️ Krok 5 – Uruchomienie Backendu**
+   ```bash
+      npm run dev
+   ```
+**⬇️ Krok 6 – Przejście do frontendu**
+   ```bash
+      cd ../Frontend
+   ```
+**📦 Krok 7 – Instalacja zależności**
+   ```bash
+      npm install
+   ```
+**▶️ Krok 8 – Uruchomienie Frontendu**
    ```bash
       npm run dev
    ```
 **🌐 Po chwili aplikacja będzie dostępna pod adresem:**
    ```bash
       http://localhost:5173
-   ```
-**⬇️ Krok 6 - Przejście do backendu**
-  ```bash
-    cd ../backend
-  ```
-**📦 Krok 7 – Instalacja zależności**
-   ```bash
-      npm install
-   ```
-**▶️ Krok 8 – Uruchomienie Backendu**
-   ```bash
-      npm run dev
    ```
 ---
 
@@ -103,11 +109,11 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Explore.tsx**: [Wiktor]
 - **Help.tsx**: [Filip]
 - **Home.tsx**: [Wiktor]
-- **Login.tsx**: [Wiktor/Filip]
+- **Login.tsx**: [Wiktor]
 - **Newsletter.tsx**: [Filip]
 - **Privacy_policy.tsx**: [Wiktor]
 - **Product.tsx**: [Jacek]
-- **Registration.tsx**: [Wiktor/Filip]
+- **Registration.tsx**: [Wiktor]
 - **Search.tsx**: [Jacek]
 - **User.tsx**: [Jacek]
 - **Weather.tsx**: [Filip]
@@ -115,6 +121,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 #### `styles`
 - **About.scss**: [Filip]
 - **Contact.scss**: [Filip]
+- **Explore.scss**: [Wiktor]
 - **Error.scss**: [Filip]
 - **Help.scss**: [Filip]
 - **Home.scss**: [Wiktor]
@@ -136,15 +143,26 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **newsletter.ts**: [Wiktor]
 - **reviews.ts**: [Wiktor]
 - **supabase.ts**: [Każdy]
+- **reservation.ts**: [Filip]
+- **userBookings.ts**: [Filip]
+- **product.ts**: [Wiktor]
+- **help1.ts**: [Jacek]
+- **main.ts**: [Jacek]
+- **supabaseClient.ts**: [Wiktor / Filip]
 
 ---
 
 ## Baza danych
 
-- **Supabase** [Każdy] <br><br>
+- **Supabase** [Każdy] 
+- **users_terraQuest** [Wiktor] 
+- **reviews_terraQuest** [Wiktor] 
+- **help** [Jacek] 
+- **Reservation** [Filip] 
+- **users_info** [Filip] <br><br>
 
 # ZAKTUALIZOWAĆ SCHEMAT BAZY
-<img src="backend/src/img/Database.png" alt="Schemat bazy danych">
+<img src="backend/src/img/baza_schemat.png" alt="Schemat bazy danych">
 
 ---
 
@@ -168,11 +186,17 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ### Backend
 
-- **auth.test.ts**: [Filip]
-- **explore.test.ts**: [Wiktor]
-- **locations.test.ts**: [Wiktor]
-- **reviews.test.ts**: [Wiktor]
-- **supabase.test.ts**: [Każdy]
+- **auth.ts**: [Filip]
+- **explore.ts**: [Wiktor]
+- **newsletter.ts**: [Wiktor]
+- **reviews.ts**: [Wiktor]
+- **supabase.ts**: [Każdy]
+- **reservation.ts**: [Filip]
+- **userBookings.ts**: [Filip]
+- **product.ts**: [Wiktor]
+- **help1.ts**: [Jacek]
+- **main.ts**: [Jacek]
+- **supabaseClient.ts**: [Wiktor / Filip]
 
 ---
 
@@ -181,113 +205,155 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Przygotowanie dokumentacji technicznej**: [Każdy]
 
 ---
-
-# 🌐 Opis podstron / backendu
-
-## Frontend:
-
-### 🧩 `App.tsx`
+  
+  # 🌐 Opis podstron / backendu
+  
+  ## Frontend:
+  
+  ### 🧩 `App.tsx`
 - **Opis**:  
-  Główny komponent aplikacji. Odpowiada za strukturę routingu i layout globalny.
-- **Funkcje**:
-  - Ustawienie tras (React Router)
-  - Globalne komponenty (np. Header, Footer)
-- **Zależności**: `main.tsx`, `routes`, `components`
+  Główny komponent aplikacji React, odpowiedzialny za konfigurację routingu przy użyciu `react-router-dom`. Renderuje nagłówek (`Header`), stopkę (`Footer`) oraz zawartość główną opartą o aktualną ścieżkę URL.
+
+---
+
+## 📄 Lista podstron:
+
+| Ścieżka                  | Komponent               | Opis                                                                 |
+|--------------------------|-------------------------|----------------------------------------------------------------------|
+| `/` / `/home`            | `Home.tsx`              | 🏠 Strona główna aplikacji                                           |
+| `/privacypolicies`       | `Privacy_policy.tsx`    | 🔒 Polityka prywatności                                              |
+| `/newsletter`            | `Newsletter.tsx`        | 📰 Zapis do newslettera                                              |
+| `/about`                 | `About.tsx`             | ℹ️ Informacje o firmie/projekcie                                     |
+| `/product/:hotelId`      | `Product.tsx`           | 🏨 Szczegóły konkretnego produktu (dynamiczne ID)                    |
+| `/help`                  | `Help.tsx`              | ❓ Centrum pomocy / FAQ                                               |
+| `/user`                  | `User.tsx`              | 👤 Panel użytkownika                                                 |
+| `/contact`               | `Contact.tsx`           | 📬 Formularz kontaktowy                                              |
+| `/login`                 | `Login.tsx`             | 🔐 Logowanie użytkownika                                             |
+| `/register`              | `Registration.tsx`      | 📝 Rejestracja nowego użytkownika                                    |
+| `/weather`               | `Weather.tsx`           | ☀️ Pogoda zintegrowana z zewnętrznym API                            |
+| `/explore`               | `Explore.tsx`           | 🌍 Eksploracja dostępnych miejsc/ofert                               |
+| `/search`                | `Search.tsx`            | 🔍 Wyszukiwanie zawartości                                           |
+| `/error`                 | `Error.tsx`             | ⚠️ Wyświetlana w przypadku błędnej ścieżki                          |
+| `*`                      | `Navigate -> /error`    | 🔁 Przekierowanie każdej innej ścieżki do strony błędu              |
+
+---
+
+## 🧱 Układ aplikacji
+
+- **`<Header />`** – stały pasek nawigacji u góry
+- **`<Footer />`** – globalna stopka aplikacji
+- **`<Routes>`** – dynamiczna zawartość główna na podstawie adresu URL
 
 ---
 
 ### 🌐 `main.tsx`
 - **Opis**:  
-  Punkt wejściowy aplikacji. Renderuje aplikację do DOM.
+  Główny punkt wejściowy aplikacji React. Odpowiada za renderowanie komponentu głównego do drzewa DOM oraz konfigurację podstawowych dostawców kontekstu i routingu.
 - **Funkcje**:
-  - Montowanie `<App />`
-  - Konfiguracja `React.StrictMode`
-
+  - Montowanie komponentu <App /> do elementu DOM o id root
+  - Otoczenie aplikacji w React.StrictMode – tryb pomocny w wykrywaniu potencjalnych problemów
+  - Konfiguracja klienta routingu za pomocą BrowserRouter z react-router-dom
+  - Dostarczenie kontekstu uwierzytelniania za pomocą AuthProvider
 ---
 
 ### 📘 `About.tsx`
 - **Opis**:  
-  Strona informacyjna o projekcie lub firmie.
+  Główna strona informacyjna aplikacji TerraQuest, przedstawiająca jej misję, historię i kluczowe dane.
 - **Zawiera**: tekst + ilustracje
-
+- **Funkcje**:
+  - Prezentacja misji oraz wartości marki TerraQuest
+  - Opis funkcjonalności i unikalnych cech platformy
+  - Wyświetlenie danych statystycznych (kraje, języki, strony itp.)
+  - Oś czasu z kluczowymi wydarzeniami w historii rozwoju firmy
 ---
 
 ### 📩 `Contact.tsx`
 - **Opis**:  
-  Formularz kontaktowy + dane kontaktowe
+  Strona kontaktowa aplikacji TerraQuest. Udostępnia użytkownikom możliwość wysłania wiadomości poprzez formularz.
 - **Funkcje**:
-  - Walidacja formularza
+  - Wyświetlenie formularza kontaktowego
   - Możliwość wysłania wiadomości
 
 ---
 
 ### 🚧 `Error.tsx`
 - **Opis**:  
-  Strona błędu 404 lub innego – wyświetlana gdy trasa nie istnieje
+  Strona błędu 404, wyświetlana gdy użytkownik trafi na nieistniejącą trasę w aplikacji TerraQuest.
 - **Funkcje**:
-  - Przekierowanie do Home
-  - Komunikat dla użytkownika
+  - Informowanie użytkownika o braku dostępnej strony
+  - Wyświetlenie przycisku nawigującego z powrotem do strony głównej
 
 ---
 
 ### 🔍 `Explore.tsx`
 - **Opis**:  
-  Strona eksploracji miejsc – propozycje podróży, ciekawe lokalizacje
+  Strona eksploracji ofert hotelowych z formularzem wyszukiwania, listą promowanych hoteli i opiniami klientów.
 - **Funkcje**:
-  - Interaktywne kafelki
-  - Dynamiczne generowanie treści
+  - Pobieranie i wyświetlanie hoteli oraz recenzji z API
+  - Przeliczanie cen na PLN, paginacja ofert
+  - Formularz z nawigacją do /search
+  - Sekcja promocyjna i baner aplikacji
 
 ---
 
 ### ❓ `Help.tsx`
 - **Opis**:  
-  FAQ lub sekcja z pomocą dla użytkownika
+  Strona pomocy z wyszukiwarką pytań i odpowiedzi (FAQ).
 - **Funkcje**:
-  - Rozwijane pytania
-  - Stylowanie UX-friendly
+  - Obsługa pola wyszukiwania zapytań
+  - Dynamiczne filtrowanie sekcji FAQ (FaqSection)
 
 ---
 
 ### 🏠 `Home.tsx`
 - **Opis**:  
-  Strona główna, landing page projektu
+  Strona główna aplikacji turystycznej — prezentuje oferty, cele podróży, inspiracje i sekcję FAQ.
 - **Zawiera**:
-  - Banery
-  - Sekcje promujące funkcje
-  - Nawigacja do reszty podstron
+  - Formularz wyszukiwania z obsługą localStorage i przekierowaniem
+  - Dynamiczne ładowanie hoteli z API 
+  - Wiele sekcji podróżniczych z komponentami 
+  - Automatyczne przeliczanie waluty (USD/EUR → PLN)
+  - Nawigacja i paginacja wyników hoteli
 
 ---
 
 ### 🔐 `Login.tsx`
 - **Opis**:  
-  Formularz logowania
+  Formularz logowania użytkownika do aplikacji, z walidacją, obsługą błędów i integracją z backendem.
 - **Funkcje**:
-  - Walidacja danych
-  - Obsługa błędów
+  - Logowanie za pomocą emaila i hasła
+  - Obsługa błędów serwera i wyświetlanie komunikatów
+  - Przekierowanie po zalogowaniu do /user
+  - Integracja z kontekstem autoryzacji useAuth()
+  - Link do strony rejestracji /register
 
 ---
 
 ### 📬 `Newsletter.tsx`
 - **Opis**:  
-  Subskrypcja newslettera
+  Formularz do zapisania użytkownika do newslettera, z walidacją emaila, obsługą błędów, i sprawdzeniem logowania.
 - **Funkcje**:
-  - Walidacja e-mail
-  - Obsługa potwierdzeń
+  - Sprawdzenie, czy użytkownik jest zalogowany
+  - Walidacja poprawności adresu email
+  - Obsługa błędów
+  - Możliwość edytowania swojego adresu email w przypadku zalogowania
+  - Przekierowanie do strony logowania, jeśli użytkownik nie jest zalogowany
 
 ---
 
 ### 🛡️ `Privacy_policy.tsx`
 - **Opis**:  
-  Polityka prywatności
-- **Zawiera**:
-  - Tekst statyczny
-  - Linki do zewnętrznych dokumentów
+  Strona przedstawiająca Politykę Prywatności aplikacji TravelQuest.
+- **Funkcje**:
+  - Wyświetlanie podstawowych informacji o firmie 
+  - Szczegółowy opis przetwarzania danych osobowych
+  - Możliwość kontaktu z administratorem poprzez e-mail, telefon lub adres firmy.
 
 ---
 
 ### 📦 `Product.tsx`
 - **Opis**:  
-  Widok konkretnego produktu/oferty
+  Strona prezentacji szczegółów hotelu z funkcją rezerwacji i przeglądem recenzji użytkowników.
 - **Funkcje**:
   - Pobieranie danych z API
   - Wyświetlanie szczegółów
@@ -298,27 +364,31 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Opis**:  
   Rejestracja nowego użytkownika
 - **Funkcje**:
-  - Walidacja formularza
-  - Hashowanie hasła (back-end)
+  - Wyświetlanie szczegółowych informacji o hotelu.
+  - Możliwość rezerwacji hotelu tylko dla zalogowanych użytkowników.
+  - Dynamiczne przeliczanie cen z USD i EUR na PLN według ustalonych kursów walutowych.
+  - Ładowanie i wyświetlanie recenzji od innych użytkowników oraz prezentacja statystyk z ocenami.
 
 ---
 
 ### 🔎 `Search.tsx`
 - **Opis**:  
-  Strona wyszukiwania miejsc/ofert
+  Strona do wyszukiwania ofert
 - **Funkcje**:
-  - Filtry
-  - Sortowanie
-  - Integracja z back-endem
+  - Wyświetlanie informacji o hotelach
+  - Możliwość sortowania lokali
+  - Przejście do szczegółów wybranego hotelu i możliwość dokonania rezerwacji
 
 ---
 
 ### 👤 `User.tsx`
 - **Opis**:  
-  Profil użytkownika
+  Strona panelu użytkownika systemu rezerwacji hoteli, umożliwiająca zarządzanie profilem oraz przeglądanie historii rezerwacji.
 - **Funkcje**:
-  - Edycja danych
-  - Historia rezerwacji
+  - Wyświetlanie danych użytkownika
+  - Aktualizacja danych profilowych
+  - Zarządzanie subskrypcją newslettera
+  - Funkcja wylogowania
 
 ---
 
