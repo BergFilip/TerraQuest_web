@@ -72,7 +72,6 @@ function PrivacyPolicies() {
                     <li>Sprzeciw wobec przetwarzania.</li>
                     <li>Wycofanie zgody.</li>
                 </ul>
-                <p>Kontakt: <a href="mailto:kontakt@travelquest.pl">kontakt@travelquest.pl</a></p>
 
                 <h2>8. Pliki cookies i technologie śledzące</h2>
                 <p>Nasza strona korzysta z plików cookies do poprawnego działania, analizy ruchu i personalizacji
