@@ -9,7 +9,7 @@ function Help() {
         <section className="help_site" data-testid="search-form">
             <div className="section9">
                 <article>
-                    <h1>Cześć, jak możemy ci pomóc?</h1>
+                    <h1>Cześć, jak możemy ci pomóc?</h1>,
                     <div>
                         <form action="">
                             <i className="fa-solid fa-magnifying-glass"></i>
