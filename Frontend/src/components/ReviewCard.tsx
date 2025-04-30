@@ -16,7 +16,7 @@ type ReviewCardComponentProps = {
 
 const ReviewCard = ({ reviews }: ReviewCardComponentProps) => {
     const [currentPage, setCurrentPage] = useState(0);
-    const reviewsPerPage = 3;  // Domyślnie 3 recenzje na stronę
+    const reviewsPerPage = 3;
     const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
     const handlePageChange = (page: number) => {
