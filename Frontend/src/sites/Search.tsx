@@ -129,7 +129,7 @@ function Search() {
     }, [selectedStars, rangeValue, selectedDiscounts, hotels]);
 
     const sortHotels = (label: string) => {
-        let sortedHotels = [...filteredHotels];
+        const sortedHotels = [...filteredHotels];
 
         if (label === "Cena rosnąco") {
             sortedHotels.sort((a, b) => {

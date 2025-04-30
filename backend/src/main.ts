@@ -8,6 +8,7 @@ import authRouter from './other/auth';
 import hotelsRouter from './routes/explore';
 import reviewsRouter from './routes/reviews';
 import productsRouter from './routes/product';
+import reservation from "./other/reservation";
 
 import helpRouter from './routes/help1';
 import path from "path";
@@ -32,6 +33,7 @@ app.use('/api/hotels', hotelsRouter);
 app.use('/api/products', productsRouter);  // Upewnij się, że ścieżka jest poprawna
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/help1', helpRouter);
+app.use('/api/reservations', reservation);
 
 app.use('/img', express.static(path.resolve(__dirname, 'img')));
 
