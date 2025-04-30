@@ -298,7 +298,9 @@ function User() {
                                             </div>
                                         </div>
                                         <div className={`booking-details ${expanded === index ? "visible" : ""}`}>
-                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
+                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe
+                                                udogodnienia, takie jak basen, restauracja i wiele innych. Idealne
+                                                miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
                                 ))}
