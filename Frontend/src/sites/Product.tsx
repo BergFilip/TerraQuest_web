@@ -3,6 +3,7 @@ import HSection from "../components/h-section.tsx";
 import ReviewCard from "../components/ReviewCard.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 // Typ dla recenzji
 type Review = {
@@ -14,9 +15,21 @@ type Review = {
     image: string;
 };
 
+// Typ dla hotelu
+type Hotel = {
+    PropertyName: string;
+    PropertyAddress: string;
+    PropertyRating: number;
+    PropertyImageUrlHighRes: string;
+    ReferencePrice: number;
+    ReferencePriceCurrency: string;
+    MaxDiscountPercent: number;
+};
+
 function Product() {
+    const { isLoggedIn, userEmail } = useAuth();
     const [reviews, setReviews] = useState<Review[]>([]);
-    const [hotel, setHotel] = useState<any>(null); // Zmienna do przechowywania danych hotelu
+    const [hotel, setHotel] = useState<Hotel | null>(null); // Poprawione tutaj
 
     // Przykładowe kursy walut
     const [currencyRates] = useState({
@@ -24,11 +37,39 @@ function Product() {
         EUR: 4.5,
     });
 
+    const handleReservation = async () => {
+        if (!isLoggedIn || !userEmail) {
+            alert("❌ Musisz być zalogowany, aby zarezerwować hotel.");
+            return;
+        }
+
+        try {
+            const reservationData = {
+                userEmail,
+                hotel: hotel,
+                checkIn: new Date().toISOString().split('T')[0], // dzisiejsza data
+                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // data za 7 dni
+            };
+
+            const response = await axios.post(
+                "http://localhost:5000/api/reservations",
+                reservationData,
+                { withCredentials: true }
+            );
+
+            console.log("Odpowiedź serwera:", response.data);
+            alert("✅ Rezerwacja dodana!");
+        } catch (error) {
+            console.error("❌ Pełny błąd przy rezerwacji:", error);
+            alert(`❌ Błąd przy rezerwacji: ${error.response?.data?.message || error.message}`);
+        }
+    };
+
     // Pobieranie recenzji
     useEffect(() => {
         const fetchReview = async () => {
             try {
-                const res = await axios.get("/api/reviews");
+                const res = await axios.get("http://localhost:5000/api/reviews");
                 if (Array.isArray(res.data)) setReviews(res.data);
             } catch (error) {
                 console.error("❌ Błąd ładowania recenzji:", error);
@@ -38,30 +79,28 @@ function Product() {
         fetchReview();
     }, []);
 
-    // Pobieranie danych hotelu z localStorage
     useEffect(() => {
         const savedHotel = localStorage.getItem("selectedHotel");
         if (savedHotel) {
-            setHotel(JSON.parse(savedHotel)); // Ustawienie hotelu w stanie
+            setHotel(JSON.parse(savedHotel));
         }
     }, []);
 
-    // Funkcja do konwersji walut na PLN
+
     const convertToPLN = (price: number, currency: string): number => {
         if (currency === "USD") {
             return price * currencyRates.USD;
         } else if (currency === "EUR") {
             return price * currencyRates.EUR;
         }
-        return price; // Jeśli cena jest już w PLN
+        return price;
     };
 
-    // Obliczenie ceny po zniżce
+
     const calculateDiscountedPrice = (price: number, discountPercent: number): number => {
         return price * (1 - discountPercent / 100);
     };
 
-    // Renderowanie danych hotelu
     if (!hotel) {
         return <p>Ładowanie danych hotelu...</p>;
     }
@@ -72,16 +111,15 @@ function Product() {
         <section className="product_site">
             <div className="product_container">
                 <div className="product_box">
-                    <div className="product_header" >
+                    <div className="product_header">
                         <div className="product_main-image">
                             <img src={hotel.PropertyImageUrlHighRes} alt="Wybrane zdjęcie" />
                         </div>
                         <div className="product_info">
-                            <h2>{hotel.PropertyName} </h2>
+                            <h2>{hotel.PropertyName}</h2>
                             <span>({hotel.PropertyAddress})</span>
                             <p className="product_duration">za 1 noc</p>
                             <p className="product_price">
-                                {/* Pokazywanie ceny w PLN */}
                                 <span className="old_price">
                                     {convertToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency).toFixed(2)} PLN
                                 </span>
@@ -89,7 +127,7 @@ function Product() {
                                     {convertToPLN(discountedPrice, hotel.ReferencePriceCurrency).toFixed(2)} PLN
                                 </span>
                             </p>
-                            <button className="product_button">Zarezerwuj</button>
+                            <button className="product_button" onClick={handleReservation}>Zarezerwuj</button>
                             <p className="product_note">{hotel.PropertyAddress}</p>
                         </div>
                     </div>

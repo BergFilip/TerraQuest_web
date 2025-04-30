@@ -3,47 +3,156 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Update_Alert from "../components/Update_Alert";
+import axios from "axios";
+import Alert from "../components/Alert.tsx";
+
+interface Booking {
+    id: number;
+    PropertyName: string;
+    PropertyAddress: string;
+    CheckIn: string;
+    CheckOut: string;
+    ReferencePrice: number;
+    ReferencePriceCurrency: string;
+    MaxDiscountPercent: number;
+    created_at: string;
+    PropertyId: number;
+}
 
 function User() {
-    const [expanded, setExpandedIndex] = useState<number | null>(null);
-    const [bookings, setBookings] = useState([
-        { id: 1, date: "04.02.2025", route: "Poznań - Warszawa", price: "345zł" },
-        { id: 2, date: "05.02.2025", route: "Wrocław - Kraków", price: "290zł" },
-        { id: 3, date: "06.02.2025", route: "Gdańsk - Katowice", price: "410zł" },
-        { id: 4, date: "07.02.2025", route: "Łódź - Szczecin", price: "350zł" },
-    ]);
-
+    const [expanded, setExpanded] = useState<number | null>(null);
+    const [bookings, setBookings] = useState<Booking[]>([]);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [showAlert, setShowAlert] = useState<boolean>(false);
-    const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth, logout } = useAuth();
+    const [newsletter, setNewsletter] = useState<boolean>(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertTitle, setAlertTitle] = useState('');
+    const [showConfirmAlert, setShowConfirmAlert] = useState(false);
+    const [currentBookingToDelete, setCurrentBookingToDelete] = useState<number | null>(null);
+
+    const {
+        isLoggedIn,
+        userEmail,
+        userFirstName,
+        userLastName,
+        checkAuth,
+        logout,
+        userId,
+        setUserFirstName,
+        setUserLastName
+    } = useAuth();
     const navigate = useNavigate();
 
+    const [currencyRates] = useState({
+        USD: 4.3,
+        EUR: 4.5,
+    });
+
+    // Weryfikacja autentyczności i pobieranie danych użytkownika
     useEffect(() => {
-        const verifyAuth = async () => {
-            const isAuthenticated = await checkAuth();
-            if (!isAuthenticated) {
-                navigate('/login');
-            } else {
-                setLoading(false);
+        let isMounted = true;
+
+        const verifyAuthAndFetchData = async () => {
+            setLoading(true);
+
+            try {
+                const isAuthenticated = await checkAuth();
+
+                if (!isAuthenticated) {
+                    navigate("/login");
+                    return;
+                }
+
+                // Poczekaj na userId - ważna zmiana!
+                if (!userId) {
+                    console.log("Oczekiwanie na userId...");
+                    return;
+                }
+
+                // Dopiero gdy mamy userId
+                if (isMounted) {
+                    await Promise.all([
+                        fetchUserBookings(),
+                        fetchUserData()
+                    ]);
+                }
+            } catch (error) {
+                console.error("Błąd inicjalizacji:", error);
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         };
-        verifyAuth();
+
+        verifyAuthAndFetchData();
 
         const interval = setInterval(() => {
-            const now = new Date();
-            setCurrentTime(now.toLocaleTimeString());
+            setCurrentTime(new Date().toLocaleTimeString());
         }, 1000);
 
-        return () => clearInterval(interval);
-    }, [checkAuth, navigate]);
+        return () => {
+            isMounted = false;
+            clearInterval(interval);
+        };
+    }, [checkAuth, navigate, userId]);
 
-    const toggleExpand = (index: number) => {
-        setExpandedIndex(expanded === index ? null : index);
+    useEffect(() => {
+        if (userId) {
+            fetchUserBookings();
+        }
+    }, [userId]);
+
+    // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get('/api/auth/user', {
+                withCredentials: true
+            });
+
+            // Aktualizacja danych użytkownika w stanie
+            setNewsletter(response.data.newsletter || false);
+
+            // Upewnij się, że backend zwraca firstName i lastName
+            if (response.data.firstName) {
+                setUserFirstName(response.data.firstName);
+            }
+            if (response.data.lastName) {
+                setUserLastName(response.data.lastName);
+            }
+
+        } catch (error) {
+            console.error('Błąd przy pobieraniu danych użytkownika', error);
+        }
     };
 
-    const clearBookings = () => {
-        setBookings([]);
+    // Funkcja do pobrania rezerwacji użytkownika
+    const fetchUserBookings = async () => {
+        if (!userId) {
+            console.log("Brak userId - nie można pobrać rezerwacji");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await axios.get(`http://localhost:5000/api/bookings?userId=${userId}`, {
+                withCredentials: true,
+            });
+            setBookings(response.data);
+        } catch (error) {
+            console.error("Błąd pobierania rezerwacji:", error);
+            if (axios.isAxiosError(error)) {
+                console.error("Szczegóły błędu:", error.response?.data);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const toggleExpand = (bookingId: number) => {
+        setExpanded(expanded === bookingId ? null : bookingId);
     };
 
     const handleLogout = () => {
@@ -51,18 +160,67 @@ function User() {
         navigate("/login");
     };
 
-    const addBooking = () => {
-        const newBooking = {
-            id: bookings.length + 1,
-            date: "08.02.2025",
-            route: "Nowa trasa - Miasto",
-            price: "400zł",
-        };
-        setBookings([...bookings, newBooking]);
+    const onRedirect = () => {
+        navigate("/Newsletter");
     };
 
     const handleProfileUpdate = () => {
         setShowAlert(true);
+    };
+
+    const formatDate = (dateString: string) => {
+        if (!dateString) return "Brak daty";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("pl-PL");
+    };
+
+    const convertToPLN = (price: number, currency: string): number => {
+        if (currency === "USD") {
+            return price * currencyRates.USD;
+        } else if (currency === "EUR") {
+            return price * currencyRates.EUR;
+        }
+        return price;
+    };
+
+    const calculatePrice = (price: number, currency: string, discount: number) => {
+        const discountedPrice = price * (1 - discount / 100);
+        const priceInPLN = convertToPLN(discountedPrice, currency);
+        return `${priceInPLN.toFixed(2)} PLN`;
+    };
+
+    const handleDeleteClick = (propertyId: number, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setCurrentBookingToDelete(propertyId);
+        setAlertTitle('Potwierdź usunięcie');
+        setAlertMessage('Czy na pewno chcesz usunąć tę rezerwację?');
+        setShowConfirmAlert(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!currentBookingToDelete) return;
+        setShowConfirmAlert(false);
+
+        try {
+            setShowConfirmAlert(false);
+            await axios.delete(`http://localhost:5000/api/bookings/${currentBookingToDelete}`, {
+                withCredentials: true
+            });
+            setShowConfirmAlert(false);
+            setBookings(prev => prev.filter(b => b.PropertyId !== currentBookingToDelete));
+            setAlertTitle('Sukces!');
+            setAlertMessage('Rezerwacja usunięta pomyślnie');
+            setShowAlert(true);
+        } catch (error) {
+            setShowConfirmAlert(false);
+            console.error('Błąd usuwania:', error);
+            setAlertTitle('Błąd');
+            setAlertMessage('Nie udało się usunąć rezerwacji');
+            setShowAlert(true);
+        } finally {
+            setShowConfirmAlert(false);
+            setCurrentBookingToDelete(null);
+        }
     };
 
     if (loading || !isLoggedIn) {
@@ -78,20 +236,30 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img src="src/assets/terraquest.webp" alt="Obraz profilu" className="user-avatar"/>
-                    <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Zaktualizuj profil"}</h2>
+                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar" />
+                    <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Brak nazwy użytkownika"}</h2>
                     <p className="email">({userEmail})</p>
-                    <hr></hr>
+                    <h6>Aby zmienić lub ustawić nazwę użytkownika kliknij w <b>Aktualizacja profilu</b></h6>
+                    <hr />
 
                     <div className="settings">
-
                         <div className="setting-item">
                             <i className="fa-solid fa-clock"></i>
                             <p><strong>Czas i godzina </strong> {currentTime}</p>
                         </div>
 
-                        <div className="setting-item" onClick={handleProfileUpdate}>
+                        <div className="setting-item">
+                            <i className="fa-solid fa-square-check"></i>
+                            <p><strong>Aktywny Newsletter</strong> {newsletter ? "Tak" : "Nie"}</p>
+                        </div>
+
+                        <div className="setting-item" onClick={onRedirect}>
                             <i className="fa-solid fa-download"></i>
+                            <p><strong>Zapisz się do Newslettera</strong></p>
+                        </div>
+
+                        <div className="setting-item" onClick={handleProfileUpdate}>
+                            <i className="fa-solid fa-pen"></i>
                             <p><strong>Aktualizacja profilu</strong></p>
                         </div>
 
@@ -103,28 +271,38 @@ function User() {
                 </div>
 
                 <div className="booking-history">
-                    <h2>Historia rezerwacji i planowania</h2>
-                    <p className="subtitle">Sprawdź swoją historię podróży</p>
+                    <h2>Historia rezerwacji</h2>
+                    <p className="subtitle">Twoje aktualne i przeszłe rezerwacje</p>
 
                     {bookings.length > 0 ? (
                         <div className="booking-list-container">
                             <div className="booking-list">
                                 {bookings.map((booking) => (
-                                    <div
-                                        key={booking.id}
-                                        className={`booking-item ${expanded === booking.id ? "expanded" : ""}`}
-                                        onClick={() => toggleExpand(booking.id)}
-                                    >
-                                        <div className="booking-header">
-                                            <div className="date"><strong>{booking.date}</strong></div>
-                                            <div className="route">{booking.route}</div>
-                                            <div className="price">{booking.price}</div>
-                                            <button className="expand-btn">
-                                                {expanded === booking.id ? "▲" : "▼"}
-                                            </button>
+                                    <div className="booking_all" key={booking.id} onClick={() => toggleExpand(booking.id)}>
+                                        <div className="booking-item">
+                                            <div className="main_booking_item">
+                                                <h3 className="booking-header">
+                                                    {booking.PropertyName}
+                                                    <span className="booking-desc"> ({booking.PropertyAddress})</span>
+                                                </h3>
+                                                <p className="info_sec_booking">
+                                                    <span className="booking_price">
+                                                        <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
+                                                        <span className="new_price_booking">
+                                                            {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div className="icons_booking">
+                                                <i
+                                                    className="fa-solid fa-trash"
+                                                    onClick={(e) => handleDeleteClick(booking.PropertyId, e)}
+                                                ></i>
+                                            </div>
                                         </div>
                                         <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
-                                            <p>Szczegóły podróży...</p>
+                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
                                 ))}
@@ -132,21 +310,38 @@ function User() {
                         </div>
                     ) : (
                         <div className="empty-state">
-                            <p><strong>Wygląda, że masz tu pusto</strong></p>
+                            <p><strong>Nie masz jeszcze żadnych rezerwacji</strong></p>
                         </div>
                     )}
-
-                    <div className="test-buttons">
-                        <button onClick={clearBookings}>Wyczyść historię</button>
-                        <button onClick={addBooking}>Dodaj rezerwację</button>
-                    </div>
                 </div>
             </div>
+
             {showAlert && (
                 <Update_Alert
                     title="Aktualizacja profilu"
                     onClose={() => setShowAlert(false)}
                     onOk={() => setShowAlert(false)}
+                />
+            )}
+            {/* Alert potwierdzający usunięcie */}
+            {showConfirmAlert && (
+                <Alert
+                    title={alertTitle}
+                    message={alertMessage}
+                    onClose={() => {
+                        setShowConfirmAlert(false);
+                        setCurrentBookingToDelete(null);
+                    }}
+                    onOk={confirmDelete}
+                />
+            )}
+
+            {/* Alert z wynikiem operacji */}
+            {showAlert && (
+                <Alert
+                    title={alertTitle}
+                    message={alertMessage}
+                    onClose={() => setShowAlert(false)}
                 />
             )}
         </main>

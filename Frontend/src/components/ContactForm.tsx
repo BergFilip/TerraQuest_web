@@ -1,5 +1,6 @@
 import styles from '../styles/components/ContactForm.module.scss';
 import { useState } from 'react';
+import Alert from './Alert'
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -16,10 +17,12 @@ const ContactForm = () => {
         message: false
     });
 
+    const [showAlert, setShowAlert] = useState(false); // Stan dla alertu
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-        setErrors((prev) => ({ ...prev, [name]: false })); // Usuwamy błąd po wpisaniu
+        setErrors((prev) => ({ ...prev, [name]: false }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -36,12 +39,14 @@ const ContactForm = () => {
 
         const hasErrors = Object.values(newErrors).some(Boolean);
         if (!hasErrors) {
+            console.log('Formularz wysłany:', formData);
             setFormData({
                 firstName: '',
                 lastName: '',
                 email: '',
                 message: ''
             });
+            setShowAlert(true);
         }
     };
 
@@ -55,7 +60,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-phone-volume"></i>
                     <div className="icons_contact">
                         <strong>Telefon</strong>
-                        +48 849 583 521
+                        +48 123 456 789
                     </div>
                 </div>
 
@@ -63,7 +68,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-envelope"></i>
                     <div className="icons_contact">
                         <strong>EMAIL</strong>
-                        jan.kowalski@gmail.com
+                        kontakt@travelquest.pl
                     </div>
                 </div>
 
@@ -71,7 +76,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-map"></i>
                     <div className="icons_contact">
                         <strong>Lokalizacja</strong>
-                        Warszawa ul. Powstańców 21A
+                        Warszawa ul. Światowa 12
                     </div>
                 </div>
             </div>
@@ -115,6 +120,14 @@ const ContactForm = () => {
                     <button type="submit">Wyślij</button>
                 </form>
             </div>
+            {showAlert && (
+                <Alert
+                    title="Sukces!"
+                    message="Wiadomość została wysłana"
+                    onClose={() => setShowAlert(false)}
+                    onOk={() => setShowAlert(false)}
+                />
+            )}
         </div>
     );
 };

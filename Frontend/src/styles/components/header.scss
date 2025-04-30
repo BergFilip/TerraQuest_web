@@ -82,6 +82,11 @@ header {
 
   .icons {
     display: none;
+
+    button{
+      padding: 0 !important;
+      background-color: transparent;
+    }
   }
 
   .menu-icon, .user-icon {
@@ -173,6 +178,11 @@ header {
 
       i {
         font-size: 24px !important;
+        padding:0rem 10px !important;
+      }
+      button{
+        padding: 0 !important;
+        background-color: transparent;
       }
     }
   }

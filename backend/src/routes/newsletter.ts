@@ -1,44 +1,66 @@
-// newsletterRouter.ts
 import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { supabase } from '../utils/supabase';
 
 const router = express.Router();
 
 router.post('/', async (req: Request, res: Response) => {
-    try {
-        const { email } = req.body;
-        const token = req.cookies.token;
+    const { email } = req.body;
 
-        if (!token) {
-            return res.status(401).json({
-                error: 'Musisz być zalogowany, aby zapisać się do newslettera'
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            error: 'Email jest wymagany'
+        });
+    }
+
+    try {
+        const { data: userData, error: userError } = await supabase
+            .from('users_terraQuest')
+            .select('id, newsletter')
+            .eq('email', email)
+            .single();
+
+        if (userError || !userData) {
+            return res.status(404).json({
+                success: false,
+                error: 'Użytkownik nie istnieje'
             });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as any;
+        if (userData.newsletter === true) {
+            return res.status(200).json({
+                success: false,
+                message: 'Już jesteś zapisany do newslettera'
+            });
+        }
 
-        const { data: subscription, error: dbError } = await supabase
-            .from('newsletter_subscriptions')
-            .insert({
-                user_id: decoded.id,
-                email: email,
-                subscribed_at: new Date().toISOString()
+        const { error: updateError, data: updatedData } = await supabase
+            .from('users_terraQuest')
+            .update({
+                newsletter: true,
             })
-            .select()
+            .eq('id', userData.id)
+            .select('email, newsletter')
             .single();
 
-        if (dbError) throw dbError;
+        if (updateError) {
+            return res.status(500).json({
+                success: false,
+                error: 'Błąd bazy danych',
+                details: updateError.message
+            });
+        }
 
-        res.status(201).json({
+        return res.status(200).json({
             success: true,
-            message: `Zapisano do newslettera. Wysłano potwierdzenie na: ${email}`
+            message: 'Zapisano do newslettera',
+            data: updatedData
         });
 
-    } catch (error) {
-        console.error('Błąd zapisu do newslettera:', error);
-        res.status(500).json({
-            error: error instanceof Error ? error.message : 'Wewnętrzny błąd serwera'
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            error: 'Wewnętrzny błąd serwera'
         });
     }
 });

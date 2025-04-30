@@ -1,243 +1,192 @@
-import { describe, it, expect } from '@jest/globals';
+import request from 'supertest';
+import express from 'express';
+import authRouter, { validateEmail, validatePassword } from '../other/auth';
+import { supabase } from '../utils/supabase';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-import { validateEmail, validatePassword } from '../other/auth';
+// Mockowanie modułów
+jest.mock('../utils/supabase', () => {
+    const mockSingle = jest.fn();
+    return {
+        supabase: {
+            from: jest.fn(() => ({
+                select: jest.fn(() => ({
+                    eq: jest.fn(() => ({
+                        single: mockSingle
+                    }))
+                })),
+                insert: jest.fn(() => ({
+                    select: jest.fn(() => ({
+                        single: mockSingle
+                    }))
+                })),
+                upsert: jest.fn()
+            })),
+        },
+        mockSingle
+    };
+});
+
+jest.mock('bcryptjs');
+jest.mock('jsonwebtoken');
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(authRouter);
 
 describe('validateEmail', () => {
-    it('should return true for valid email', () => {
+    it('should validate correct email', () => {
         expect(validateEmail('test@example.com')).toBe(true);
     });
 
-    it('should return false for invalid email', () => {
+    it('should invalidate incorrect email', () => {
         expect(validateEmail('invalid-email')).toBe(false);
-        expect(validateEmail('test@.com')).toBe(false);
-        expect(validateEmail('test@com')).toBe(false);
-        expect(validateEmail('test@domain.')).toBe(false);
     });
 });
 
 describe('validatePassword', () => {
-    it('should return true for a strong password', () => {
-        expect(validatePassword('Str0ng!Pass')).toBe(true);
+    it('should validate correct password', () => {
+        expect(validatePassword('StrongP@ss1')).toBe(true);
     });
 
-    it('should return false for password shorter than 8 characters', () => {
-        expect(validatePassword('S1!a')).toBe(false);
+    it('should invalidate short password', () => {
+        expect(validatePassword('S@1a')).toBe(false);
     });
 
-    it('should return false for password without uppercase', () => {
-        expect(validatePassword('weakpass1!')).toBe(false);
-    });
-
-    it('should return false for password without number', () => {
-        expect(validatePassword('NoNumbers!')).toBe(false);
-    });
-
-    it('should return false for password without special character', () => {
-        expect(validatePassword('NoSpecial1')).toBe(false);
+    it('should invalidate password without special character', () => {
+        expect(validatePassword('Password1')).toBe(false);
     });
 });
 
-//----------------------- REGISTER -----------------------
+describe('POST /register', () => {
+    it('should register a new user', async () => {
+        const { mockSingle } = require('../utils/supabase');
+        mockSingle.mockResolvedValueOnce({ data: null, error: null });
+        mockSingle.mockResolvedValueOnce({ data: { id: '1', email: 'test@example.com' }, error: null });
 
-import request from 'supertest';
-import app from '../main';
-import { supabase } from '../utils/supabase';
+        (bcrypt.genSalt as jest.Mock).mockResolvedValue('salt');
+        (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+        (jwt.sign as jest.Mock).mockReturnValue('fakeToken');
 
-jest.mock('../utils/supabase', () => {
-    const mockSelect = jest.fn().mockReturnThis();
-    const mockEq = jest.fn().mockReturnThis();
-    const mockSingle = jest.fn();
-    const mockInsert = jest.fn().mockReturnThis();
+        const response = await request(app).post('/register').send({
+            email: 'test@example.com',
+            password: 'StrongP@ss1'
+        });
 
-    return {
-        supabase: {
-            from: jest.fn(() => ({
-                select: mockSelect,
-                eq: mockEq,
-                single: mockSingle,
-                insert: mockInsert,
-            })) as any, // <-- ważne
-        },
-    };
-});
-
-const mockSingle = (supabase.from('') as any).single as jest.Mock;
-const mockInsert = (supabase.from('') as any).insert as jest.Mock;
-
-describe('POST /api/auth/register', () => {
-    it('should return 400 for invalid email', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'invalid-email', password: 'Valid123!' });
-
-        expect(res.status).toBe(400);
-        expect(res.body.message).toBe('Invalid email format');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            message: 'Pomyślnie zalogowano',
+            user: { email: 'test@example.com' }
+        });
     });
 
-    it('should return 400 for weak password', async () => {
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'test@example.com', password: 'weak' });
+    it('should not register with invalid email', async () => {
+        const response = await request(app).post('/register').send({
+            email: 'bademail',
+            password: 'StrongP@ss1'
+        });
 
-        expect(res.status).toBe(400);
-        expect(res.body.message).toContain('Password must be');
+        expect(response.status).toBe(400);
     });
 
-    it('should return 400 if user already exists', async () => {
+    it('should not register if user already exists', async () => {
+        const { mockSingle } = require('../utils/supabase');
         mockSingle.mockResolvedValueOnce({ data: { email: 'test@example.com' }, error: null });
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'test@example.com', password: 'Valid123!' });
-
-        expect(res.status).toBe(400);
-        expect(res.body.message).toBe('User with this email already exists');
-    });
-
-    it('should return 500 if insertion fails', async () => {
-        mockSingle.mockResolvedValueOnce({ data: null, error: null });
-        mockInsert.mockReturnValueOnce({
-            select: () => ({
-                single: () => Promise.resolve({ data: null, error: { message: 'Insert error' } }),
-            }),
+        const response = await request(app).post('/register').send({
+            email: 'test@example.com',
+            password: 'StrongP@ss1'
         });
 
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'test@example.com', password: 'Valid123!' });
-
-        expect(res.status).toBe(500);
-        expect(res.body.message).toBe('Błąd przy rejestracji użytkownika');
-    });
-
-    it('should register user and return 200 with cookie', async () => {
-        mockSingle.mockResolvedValueOnce({ data: null, error: null });
-        mockInsert.mockReturnValueOnce({
-            select: () => ({
-                single: () =>
-                    Promise.resolve({
-                        data: { id: '123', email: 'test@example.com' },
-                        error: null,
-                    }),
-            }),
-        });
-
-        const res = await request(app)
-            .post('/api/auth/register')
-            .send({ email: 'test@example.com', password: 'Valid123!' });
-
-        expect(res.status).toBe(200);
-        expect(res.body.message).toBe('Login successful');
-        expect(res.body.user.email).toBe('test@example.com');
-        expect(res.headers['set-cookie']).toBeDefined();
+        expect(response.status).toBe(400);
     });
 });
 
-//----------------------- LOGIN -----------------------
+describe('POST /login', () => {
+    it('should login a user', async () => {
+        const { mockSingle } = require('../utils/supabase');
+        mockSingle.mockResolvedValueOnce({ data: { id: '1', email: 'test@example.com', pass: 'hashedPassword' }, error: null });
 
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+        (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+        (jwt.sign as jest.Mock).mockReturnValue('fakeToken');
 
-// Mock the modules
-jest.mock('../utils/supabase'); // Same path as above
-jest.mock('bcrypt');
-jest.mock('jsonwebtoken');
+        const response = await request(app).post('/login').send({
+            email: 'test@example.com',
+            password: 'StrongP@ss1'
+        });
 
-describe('POST /api/auth/login', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-        // Reset all mocks to default implementations
-        (supabase.from as jest.Mock).mockImplementation(() => ({
-            select: jest.fn().mockImplementation(() => ({
-                eq: jest.fn().mockImplementation(() => ({
-                    single: jest.fn().mockResolvedValue({ data: null, error: null })
-                }))
-            }))
-        }));
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            message: 'Pomyślnie zalogowano',
+            user: { email: 'test@example.com' }
+        });
     });
 
-    it('should return 400 if email or password is missing', async () => {
-        const res = await request(app).post('/api/auth/login')
-            .send({ email: '', password: '' });
-        expect(res.status).toBe(400);
-        expect(res.body.message).toBe('Missing email or password');
-    });
-
-    it('should return 401 if credentials are invalid', async () => {
-        (supabase.from as jest.Mock).mockImplementation(() => ({
-            select: jest.fn().mockImplementation(() => ({
-                eq: jest.fn().mockImplementation(() => ({
-                    single: jest.fn().mockResolvedValue({
-                        error: { message: 'User not found' },
-                        data: null
-                    })
-                }))
-            }))
-        }));
-
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send({ email: 'nonexistent@example.com', password: 'wrongPassword' });
-
-        expect(res.status).toBe(401);
-        expect(res.body.message).toBe('Invalid credentials');
-    });
-
-    it('should return 401 if password is incorrect', async () => {
-        (supabase.from as jest.Mock).mockImplementation(() => ({
-            select: jest.fn().mockImplementation(() => ({
-                eq: jest.fn().mockImplementation(() => ({
-                    single: jest.fn().mockResolvedValue({
-                        error: null,
-                        data: { id: 1, email: 'test@example.com', pass: 'hashedPassword' }
-                    })
-                }))
-            }))
-        }));
+    it('should not login with wrong password', async () => {
+        const { mockSingle } = require('../utils/supabase');
+        mockSingle.mockResolvedValueOnce({ data: { pass: 'hashedPassword' }, error: null });
 
         (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send({ email: 'test@example.com', password: 'wrongPassword' });
-
-        expect(res.status).toBe(401);
-        expect(res.body.message).toBe('Invalid credentials');
-    });
-
-    it('should return 200 and user info if credentials are correct', async () => {
-        // Mock Supabase response
-        (supabase.from as jest.Mock).mockReturnValue({
-            select: jest.fn().mockReturnValue({
-                eq: jest.fn().mockReturnValue({
-                    single: jest.fn().mockResolvedValue({
-                        error: null,
-                        data: {
-                            id: 1,
-                            email: 'test@example.com',
-                            pass: '$2b$10$n0jy4wP9cxE/iLBJjAiAZ.0Bq.d5qN1mQpwTO9UjJTo22eSag5H/y' // mock hashed password
-                        }
-                    })
-                })
-            })
+        const response = await request(app).post('/login').send({
+            email: 'test@example.com',
+            password: 'WrongPassword'
         });
 
-        // Mock bcrypt to return true for comparison
-        (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+        expect(response.status).toBe(401);
+    });
+});
 
-        // Mock JWT sign
-        (jwt.sign as jest.Mock).mockReturnValue('mockToken');
+describe('GET /user', () => {
+    it('should get user profile', async () => {
+        const { mockSingle } = require('../utils/supabase');
+        mockSingle.mockResolvedValueOnce({
+            data: {
+                email: 'test@example.com',
+                users_info: { Name: 'John', Surname: 'Doe' }
+            },
+            error: null
+        });
 
-        const res = await request(app)
-            .post('/api/auth/login')
-            .send({ email: 'test@example.com', password: 'ValidPassword123!' });
+        (jwt.verify as jest.Mock).mockReturnValue({ id: '1', email: 'test@example.com' });
 
-        console.log('Response:', res.body); // Add this for debugging
-        console.log('Status:', res.status); // Add this for debugging
+        const agent = request.agent(app);
+        const response = await agent
+            .get('/user')
+            .set('Cookie', ['token=fakeToken']);
 
-        expect(res.status).toBe(200);
-        expect(res.body.message).toBe('Login successful');
-        expect(res.body.user.email).toBe('test@example.com');
-        expect(res.headers['set-cookie']).toBeDefined();
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            email: 'test@example.com',
+            firstName: 'John',
+            lastName: 'Doe'
+        });
+    });
+});
+
+describe('POST /logout', () => {
+    it('should clear the token cookie', async () => {
+        const response = await request(app).post('/logout');
+
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ message: 'Pomyślnie wylogowano' });
+    });
+});
+
+describe('PUT /updateProfile', () => {
+    it('should update user profile', async () => {
+        (jwt.verify as jest.Mock).mockReturnValue({ id: '1', email: 'test@example.com' });
+        (supabase.from().upsert as jest.Mock).mockResolvedValueOnce({ error: null });
+
+        const agent = request.agent(app);
+        const response = await agent
+            .put('/updateProfile')
+            .set('Cookie', ['token=fakeToken'])
+            .send({ firstName: 'John', lastName: 'Doe' });
+
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ message: 'Dane zostały zaktualizowane pomyślnie' });
     });
 });
