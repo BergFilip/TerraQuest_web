@@ -30,7 +30,8 @@ router.post('/', async (req: Request, res: Response) => {
             .from('Reservation')
             .insert([
                 {
-                    PropertyId: userData.id, // Używamy ID użytkownika z tabeli users_terraQuest
+                    id: userData.id,
+                    PropertyId: hotel.PropertyId,
                     PropertyName: hotel.PropertyName,
                     ReferencePrice: hotel.ReferencePrice,
                     MaxDiscountPercent: hotel.MaxDiscountPercent,

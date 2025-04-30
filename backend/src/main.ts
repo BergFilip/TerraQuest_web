@@ -9,6 +9,8 @@ import hotelsRouter from './routes/explore';
 import reviewsRouter from './routes/reviews';
 import productsRouter from './routes/product';
 import reservation from "./other/reservation";
+import bookingsRouter from "./other/userBookings"
+import newsletterRouter from './routes/newsletter';
 
 import helpRouter from './routes/help1';
 import path from "path";
@@ -34,6 +36,9 @@ app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/help1', helpRouter);
 app.use('/api/reservations', reservation);
+app.use('/api/bookings', bookingsRouter);
+app.use('/api/newsletter', newsletterRouter);
+
 
 app.use('/img', express.static(path.resolve(__dirname, 'img')));
 

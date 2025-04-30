@@ -46,14 +46,22 @@ function Product() {
         try {
             const reservationData = {
                 userEmail,
-                hotel,
+                hotel: hotel,
+                checkIn: new Date().toISOString().split('T')[0], // dzisiejsza data
+                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // data za 7 dni
             };
 
-            await axios.post("http://localhost:5000/api/reservations", reservationData, { withCredentials: true });
+            const response = await axios.post(
+                "http://localhost:5000/api/reservations",
+                reservationData,
+                { withCredentials: true }
+            );
+
+            console.log("Odpowiedź serwera:", response.data);
             alert("✅ Rezerwacja dodana!");
         } catch (error) {
-            console.error("❌ Błąd przy rezerwacji:", error);
-            alert("❌ Coś poszło nie tak przy rezerwacji.");
+            console.error("❌ Pełny błąd przy rezerwacji:", error);
+            alert(`❌ Błąd przy rezerwacji: ${error.response?.data?.message || error.message}`);
         }
     };
 
@@ -71,25 +79,24 @@ function Product() {
         fetchReview();
     }, []);
 
-    // Pobieranie danych hotelu z localStorage
     useEffect(() => {
         const savedHotel = localStorage.getItem("selectedHotel");
         if (savedHotel) {
-            setHotel(JSON.parse(savedHotel)); // Ustawienie hotelu w stanie
+            setHotel(JSON.parse(savedHotel));
         }
     }, []);
 
-    // Funkcja do konwersji walut na PLN
+
     const convertToPLN = (price: number, currency: string): number => {
         if (currency === "USD") {
             return price * currencyRates.USD;
         } else if (currency === "EUR") {
             return price * currencyRates.EUR;
         }
-        return price; // Jeśli cena jest już w PLN
+        return price;
     };
 
-    // Obliczenie ceny po zniżce
+
     const calculateDiscountedPrice = (price: number, discountPercent: number): number => {
         return price * (1 - discountPercent / 100);
     };

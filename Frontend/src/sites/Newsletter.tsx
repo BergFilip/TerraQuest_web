@@ -1,5 +1,5 @@
 import "../styles/sites/Newsletter.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +14,15 @@ function Newsletter() {
         message: ""
     });
 
-    const { isLoggedIn, checkAuth } = useAuth();
+    const { isLoggedIn, checkAuth, userEmail } = useAuth();
     const navigate = useNavigate();
+
+    // Pre-fill email if user is logged in
+    useEffect(() => {
+        if (userEmail) {
+            setEmail(userEmail);
+        }
+    }, [userEmail]);
 
     const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -27,7 +34,7 @@ function Newsletter() {
         setIsSubmitting(true);
         setEmailError("");
 
-        // Walidacja emaila
+        // Email validation
         if (!email.trim()) {
             setEmailError("Email jest wymagany");
             setIsSubmitting(false);
@@ -41,7 +48,7 @@ function Newsletter() {
         }
 
         try {
-            // Sprawdź czy użytkownik jest zalogowany
+            // Check if user is logged in
             const isAuthenticated = await checkAuth();
 
             if (!isAuthenticated) {
@@ -54,24 +61,52 @@ function Newsletter() {
                 return;
             }
 
-            // Symulacja wysyłania danych
-            console.log(`Wysłano zapis na newsletter: ${email}`);
+            const response = await fetch('http://localhost:5000/api/newsletter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email }),
+                credentials: 'include'
+            });
+
+            // Check response content type
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text();
+                throw new Error(`Nieprawidłowa odpowiedź serwera: ${text.slice(0, 100)}...`);
+            }
+
+            const data = await response.json();
+
+            if (data.message === 'Już jesteś zapisany do newslettera') {
+                setAlertData({
+                    title: "Uwaga",
+                    message: data.message
+                });
+                return;
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || 'Błąd podczas zapisywania do newslettera');
+            }
+
 
             setAlertData({
-                title: "Zapisano pomyślnie!",
-                message: "Dziękujemy za zapisanie się do naszego newslettera"
+                title: "Sukces!",
+                message: data.message || "Twój status newslettera został zaktualizowany"
             });
-            setShowAlert(true);
-            setEmail("");
 
         } catch (error) {
+            console.error('Błąd zapisu do newslettera:', error);
             setAlertData({
                 title: "Błąd!",
-                message: "Wystąpił błąd podczas zapisywania. Spróbuj ponownie."
+                message: error instanceof Error ? error.message : "Wystąpił nieoczekiwany błąd"
             });
-            setShowAlert(true);
         } finally {
             setIsSubmitting(false);
+            setShowAlert(true);
         }
     };
 
