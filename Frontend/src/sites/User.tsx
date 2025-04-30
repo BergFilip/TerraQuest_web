@@ -70,7 +70,6 @@ function User() {
         }
     };
 
-    // Funkcja do pobrania rezerwacji użytkownika
     const fetchUserBookings = async () => {
         if (!userId) {
             console.log("Brak userId - nie można pobrać rezerwacji");
