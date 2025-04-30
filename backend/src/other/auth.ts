@@ -150,7 +150,6 @@ router.post('/login', async (req: Request, res: Response) => {
 });
 
 router.get('/user', async (req: Request, res: Response) => {
-
     const token = req.cookies.token;
 
     if (!token) {
@@ -167,6 +166,7 @@ router.get('/user', async (req: Request, res: Response) => {
             .select(`
                 id,
                 email,
+                newsletter,
                 users_info:users_info (
                     Name,
                     Surname
@@ -180,13 +180,15 @@ router.get('/user', async (req: Request, res: Response) => {
             return;
         }
 
-        const usersInfo = data.users_info as unknown as { Name: string; Surname: string } || {};
+        const usersInfo = data.users_info as unknown as { Name: string; Surname: string} || {};
         const firstName = usersInfo.Name || '';
         const lastName = usersInfo.Surname || '';
+        const newsletter = data.newsletter !== undefined ? data.newsletter : false; // Zapewnia domyślną wartość false
 
         res.status(200).json({
             id: data.id,
             email: data.email,
+            newsletter: newsletter,
             firstName: firstName,
             lastName: lastName
         });

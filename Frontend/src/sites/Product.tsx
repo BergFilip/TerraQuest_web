@@ -79,25 +79,24 @@ function Product() {
         fetchReview();
     }, []);
 
-    // Pobieranie danych hotelu z localStorage
     useEffect(() => {
         const savedHotel = localStorage.getItem("selectedHotel");
         if (savedHotel) {
-            setHotel(JSON.parse(savedHotel)); // Ustawienie hotelu w stanie
+            setHotel(JSON.parse(savedHotel));
         }
     }, []);
 
-    // Funkcja do konwersji walut na PLN
+
     const convertToPLN = (price: number, currency: string): number => {
         if (currency === "USD") {
             return price * currencyRates.USD;
         } else if (currency === "EUR") {
             return price * currencyRates.EUR;
         }
-        return price; // Jeśli cena jest już w PLN
+        return price;
     };
 
-    // Obliczenie ceny po zniżce
+
     const calculateDiscountedPrice = (price: number, discountPercent: number): number => {
         return price * (1 - discountPercent / 100);
     };

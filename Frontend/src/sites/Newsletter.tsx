@@ -61,36 +61,52 @@ function Newsletter() {
                 return;
             }
 
-            // Send request to update newsletter status
-            const response = await fetch('/api/newsletter', {
+            const response = await fetch('http://localhost:5000/api/newsletter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ email }),
                 credentials: 'include'
             });
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || 'Błąd podczas zapisywania');
+            // Check response content type
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text();
+                throw new Error(`Nieprawidłowa odpowiedź serwera: ${text.slice(0, 100)}...`);
             }
 
+            const data = await response.json();
+
+            if (data.message === 'Już jesteś zapisany do newslettera') {
+                setAlertData({
+                    title: "Uwaga",
+                    message: data.message
+                });
+                return;
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || 'Błąd podczas zapisywania do newslettera');
+            }
+
+
             setAlertData({
-                title: "Zapisano pomyślnie!",
-                message: "Twój status newslettera został zaktualizowany"
+                title: "Sukces!",
+                message: data.message || "Twój status newslettera został zaktualizowany"
             });
-            setShowAlert(true);
 
         } catch (error) {
+            console.error('Błąd zapisu do newslettera:', error);
             setAlertData({
                 title: "Błąd!",
-                message: error instanceof Error ? error.message : "Wystąpił błąd podczas zapisywania. Spróbuj ponownie."
+                message: error instanceof Error ? error.message : "Wystąpił nieoczekiwany błąd"
             });
-            setShowAlert(true);
         } finally {
             setIsSubmitting(false);
+            setShowAlert(true);
         }
     };
 

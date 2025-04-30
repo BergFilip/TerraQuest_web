@@ -18,14 +18,20 @@ interface Booking {
 }
 
 function User() {
-    const [expanded, setExpandedIndex] = useState<number | null>(null);
+    const [expanded, setExpanded] = useState<number | null>(null);
     const [bookings, setBookings] = useState<Booking[]>([]);
-
     const [currentTime, setCurrentTime] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [showAlert, setShowAlert] = useState<boolean>(false);
+    const [newsletter, setNewsletter] = useState<boolean>(false);
+
     const { isLoggedIn, userEmail, userFirstName, userLastName, checkAuth, logout, userId } = useAuth();
     const navigate = useNavigate();
+
+    const [currencyRates] = useState({
+        USD: 4.3,
+        EUR: 4.5,
+    });
 
     useEffect(() => {
         const verifyAuth = async () => {
@@ -34,7 +40,7 @@ function User() {
                 navigate("/login");
             } else {
                 fetchUserBookings();
-                setLoading(false);
+                fetchUserData();
             }
         };
 
@@ -49,40 +55,50 @@ function User() {
 
     useEffect(() => {
         if (userId) {
-            console.log(`UserId zmieniło się na: ${userId}`);
             fetchUserBookings();
         }
     }, [userId]);
 
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get('/api/user', { withCredentials: true });
+            setNewsletter(response.data.newsletter || false);
+        } catch (error) {
+            console.error('Błąd przy pobieraniu danych użytkownika', error);
+        }
+    };
+
     const fetchUserBookings = async () => {
         if (!userId) {
             console.log("Brak userId - nie można pobrać rezerwacji");
+            setLoading(false);
             return;
         }
 
         try {
-            console.log(`Pobieram rezerwacje dla userId: ${userId}`); // Debug
             const response = await axios.get(`http://localhost:5000/api/bookings?userId=${userId}`, {
                 withCredentials: true,
             });
-            console.log("Otrzymane rezerwacje:", response.data); // Debug
             setBookings(response.data);
         } catch (error) {
             console.error("Błąd pobierania rezerwacji:", error);
             if (axios.isAxiosError(error)) {
                 console.error("Szczegóły błędu:", error.response?.data);
             }
+        } finally {
+            setLoading(false);
         }
     };
 
-    const toggleExpand = (index: number) => {
-        setExpandedIndex(expanded === index ? null : index);
+    const toggleExpand = (bookingId: number) => {
+        setExpanded(expanded === bookingId ? null : bookingId);
     };
 
     const handleLogout = () => {
         logout();
         navigate("/login");
     };
+
     const onRedirect = () => {
         navigate("/Newsletter");
     };
@@ -97,9 +113,19 @@ function User() {
         return date.toLocaleDateString("pl-PL");
     };
 
+    const convertToPLN = (price: number, currency: string): number => {
+        if (currency === "USD") {
+            return price * currencyRates.USD;
+        } else if (currency === "EUR") {
+            return price * currencyRates.EUR;
+        }
+        return price;
+    };
+
     const calculatePrice = (price: number, currency: string, discount: number) => {
         const discountedPrice = price * (1 - discount / 100);
-        return `${discountedPrice.toFixed(2)} ${currency}`;
+        const priceInPLN = convertToPLN(discountedPrice, currency);
+        return `${priceInPLN.toFixed(2)} PLN`;
     };
 
     if (loading || !isLoggedIn) {
@@ -115,23 +141,21 @@ function User() {
         <main className="user">
             <div className="container">
                 <div className="user-card">
-                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar"/>
+                    <img src="src/assets/user_no.webp" alt="Obraz profilu" className="user-avatar" />
                     <h2>{(userFirstName && userLastName) ? ` ${userFirstName} ${userLastName}` : "Brak nazwy użytkownika"}</h2>
                     <p className="email">({userEmail})</p>
                     <h6>Aby zmienić lub ustawić nazwę użytkownika kliknij w <b>Aktualizacja profilu</b></h6>
-                    <hr></hr>
+                    <hr />
 
                     <div className="settings">
                         <div className="setting-item">
                             <i className="fa-solid fa-clock"></i>
-                            <p>
-                                <strong>Czas i godzina </strong> {currentTime}
-                            </p>
+                            <p><strong>Czas i godzina </strong> {currentTime}</p>
                         </div>
 
-                        <div className="setting-item" onClick={handleProfileUpdate}>
+                        <div className="setting-item">
                             <i className="fa-solid fa-square-check"></i>
-                            <p><strong>Aktywny Newsletter</strong></p>
+                            <p><strong>Aktywny Newsletter</strong> {newsletter ? "Nie" : "Tak"}</p>
                         </div>
 
                         <div className="setting-item" onClick={onRedirect}>
@@ -146,9 +170,7 @@ function User() {
 
                         <div className="setting-item" onClick={handleLogout}>
                             <i className="fa-solid fa-right-from-bracket"></i>
-                            <p>
-                                <strong>Wyloguj</strong>
-                            </p>
+                            <p><strong>Wyloguj</strong></p>
                         </div>
                     </div>
                 </div>
@@ -161,18 +183,20 @@ function User() {
                         <div className="booking-list-container">
                             <div className="booking-list">
                                 {bookings.map((booking) => (
-                                    <div className="booking_all" key={booking.id}
-                                         onClick={() => toggleExpand(booking.id)}>
+                                    <div className="booking_all" key={booking.id} onClick={() => toggleExpand(booking.id)}>
                                         <div className="booking-item">
                                             <div className="main_booking_item">
                                                 <h3 className="booking-header">
-                                                    Hotel Trianon Rive Gauche
-                                                    <span
-                                                        className="booking-desc"> (3, Rue de Vaugirard, Paris, FR)</span>
+                                                    {booking.PropertyName}
+                                                    <span className="booking-desc"> ({booking.PropertyAddress})</span>
                                                 </h3>
                                                 <p className="info_sec_booking">
-                                                <span className="booking_price"><del>793.26 PLN</del><span
-                                                    className="new_price_booking">261.78 PLN</span></span>
+                                                    <span className="booking_price">
+                                                        <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
+                                                        <span className="new_price_booking">
+                                                            {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
+                                                        </span>
+                                                    </span>
                                                 </p>
                                             </div>
                                             <div className="icons_booking">
@@ -182,27 +206,21 @@ function User() {
                                                 }}></i>
                                             </div>
                                         </div>
-                                        <div
-                                            className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
-                                            <p>Hotel Trianon Rive Gauche to 3, Rue de Vaugirard, Paris, FR. Posiada
-                                                4 Stars gwiazdek i oferuje wyjątkowe udogodnienia, takie jak basen,
-                                                restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
+                                        <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
+                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
-
                                 ))}
-
                             </div>
                         </div>
                     ) : (
                         <div className="empty-state">
-                            <p>
-                                <strong>Nie masz jeszcze żadnych rezerwacji</strong>
-                            </p>
+                            <p><strong>Nie masz jeszcze żadnych rezerwacji</strong></p>
                         </div>
                     )}
                 </div>
             </div>
+
             {showAlert && (
                 <Update_Alert
                     title="Aktualizacja profilu"
