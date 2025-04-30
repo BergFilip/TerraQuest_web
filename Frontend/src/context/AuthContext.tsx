@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Dane z checkAuth:', data);
                 setIsLoggedIn(true);
                 setUserEmail(data.email);
                 setUserFirstName(data.firstName);
