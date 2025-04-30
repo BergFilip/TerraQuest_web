@@ -8,6 +8,7 @@ import Alert from "../components/Alert.tsx";
 
 interface Booking {
     id: number;
+    bookingId: number;
     PropertyName: string;
     PropertyAddress: string;
     CheckIn: string;
@@ -271,8 +272,8 @@ function User() {
                     {bookings.length > 0 ? (
                         <div className="booking-list-container">
                             <div className="booking-list">
-                                {bookings.map((booking) => (
-                                    <div className="booking_all" key={booking.id} onClick={() => toggleExpand(booking.id)}>
+                                {bookings.map((booking, index) => (
+                                    <div className="booking_all" key={index} onClick={() => toggleExpand(index)}>
                                         <div className="booking-item">
                                             <div className="main_booking_item">
                                                 <h3 className="booking-header">
@@ -280,22 +281,25 @@ function User() {
                                                     <span className="booking-desc"> ({booking.PropertyAddress})</span>
                                                 </h3>
                                                 <p className="info_sec_booking">
-                                                    <span className="booking_price">
-                                                        <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
-                                                        <span className="new_price_booking">
-                                                            {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
-                                                        </span>
-                                                    </span>
+                                <span className="booking_price">
+                                    <del>{calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, 0)}</del>
+                                    <span className="new_price_booking">
+                                        {calculatePrice(booking.ReferencePrice, booking.ReferencePriceCurrency, booking.MaxDiscountPercent)}
+                                    </span>
+                                </span>
                                                 </p>
                                             </div>
                                             <div className="icons_booking">
                                                 <i
                                                     className="fa-solid fa-trash"
-                                                    onClick={(e) => handleDeleteClick(booking.PropertyId, e)}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDeleteClick(booking.PropertyId, e);
+                                                    }}
                                                 ></i>
                                             </div>
                                         </div>
-                                        <div className={`booking-details ${expanded === booking.id ? "visible" : ""}`}>
+                                        <div className={`booking-details ${expanded === index ? "visible" : ""}`}>
                                             <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
