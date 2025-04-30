@@ -171,10 +171,21 @@ router.get('/user', async (req: Request, res: Response) => {
             return;
         }
 
+        const { data: userInfoData, error: userInfoError } = await supabase
+            .from('users_info')
+            .select('Name, Surname')
+            .eq('id', userId)
+            .single();
+
+        const firstName = userInfoData?.Name || '';
+        const lastName = userInfoData?.Surname || '';
+
         res.status(200).json({
             id: data.id, // KLUCZOWE - frontend tego oczekuje
             email: data.email,
-            newsletter: data.newsletter
+            newsletter: data.newsletter,
+            firstName, // Dodajemy imię
+            lastName
         });
     } catch (err) {
         res.status(500).json({ message: 'Błąd serwera' });
