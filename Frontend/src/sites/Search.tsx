@@ -277,7 +277,7 @@ function Search() {
                                         <p className="stars">
                                             {"★".repeat(getStarRating(hotel.PropertyRating))}
                                         </p>
-                                        <p>{hotel.PropertyAddress}</p>
+                                        <p className="adres_location">{hotel.PropertyAddress}</p>
                                         <p className="price">
                                             <span className="nights">1 noc</span>
                                             <span className="old_price">

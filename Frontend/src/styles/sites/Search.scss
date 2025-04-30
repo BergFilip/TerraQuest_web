@@ -1,7 +1,7 @@
 .search_site {
   display: flex;
   flex-direction: column;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
 
   .section1 {
     background-image: url("/src/assets/baner_search.webp");
@@ -154,8 +154,8 @@
   display: flex;
   align-items: flex-start !important;
   gap: 20px;
-  margin: 2rem;
-  padding: 5rem;
+  margin: 1rem;
+  padding: 4rem;
 }
 
 .filters {
@@ -334,7 +334,7 @@
   .search_site {
     display: flex;
     flex-direction: column;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
   }
 
   .search_header{
@@ -401,14 +401,12 @@
     display: flex;
     align-items: flex-start !important;
     gap: 20px;
-    margin: 2rem;
-    padding: 5rem;
   }
 
   .filters {
     width: 250px;
     position: sticky;
-    top:20px;
+    top:30px;
     overflow-y: auto;
     align-self: flex-start;
     background: #f9f9f9;
@@ -583,10 +581,11 @@
   }
 }
 
+
 @media (max-width: 1286px) {
   .search_content {
     padding: 2rem;
-    margin: 1rem;
+    margin: 3rem 1rem;
     gap: 1.5rem;
   }
 
@@ -661,10 +660,59 @@
   }
 }
 
+
+
+@media (max-width: 1250px) {
+  .search_site {
+    .search_content {
+      padding: 0rem 4rem 3rem 4rem !important;
+    }
+
+    .section1 {
+      background-size: 100% !important;
+      height: 20rem !important;
+      display: flex;
+      align-items: center;
+      justify-content: start !important;
+
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: transparent;
+
+        input {
+          height: 38px;
+
+        }
+
+        input::placeholder {
+          font-size: 14px !important;
+        }
+
+        input[type="text"], input[type="date"] {
+          width: 40% !important;
+          font-size: 14px !important;
+        }
+
+        input[type="number"] {
+          width: 65% !important;
+          font-size: 14px !important;
+        }
+
+        input[type="submit"] {
+          width: 15% !important;
+          font-size: 14px !important;
+        }
+      }
+    }
+
+  }
+}
+
 @media (max-width: 1035px) {
-  .search_content {
+  .search_site .search_content {
     padding: 1.5rem;
-    margin: 1rem;
+    margin: 3rem 0.5rem;
     gap: 1rem;
   }
 
@@ -672,6 +720,7 @@
     width: 170px;
     padding: 1rem;
     margin-right: 2rem;
+    font-size: 13.5px !important;
   }
 
   .filter_section h4 {
@@ -743,96 +792,50 @@
     font-size: 0.8rem;
     padding: 3px 6px;
   }
+
 }
 
 @media (max-width: 910px) {
-  .search_content {
-    padding: 1rem;
-    margin: 0.5rem;
+  .search_site .search_content {
+    padding: 1rem 3rem !important;
+    margin-top: 2rem;
     gap: 0.5rem;
   }
-
+  .sorting{
+    flex-wrap: wrap;
+  }
+  .sorting button{
+    margin-right: 12px;
+  }
   .filters {
-    width: 140px;
-    padding: 0.8rem;
-    margin-right: 1rem;
+    font-size: 14px;
   }
 
-  .filter_section h4 {
-    font-size: 0.85rem;
-    margin-bottom: 6px;
-  }
+}
 
-  .tags span {
-    font-size: 0.75rem;
-    padding: 2px 5px;
-    margin: 4px 4px 0 0;
-  }
+@media (max-width: 850px) {
+  .search_site{
+    .section1 {
+      h1 {
+        font-size: 20px !important;
+        height: 2rem !important;
+      }
+      form {
 
-  .search_bar {
-    gap: 5px;
-    padding: 5px;
-  }
+        input[type="number"] {
+          width: 60% !important;
 
-  .search_field {
-    padding: 4px 6px;
-    gap: 10px;
-    height: 1.8rem;
-    min-width: 140px;
-  }
+        }
 
-  .search_heading {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
+        input[type="submit"] {
+          width: 20% !important;
 
-  .search_button {
-    padding: 8px 14px;
-    font-size: 0.8rem;
-  }
-
-  .sorting input {
-    width: 200px;
-    padding: 6px;
-    font-size: 0.8rem;
-  }
-
-  .sorting button {
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-
-  .hotel_card {
-    padding: 0.5rem;
-    gap: 10px;
-    height: auto;
-  }
-
-  .hotel_card img {
-    width: 8.5rem;
-    height: 8.5rem;
-  }
-
-  .hotel_info h3 {
-    font-size: 0.9rem;
-  }
-
-  .stars {
-    font-size: 0.8rem;
-  }
-
-  .price {
-    font-size: 0.8rem;
-  }
-
-  .old_price,
-  .new_price {
-    font-size: 0.8rem;
-  }
-
-  .hotel_info button {
-    padding: 4px 8px;
-    font-size: 0.75rem;
+        }
+      }
+    }
+    .adres_location{
+      font-size: 13px;
+    }
   }
 }
 
@@ -844,69 +847,21 @@
   }
 
   .filters {
-    width: 120px;
-    padding: 0.6rem;
-    margin-right: 0.8rem;
-    font-size: 9px;
-  }
-
-  .filter_section h4 {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-  }
-
-  .tags span {
-    font-size: 0.7rem;
-    padding: 2px 4px;
-    margin: 3px 3px 0 0;
-  }
-
-  .search_heading {
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-
-  .search_bar {
-    gap: 4px;
-    padding: 4px;
-  }
-
-  .search_field {
-    padding: 4px 6px;
-    gap: 8px;
-    height: 1.6rem;
-    min-width: 120px;
-  }
-
-  .search_field input {
-    font-size: 0.75rem;
-  }
-
-  .search_button {
-    padding: 6px 10px;
-    font-size: 0.75rem;
-  }
-
-  .sorting input {
-    width: 180px;
-    padding: 5px;
-    font-size: 0.75rem;
-  }
-
-  .sorting button {
-    padding: 3px 6px;
-    font-size: 0.7rem;
+    font-size: 13px;
   }
 
   .hotel_card {
-    padding: 0.4rem;
+    padding: 0.7rem;
     gap: 8px;
     height: auto;
+    display: flex;
+    align-items: flex-start;
   }
 
   .hotel_card img {
-    width: 7rem;
-    height: 7rem;
+    width: 10rem;
+    height: 8rem;
+
   }
 
   .hotel_info h3 {
@@ -920,15 +875,31 @@
   .price {
     font-size: 0.75rem;
   }
-
+  .adres_location{
+    font-size: 13px;
+  }
   .old_price,
   .new_price {
     font-size: 0.75rem;
   }
 
   .hotel_info button {
-    padding: 4px 6px;
+    padding: 5px 15px;
     font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 740px) {
+  .search_site .section1 {
+    background-size: 100% 150% !important;
+    background-repeat: no-repeat;
+
+    h1 {
+      font-size: 19px !important;
+      padding-right: 3rem !important;
+      min-height: 3rem !important;
+      padding-left: 3rem !important;
+    }
   }
 }
 
@@ -1039,90 +1010,6 @@
   }
 }
 
-
-
-@media (max-width: 1250px) {
-  .search_site {
-    .search_content {
-      padding: 0rem 4rem 3rem 4rem !important;
-    }
-
-    .section1 {
-      background-size: 100% !important;
-      height: 20rem !important;
-      display: flex;
-      align-items: center;
-      justify-content: start !important;
-
-      form {
-        display: flex;
-        flex-wrap: wrap;
-        background-color: transparent;
-
-        input {
-          height: 38px;
-
-        }
-
-        input::placeholder {
-          font-size: 14px !important;
-        }
-
-        input[type="text"], input[type="date"] {
-          width: 40% !important;
-          font-size: 14px !important;
-        }
-
-        input[type="number"] {
-          width: 68% !important;
-          font-size: 14px !important;
-        }
-
-        input[type="submit"] {
-          width: 12% !important;
-          font-size: 14px !important;
-        }
-      }
-    }
-
-  }
-}
-@media (max-width: 850px) {
-  .search_site{
-    .section1 {
-      h1 {
-        font-size: 20px !important;
-        height: 2rem !important;
-      }
-      form {
-
-        input[type="number"] {
-          width: 60% !important;
-
-        }
-
-        input[type="submit"] {
-          width: 20% !important;
-
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 740px) {
-  .search_site .section1 {
-    background-size: 100% 150% !important;
-    background-repeat: no-repeat;
-
-    h1 {
-      font-size: 19px !important;
-      padding-right: 3rem !important;
-      min-height: 3rem !important;
-      padding-left: 3rem !important;
-    }
-  }
-}
 
 
 @media (max-width: 535px) {

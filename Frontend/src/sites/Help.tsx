@@ -6,46 +6,43 @@ import { useState } from "react";
 
 function Help() {
     const [showAlert, setShowAlert] = useState(false);
-    const [inputValue, setInputValue] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
-    const handleSearchClick = (e: React.FormEvent) => {
+    const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (inputValue.trim() !== "") {
+        if (!searchTerm.trim()) {
             setShowAlert(true);
-            setInputValue("");
         }
     };
 
     return (
-        <section className="help_site" data-testid="search-form">
+        <section className="help_site">
             <div className="section9">
                 <article>
                     <h1>Cześć, jak możemy ci pomóc?</h1>
                     <div className="form-row-wrapper">
-                        <form onSubmit={handleSearchClick}>
+                        <form onSubmit={handleSearch}>
                             <i className="fa-solid fa-magnifying-glass"></i>
                             <input
                                 type="text"
-                                name="question"
-                                id="question"
-                                placeholder="Zadaj nam pytanie?"
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)} // Ustawiamy wartość inputa
+                                placeholder="Wpisz szukaną frazę..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                            <Button text={"Szukaj"} type="submit" />
+                            <Button text="Szukaj" type="submit" />
                         </form>
                     </div>
                 </article>
                 <div className="places_section_8">
-                    <FaqSection />
+                    <FaqSection searchTerm={searchTerm} />
                 </div>
             </div>
 
             {showAlert && (
                 <Alert
-                    title="Dziękujemy!"
-                    message="Twoja wiadomość została wysłana."
+                    title="Uwaga"
+                    message="Proszę wpisać frazę do wyszukania"
                     onClose={() => setShowAlert(false)}
                 />
             )}
