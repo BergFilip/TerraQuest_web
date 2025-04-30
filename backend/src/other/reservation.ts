@@ -1,11 +1,9 @@
-import express from 'express';
-import { Request, Response } from 'express';
+import express, { Request, Response, Router } from 'express';
 import { supabase } from '../utils/supabase'; // Wczytaj klienta Supabase
 
-const app = express();
-app.use(express.json());
+const router = express.Router();
 
-app.post('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
     const { userEmail, hotel, checkIn, checkOut } = req.body;
 
     // Sprawdzamy, czy dane są poprawne
@@ -70,8 +68,4 @@ app.post('/', async (req: Request, res: Response) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log('Serwer działa na porcie 5000');
-});
-
-export default app;
+export default router;
