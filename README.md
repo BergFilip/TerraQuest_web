@@ -598,14 +598,14 @@ Testy weryfikujące działanie endpointów związanych z zarządzaniem rezerwacj
 
 ## Frontend:
 
-### 🧪 About.test.tsx – [Testy komponentu About]
 
+### 🧪 About.test.tsx – [Testy komponentu About]
 **Opis:**  
 Testy jednostkowe dla komponentu `About`. Sprawdzają poprawność renderowania treści, obecność kluczowych sekcji oraz integrację z komponentem `Button`.
 
 **Funkcje:**
-- Sprawdzenie poprawnego renderowania komponentu `About` bez błędów
-- Weryfikacja obecności tekstów i nagłówków (`Nasza misja`, `O TerraQuest`, itd.)
+- Sprawdzenie poprawnego renderowania komponentu About bez błędów
+- Weryfikacja obecności tekstów i nagłówków (Nasza misja, O TerraQuest, itd.)
 - Testowanie tekstu misji i opisu TerraQuest
 - Sprawdzenie poprawności renderowania sekcji statystyk i osi czasu
 - Testowanie obecności i treści przycisków (mockowanie komponentu `Button`)
@@ -615,112 +615,67 @@ Testy jednostkowe dla komponentu `About`. Sprawdzają poprawność renderowania 
 - `@testing-library/react` – renderowanie komponentów i selektory
 - `jest` – mockowanie komponentów
 - `../sites/About.tsx` – testowany komponent
-- `../components/Button.tsx` – mockowany komponent przycisku
+- `@components/Button.tsx` – mockowany komponent przycisku
+
+---
+
+### 🧪 AuthContext.test.tsx – [Testy kontekstu uwierzytelnienia]
+**Opis:**  
+Testy logiki kontekstu `AuthContext`. Weryfikują domyślne wartości, funkcje logowania, wylogowania i autoryzacji użytkownika oraz reakcję na odpowiedzi API.
+
+**Funkcje:**
+- Sprawdzenie początkowego stanu (`isLoggedIn`, dane użytkownika)
+- Obsługa błędnego użycia `useAuth` poza `AuthProvider`
+- Symulacja logowania i aktualizacji danych użytkownika
+- Wylogowanie i reset stanu
+- Sprawdzenie autoryzacji przy montażu i kliknięciu przycisku
+- Obsługa błędów (np. brak autoryzacji, błąd sieci)
+- Ustawianie pól użytkownika przez odpowiednie funkcje
+
+**Zależności:**
+- `@testing-library/react`, `@testing-library/jest-dom` – testowanie komponentów i selektorów
+- `jest` – mockowanie funkcji `fetch`
+- `../context/AuthContext.tsx` – kontekst do testów
+- `global.fetch` – zamockowany endpoint `http://localhost:5000/api/auth/user`
 
 ---
 
 ### 🧪 Contact.test.tsx – [Testy komponentu Contact]
-
 **Opis:**  
-Zestaw testów jednostkowych dla komponentu `Contact`. Testy skupiają się na poprawnym renderowaniu, strukturze DOM oraz integracji z komponentem `ContactForm`.
+Testy komponentu `Contact`. Sprawdzają poprawność renderowania struktury oraz integrację z formularzem kontaktowym.
 
 **Funkcje:**
-- Sprawdzenie czy komponent `Contact` renderuje się bez błędów
-- Weryfikacja obecności głównych klas strukturalnych (`.contact_site`, `.background`)
-- Testowanie poprawnego wyrenderowania mockowanego komponentu `ContactForm`
-- Upewnienie się, że do `ContactForm` nie są przekazywane żadne propsy
+- Renderowanie komponentu bez błędów
+- Walidacja obecności głównych sekcji i klas CSS
+- Sprawdzenie obecności komponentu `ContactForm` (mockowany)
+- Weryfikacja, że do `ContactForm` nie są przekazywane żadne propsy
 
 **Zależności:**
-- `@testing-library/react` – renderowanie komponentów i selektory
-- `jest` – mockowanie komponentów i sprawdzanie wywołań
+- `@testing-library/react` – renderowanie i selektory
+- `jest` – mockowanie komponentu `ContactForm`
 - `../sites/Contact.tsx` – testowany komponent
-- `../components/ContactForm.tsx` – mockowany komponent formularza kontaktowego
+- `@components/ContactForm.tsx` – mockowany formularz kontaktowy
 
 ---
 
 ### 🧪 Error.test.tsx – [Testy komponentu Error]
-
 **Opis:**  
-Testy jednostkowe dla komponentu `Error`, który odpowiada za wyświetlenie komunikatu o błędzie 404 oraz przycisku powrotu na stronę główną.
+Testy komponentu `Error`, który wyświetla komunikat o błędnej stronie oraz przycisk powrotu. Sprawdzana jest zawartość, poprawność przekazywanych propsów i klasy CSS.
 
 **Funkcje:**
-- Sprawdzenie, czy komponent renderuje komunikat o błędzie i przycisk
-- Weryfikacja przekazywanych propsów do mockowanego komponentu `Button`
-- Kontrola obecności odpowiednich klas CSS (`.error`, `.back`)
-- Upewnienie się, że przycisk posiada poprawną trasę (`data-route="/"`) i etykietę (`Powrót`)
+- Renderowanie komponentu z komunikatem i przyciskiem
+- Sprawdzenie treści i atrybutów przycisku `Powrót`
+- Walidacja przekazywanych propsów do zamockowanego `Button`
+- Sprawdzenie obecności klas `.error` i `.back`
 
 **Zależności:**
-- `@testing-library/react` – renderowanie komponentu i selektory DOM
-- `jest` – mockowanie komponentu `Button` i sprawdzanie wywołań
+- `@testing-library/react` – renderowanie komponentów i selektory
+- `jest` – mockowanie komponentu `Button`
 - `../sites/Error.tsx` – testowany komponent
-- `../components/Button.tsx` – mockowany komponent przycisku
+- `@components/Button.tsx` – mockowany komponent przycisku
 
 ---
 
-### 🧪 Help.test.tsx – [Testy komponentu Help]
-
-**Opis:**  
-Testy jednostkowe dla komponentu `Help`, odpowiadającego za interfejs pomocy i sekcję FAQ z możliwością wyszukiwania.
-
-**Funkcje:**
-- Renderowanie nagłówka, pola wyszukiwania oraz mockowanych komponentów `Button` i `FaqSection`
-- Weryfikacja poprawnej struktury formularza wyszukiwania (input, ikona, form)
-- Sprawdzenie przekazywanych propsów do komponentu `Button`
-- Testowanie interakcji z polem wyszukiwania (zmiana wartości)
-
-**Zależności:**
-- `@testing-library/react` – renderowanie, selektory DOM, symulacja zdarzeń
-- `jest` – mockowanie `Button` i `FaqSection`
-- `../sites/Help.tsx` – testowany komponent
-- `../components/help_section.tsx` – mockowany komponent FAQ
-- `../components/Button.tsx` – mockowany komponent przycisku
-
----
-
-### 🧪 Newsletter.test.tsx – [Testy komponentu Newsletter]
-
-**Opis:**  
-Zestaw testów jednostkowych dla komponentu `Newsletter`, który umożliwia zapis do newslettera i wyświetla alert potwierdzający.
-
-**Zakres testów:**
-- Renderowanie podstawowej struktury strony z nagłówkiem, tekstem, polem e-mail i przyciskiem
-- Kliknięcie przycisku uruchamia alert (przez `setShowAlert`)
-- Sprawdzenie przekazywanych propsów do komponentu `Alert` (tytuł, wiadomość, callback `onClose`)
-- Sprawdzenie działania `onClose` – zamyka alert (ustawia `showAlert` na `false`)
-
-**Zależności:**
-- `@testing-library/react` – renderowanie, selektory, obsługa zdarzeń
-- `jest` – mockowanie `Alert` i `useState`
-- `../sites/Newsletter.tsx` – testowany komponent
-- `../components/Alert.tsx` – komponent alertu (mock)
-- `react` – hook `useState` (mockowany)
-
-**Mockowanie Reacta:**
-- `useState` został zmockowany, by móc przechwycić wywołanie `setShowAlert` i przetestować jego działanie.
-
----
-
-### 🌤️ Weather.test.tsx – [Testy komponentu Weather]
-
-**Opis:**  
-Zestaw testów jednostkowych dla komponentu `Weather`, który wyświetla komunikat o niedostępności oraz przycisk powrotu do strony głównej.
-
-**Zakres testów:**
-- Renderowanie tekstów informacyjnych o niedostępnej stronie
-- Sprawdzenie obecności przycisku `Powrót` oraz jego atrybutów (`text`, `data-route`)
-- Weryfikacja, czy `Button` otrzymuje poprawne propsy (`text: "Powrót", route: "/"`)
-
-**Zależności:**
-- `@testing-library/react` – renderowanie komponentu, selekcja elementów
-- `jest` – mockowanie `Button`
-- `../sites/Weather.tsx` – testowany komponent
-- `../components/Button.tsx` – komponent przycisku (mock)
-
-**Mockowanie Buttona:**
-- Zamiast oryginalnego przycisku, renderowany jest prosty `<button data-testid="mock-button" />`, co ułatwia testowanie logiki przekazywania propsów bez zależności od implementacji wizualnej.
-
----
-
-## Backend:
+## Makieta projektu - Figma:
 
 ---
