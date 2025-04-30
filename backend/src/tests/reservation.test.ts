@@ -1,9 +1,8 @@
 import request from 'supertest';
 import express from 'express';
-import reservationRouter from '../other/reservation'; // <-- popraw ścieżkę
+import reservationRouter from '../other/reservation';
 import { supabase } from '../utils/supabase';
 
-// Mockujemy supabase
 jest.mock('../utils/supabase', () => ({
     supabase: {
         from: jest.fn(() => ({

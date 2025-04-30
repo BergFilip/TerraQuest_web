@@ -11,7 +11,7 @@ describe('Main App', () => {
 
     it('should handle 404 for unknown routes', async () => {
         const response = await request(app).get('/non-existent-route');
-        expect(response.status).toBe(404); // Express domyślnie daje 404
+        expect(response.status).toBe(404);
     });
 
 });

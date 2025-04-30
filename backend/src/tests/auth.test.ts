@@ -5,7 +5,6 @@ import { supabase } from '../utils/supabase';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Mockujemy supabase, bcrypt i jwt
 jest.mock('../utils/supabase', () => ({
     supabase: {
         from: jest.fn(() => ({
