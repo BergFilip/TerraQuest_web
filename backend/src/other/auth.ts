@@ -187,12 +187,9 @@ router.get('/user', async (req: Request, res: Response) => {
         const newsletter = data.newsletter || false;
 
         res.status(200).json({
-            id: data.id,
+            id: data.id, // KLUCZOWE - frontend tego oczekuje
             email: data.email,
-            newsletter: newsletter,
-            firstName: firstName,
-            lastName: lastName
-
+            newsletter: data.newsletter
         });
     } catch (err) {
         res.status(401).json({ message: 'Token jest nieprawidłowy' });
