@@ -8,10 +8,6 @@ function Help() {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-<<<<<<< HEAD
-=======
-
->>>>>>> 9e1043908cc7f4db4297f270aeedb07150b0d7bf
     };
 
     return (
