@@ -5,16 +5,11 @@ import Alert from "../components/Alert.tsx";
 import { useState } from "react";
 
 function Help() {
-    const [showAlert, setShowAlert] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
     const handleSearchClick = (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (inputValue.trim() !== "") {
-            setShowAlert(true);
-            setInputValue("");
-        }
+        // nie resetujemy inputa — filtracja działa na bieżąco
     };
 
     return (
@@ -31,24 +26,15 @@ function Help() {
                                 id="question"
                                 placeholder="Zadaj nam pytanie?"
                                 value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)} // Ustawiamy wartość inputa
+                                onChange={(e) => setInputValue(e.target.value)}
                             />
-                            <Button text={"Szukaj"} type="submit" />
                         </form>
                     </div>
                 </article>
                 <div className="places_section_8">
-                    <FaqSection />
+                    <FaqSection searchTerm={inputValue} />
                 </div>
             </div>
-
-            {showAlert && (
-                <Alert
-                    title="Dziękujemy!"
-                    message="Twoja wiadomość została wysłana."
-                    onClose={() => setShowAlert(false)}
-                />
-            )}
         </section>
     );
 }
