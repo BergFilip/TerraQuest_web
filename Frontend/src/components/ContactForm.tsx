@@ -19,7 +19,7 @@ const ContactForm = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-        setErrors((prev) => ({ ...prev, [name]: false })); // Usuwamy błąd po wpisaniu
+        setErrors((prev) => ({ ...prev, [name]: false }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -55,7 +55,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-phone-volume"></i>
                     <div className="icons_contact">
                         <strong>Telefon</strong>
-                        +48 849 583 521
+                        +48 123 456 789
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-envelope"></i>
                     <div className="icons_contact">
                         <strong>EMAIL</strong>
-                        jan.kowalski@gmail.com
+                        kontakt@travelquest.pl
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@ const ContactForm = () => {
                     <i className="fa-solid fa-map"></i>
                     <div className="icons_contact">
                         <strong>Lokalizacja</strong>
-                        Warszawa ul. Powstańców 21A
+                        Warszawa ul. Światowa 12
                     </div>
                 </div>
             </div>

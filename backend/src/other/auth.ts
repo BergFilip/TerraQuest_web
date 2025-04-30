@@ -21,14 +21,14 @@ router.post("/register", async (req: Request, res: Response) => {
 
     if (!validateEmail(email)) {
         res.status(400).json({
-            message: "Invalid email format",
+            message: "Nieprawidłowy format wiadomości e-mail",
         });
         return;
     }
 
     if (!validatePassword(password)) {
         res.status(400).json({
-            message: "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.",
+            message: "Hasło musi mieć co najmniej 8 znaków i zawierać wielką literę, cyfrę i znak specjalny.",
         });
         return;
     }
@@ -41,7 +41,7 @@ router.post("/register", async (req: Request, res: Response) => {
 
     if (data) {
         res.status(400).json({
-            message: "User with this email already exists",
+            message: "Użytkownik z tym adresem e-mail już istnieje",
         })
         return
     }
@@ -82,7 +82,7 @@ router.post("/register", async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-        message: 'Login successful',
+        message: 'Pomyślnie zalogowano',
         user: { email: insertedUser.email }
     });
 })
@@ -92,7 +92,7 @@ router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(400).json({ message: 'Missing email or password' });
+        res.status(400).json({ message: 'Brak adresu e-mail lub hasła' });
         return
     }
 
@@ -105,12 +105,12 @@ router.post('/login', async (req: Request, res: Response) => {
             .single();
 
         if (response.error) {
-            res.status(401).json({ message: 'Invalid credentials' });
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
             return
         }
 
         if (!response.data) {
-            res.status(401).json({ message: 'Invalid credentials' });
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
             return
         }
 
@@ -119,7 +119,7 @@ router.post('/login', async (req: Request, res: Response) => {
         const passwordMatches = await bcrypt.compare(password, data.pass);
 
         if (!passwordMatches) {
-            res.status(401).json({ message: 'Invalid credentials' });
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
             return
         }
 
@@ -137,13 +137,13 @@ router.post('/login', async (req: Request, res: Response) => {
         });
 
         res.status(200).json({
-            message: 'Login successful',
+            message: 'Pomyślnie zalogowano',
             user: { email: data.email }
         });
     }
     catch (err: unknown) {
         console.error('Login error:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Wewnętrzny błąd serwera' });
         return
     }
 });
@@ -195,7 +195,7 @@ router.get('/user', async (req: Request, res: Response) => {
 
 router.post('/logout', (req: Request, res: Response) => {
     res.clearCookie('token');
-    res.status(200).json({ message: 'Logout successful' });
+    res.status(200).json({ message: 'Pomyślnie wylogowano' });
 });
 
 router.put('/updateProfile', async (req: Request, res: Response) => {

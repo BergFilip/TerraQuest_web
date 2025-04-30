@@ -30,26 +30,22 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/hotels', hotelsRouter);
-app.use('/api/products', productsRouter);  // Upewnij się, że ścieżka jest poprawna
+app.use('/api/products', productsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/help1', helpRouter);
 app.use('/api/reservations', reservation);
 
 app.use('/img', express.static(path.resolve(__dirname, 'img')));
 
-
-// Base route
 app.get('/', (req: Request, res: Response) => {
     res.send('✅ Backend działa 🚀');
 });
 
-// Global error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Coś poszło nie tak!' });
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`🚀 Serwer działa na http://localhost:${PORT}`);
 });

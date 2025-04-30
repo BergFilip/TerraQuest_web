@@ -76,11 +76,16 @@
   .help_site {
     padding: 0rem 3rem !important;
 
+
     .section9 {
       article {
         h1 {
           font-size: 26px;
           margin-bottom: 3rem;
+        }
+
+        .form-row-wrapper form {
+          width: 70%;
         }
       }
     }
@@ -108,7 +113,7 @@
         }
 
         .form-row-wrapper form {
-          width: 100%;
+          width: 90%;
         }
 
         .form-row-wrapper form Button {

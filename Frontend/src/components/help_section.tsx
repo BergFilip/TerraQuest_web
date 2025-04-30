@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // <-- dodane
+import { useLocation } from "react-router-dom";
 import "../styles/components/help_section.scss";
 
 type FaqProps = {
@@ -7,6 +7,10 @@ type FaqProps = {
     content: string;
     colorB: string;
     colorT: string;
+};
+
+type FaqSectionProps = {
+    searchTerm?: string;
 };
 
 const FaqItem = ({ title, content, colorB, colorT }: FaqProps) => {
@@ -25,8 +29,8 @@ const FaqItem = ({ title, content, colorB, colorT }: FaqProps) => {
     );
 };
 
-const FaqSection = () => {
-    const location = useLocation(); // <-- aktualna ścieżka
+const FaqSection = ({ searchTerm = "" }: FaqSectionProps) => {
+    const location = useLocation();
     const [faqs, setFaqs] = useState<FaqProps[]>([]);
     const [allFaqs, setAllFaqs] = useState<FaqProps[]>([]);
     const [loading, setLoading] = useState(true);
@@ -52,8 +56,8 @@ const FaqSection = () => {
                 const data = await response.json();
                 const shuffledFaqs = shuffleArray(data);
 
-                setAllFaqs(shuffledFaqs); // <-- zapisujemy wszystkie
-                setFaqs(shuffledFaqs.slice(0, 4)); // <-- domyślnie pokazujemy 4
+                setAllFaqs(shuffledFaqs);
+                setFaqs(shuffledFaqs.slice(0, 4));
             } catch (err) {
                 console.error("Błąd podczas pobierania FAQ:", err);
                 setError("Nie udało się załadować FAQ.");
@@ -65,35 +69,57 @@ const FaqSection = () => {
         fetchFaqs();
     }, []);
 
-    const handleShowMore = () => {
-        setShowAll(true);
+    const filterFaqs = (term: string): FaqProps[] => {
+        if (!term.trim()) {
+            return showAll ? allFaqs : faqs;
+        }
+
+        const lowerTerm = term.toLowerCase();
+
+        let filtered = allFaqs.filter(faq =>
+            faq.title.toLowerCase().includes(lowerTerm)
+        );
+
+        if (filtered.length === 0) {
+            filtered = allFaqs.filter(faq =>
+                faq.content.toLowerCase().includes(lowerTerm)
+            );
+        }
+
+        return filtered;
     };
+
+    const visibleFaqs = filterFaqs(searchTerm);
+    const isHelpPage = location.pathname === '/help';
 
     if (loading) return <div>Ładowanie...</div>;
     if (error) return <div>{error}</div>;
 
-    const visibleFaqs = showAll ? allFaqs : faqs;
-    const isHelpPage = location.pathname === '/help'; // <-- sprawdzenie ścieżki
-
     return (
         <div className="faq-section">
-            {visibleFaqs.map((faq, index) => (
-                <FaqItem key={index} {...faq} />
-            ))}
-            <p className="end">
-                {isHelpPage ? (
-                    <button
-                        className="faq-more"
-                        onClick={showAll ? () => setShowAll(false) : handleShowMore}
-                    >
-                        {showAll ? "Mniej" : "Więcej"}
-                    </button>
-                ) : (
-                    <a className="faq-more" href="/help">
-                        Więcej
-                    </a>
-                )}
-            </p>
+            {visibleFaqs.length === 0 ? (
+                <p className="no-results">Nie znaleziono wyników</p>
+            ) : (
+                <>
+                    {visibleFaqs.map((faq, index) => (
+                        <FaqItem key={index} {...faq} />
+                    ))}
+                    <p className="end">
+                        {isHelpPage ? (
+                            <button
+                                className="faq-more"
+                                onClick={showAll ? () => setShowAll(false) : () => setShowAll(true)}
+                            >
+                                {showAll ? "Mniej" : "Więcej"}
+                            </button>
+                        ) : (
+                            <a className="faq-more" href="/help">
+                                Więcej
+                            </a>
+                        )}
+                    </p>
+                </>
+            )}
         </div>
     );
 };

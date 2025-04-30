@@ -43,7 +43,7 @@ function Search() {
         USD: 4.3,
         EUR: 4.5,
     });
-
+    const [showFilters, setShowFilters] = useState(false);
     const availableDiscountRanges = ["0-10%", "11-20%", "21-50%", "51-75%", "76-100%"];
 
     const fetchHotels = async (city: string) => {
@@ -203,7 +203,14 @@ function Search() {
             </div>
 
             <section className="search_content">
-                <aside className="filters">
+                <button
+                    className="toggle-filters_search"
+                    onClick={() => setShowFilters(!showFilters)}
+                >
+                    {showFilters ? 'Ukryj filtry' : 'Pokaż filtry'}
+                </button>
+
+                <aside className={`filters ${showFilters ? 'visible' : ''}`}>
                     <div className="filter_section">
                         <h4>Skala rabatu</h4>
                         <div className="tags">
@@ -212,10 +219,9 @@ function Search() {
                                     key={range}
                                     onClick={() => handleFilterDiscounts(range)}
                                     className={`clickable ${selectedDiscounts.includes(range) ? "active" : ""}`}
-                                >
-                                    {range}
-                                </span>
-                            ))}
+                                >{range}
+                                 </span>
+                                ))}
                         </div>
                     </div>
 
@@ -247,56 +253,58 @@ function Search() {
                     </div>
                 </aside>
 
-                <main className="results">
-                    <div className="sorting">
-                        <h3>Sortuj po:</h3>
-                        <div className="buttons">
-                            {["Nowe", "Cena rosnąco", "Cena malejąco", "Najlepsze"].map((label) => (
-                                <button
-                                    key={label}
-                                    className={`results_button ${activeSort === label ? "active" : ""}`}
-                                    onClick={() => sortHotels(label)}
-                                >
-                                    {label} {activeSort === label && "✔"}
-                                </button>
-                            ))}
+
+                    <main className="results">
+                        <div className="sorting">
+                            <h3>Sortuj po:</h3>
+                            <div className="buttons">
+                                {["Nowe", "Cena rosnąco", "Cena malejąco", "Najlepsze"].map((label) => (
+                                    <button
+                                        key={label}
+                                        className={`results_button ${activeSort === label ? "active" : ""}`}
+                                        onClick={() => sortHotels(label)}
+                                    >
+                                        {label} {activeSort === label && "✔"}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {loading ? (
-                        <p>Ładowanie hoteli...</p>
-                    ) : filteredHotels.length > 0 ? (
-                        filteredHotels.map((hotel) => {
-                            const discountedPricePLN = convertToPLN(hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100), hotel.ReferencePriceCurrency);
+                        {loading ? (
+                            <p>Ładowanie hoteli...</p>
+                        ) : filteredHotels.length > 0 ? (
+                            filteredHotels.map((hotel) => {
+                                const discountedPricePLN = convertToPLN(hotel.ReferencePrice * (1 - hotel.MaxDiscountPercent / 100), hotel.ReferencePriceCurrency);
 
-                            return (
-                                <div className="hotel_card" key={hotel.PropertyId}>
-                                    <img src={`https:${hotel.PropertyImageUrl}`} alt={hotel.PropertyName} />
-                                    <div className="hotel_info">
-                                        <h3>{hotel.PropertyName}</h3>
-                                        <p className="stars">
-                                            {"★".repeat(getStarRating(hotel.PropertyRating))}
-                                        </p>
-                                        <p>{hotel.PropertyAddress}</p>
-                                        <p className="price">
-                                            <span className="nights">1 noc</span>
-                                            <span className="old_price">
+                                return (
+                                    <div className="hotel_card" key={hotel.PropertyId}>
+                                        <img src={`https:${hotel.PropertyImageUrl}`} alt={hotel.PropertyName}/>
+                                        <div className="hotel_info">
+                                            <h3>{hotel.PropertyName}</h3>
+                                            <p className="stars">
+                                                {"★".repeat(getStarRating(hotel.PropertyRating))}
+                                            </p>
+                                            <p className="adres_location">{hotel.PropertyAddress}</p>
+                                            <p className="price">
+                                                <span className="nights">1 noc</span>
+                                                <span className="old_price">
                                                 {convertToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency).toFixed(2)} zł
                                             </span>
-                                            <span className="new_price">{discountedPricePLN.toFixed(2)} zł</span>
-                                        </p>
-                                        <button onClick={() => handleSeeOffer(hotel.PropertyId)}>Zobacz ofertę</button>
+                                                <span className="new_price">{discountedPricePLN.toFixed(2)} zł</span>
+                                            </p>
+                                            <button onClick={() => handleSeeOffer(hotel.PropertyId)}>Zobacz ofertę
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p>Brak wyników dla: {destination}</p>
-                    )}
-                </main>
-            </section>
+                                );
+                            })
+                        ) : (
+                            <p>Brak wyników dla: {destination}</p>
+                        )}
+                    </main>
+                </section>
         </main>
-    );
+);
 }
 
 export default Search;
