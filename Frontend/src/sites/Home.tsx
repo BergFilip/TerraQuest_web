@@ -85,8 +85,10 @@ function Home() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        const dateToSave = startDateInput || new Date().toISOString().split('T')[0];
+
         localStorage.setItem('destination', destination);
-        localStorage.setItem('startDate', startDateInput);
+        localStorage.setItem('startDate', dateToSave);
         localStorage.setItem('numUsers', numUsers.toString());
 
         navigate('/search');
@@ -94,12 +96,17 @@ function Home() {
     };
 
     const handleCityClick = (cityName: string) => {
+        const defaultDate = new Date().toISOString().split('T')[0];
+
         localStorage.setItem('destination', cityName);
+        localStorage.setItem('startDate', defaultDate);
+        localStorage.setItem('numUsers', '1');
         navigate('/search');
         window.scrollTo(0, 0);
     };
 
     const handleHotelClick = (hotel: Hotel) => {
+
         localStorage.setItem('selectedHotel', JSON.stringify(hotel));
         navigate(`/product/${hotel.PropertyId}`);
         window.scrollTo(0, 0);
