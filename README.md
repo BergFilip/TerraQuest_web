@@ -161,7 +161,6 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Reservation** [Filip] 
 - **users_info** [Filip] <br><br>
 
-# ZAKTUALIZOWAĆ SCHEMAT BAZY
 <img src="backend/src/img/baza_schemat.png" alt="Schemat bazy danych">
 
 ---
@@ -397,10 +396,205 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
   Praca wtoku
 
 ---
+# 🌐 Opis testów
 
 ## Backend:
 
-# 🌐 Opis testów
+### 🧪 Auth.test.ts – [Testy endpointów autentykacji]
+**Opis**:
+Testy jednostkowe i integracyjne dla endpointów autentykacji (/register, /login, /logout). Sprawdzają poprawność walidacji danych, integrację z Supabase oraz generowanie tokenów JWT.
+
+**Funkcje**:
+
+  - Testowanie walidacji emaila (validateEmail) dla poprawnych i niepoprawnych formatów
+  - Testowanie walidacji hasła (validatePassword) zgodnie z wymaganiami bezpieczeństwa
+  - Testowanie rejestracji użytkownika (/register) z uwzględnieniem:
+  - Sukcesywnej rejestracji z poprawnymi danymi
+  - Odrzucenia słabego hasła
+  - Obsługi istniejącego użytkownika
+  - Poprawnego logowania z właściwymi danymi
+  - Odrzucenia nieprawidłowych danych
+  - Testowanie wylogowania (/logout) i czyszczenia sesji
+  - Mockowanie zależności (Supabase, bcrypt, JWT) dla izolacji testów
+
+**Zależności**:
+
+  - supertest – testowanie endpointów HTTP
+  - express – serwer testowy
+  - jest – framework testowy i mockowanie
+  - bcryptjs – mockowanie funkcji hashujących
+  - jsonwebtoken – mockowanie tokenów JWT
+  - supabase – mockowanie operacji bazodanowych
+  - ../other/auth – testowany router autentykacji
+
+---
+
+### 🧪 Help1.test.ts – [Testy endpointów FAQ]
+**Opis**:
+esty integracyjne dla endpointów FAQ (/api/help1/faq). Weryfikują poprawność pobierania danych z Supabase, obsługę błędów oraz zwracanie odpowiednich kodów statusu HTTP.
+
+**Funkcje**:
+
+- Testowanie poprawnego zwracania listy FAQ z bazy danych
+- Weryfikacja struktury danych odpowiedzi (tytuł, treść, kolory)
+- Mockowanie Supabase Clienta dla izolacji testów
+- Czyszczenie mocków po każdym teście (afterEach)
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- ../supabaseClient – mockowany klient Supabase
+- ../routes/help1 – testowany router FAQ
+
+---
+
+### 🧪 Main.test.ts – [Testy głównej aplikacji]
+**Opis**:
+esty integracyjne sprawdzające podstawową funkcjonalność głównego serwera aplikacji. Weryfikują poprawność działania endpointu głównego oraz obsługę nieznanych ścieżek.
+
+**Funkcje**:
+
+- Testowanie poprawnej odpowiedzi na żądanie GET / (health check)
+- Weryfikacja statusu 200 i komunikatu potwierdzającego działanie backendu
+- Testowanie obsługi nieistniejących ścieżek (404 Not Found)
+- Sprawdzenie czy aplikacja poprawnie inicjalizuje się i odpowiada na żądania
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+
+---
+
+### 🧪 Newsletter.test.ts – [Testy głównej aplikacji]
+**Opis**:
+Kompleksowe testy integracyjne endpointu zapisu do newslettera. Weryfikują poprawność walidacji danych, integrację z Supabase oraz wszystkie możliwe scenariusze odpowiedzi.
+
+**Funkcje**:
+
+- Testowanie walidacji adresu email (wymagane pole, format)
+- Obsługa różnych przypadków użytkownika
+- Testowanie niestandardowych przypadków ( adresy z wielkimi literami, adresy z polskimi znakami ...)
+- Mockowanie Supabase Clienta dla izolacji testów
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- ../utils/supabase – mockowany klient Supabase
+- ../routes/newsletter – testowany router newslettera
+
+---
+
+### 🧪 Product.test.ts – [Testy endpointów hotelowych]
+**Opis**:
+Kompleksowe testy integracyjne dla endpointów związanych z wyszukiwaniem i szczegółami hoteli. Weryfikują poprawność integracji z zewnętrznym API, walidację parametrów oraz obsługę różnych scenariuszy odpowiedzi.
+
+**Funkcje**:
+
+- Testowanie walidacji parametrów (wymagane pole 'city')
+- Weryfikacja struktury odpowiedzi dla szczegółów hotelu
+- Mockowanie axios dla izolacji testów
+- Testowanie obsługi błędów
+- Obsługa różnych formatów odpowiedzi z API
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- axios – mockowane żądania HTTP
+- ../routes/product – testowany router hotelowy
+
+---
+
+### 🧪 Reservation.test.ts – [Testy endpointów rezerwacji]
+**Opis**:
+Kompleksowe testy procesu rezerwacji hoteli, weryfikujące poprawność walidacji danych, integrację z bazą danych oraz obsługę wszystkich scenariuszy biznesowych i błędów.
+
+**Funkcje**:
+
+- Walidacja wymaganych pól (email, dane hotelu)
+- Wyszukiwanie użytkownika w Supabase
+- Zapis pełnych danych rezerwacji
+- Generowanie odpowiedzi dla klienta
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- ../utils/supabase – mockowany klient Supabase
+- ../other/reservation – Testowany router rezerwacji
+
+---
+
+### 🧪 Reviews.test.ts – [Testy endpointu recenzji]
+**Opis**:
+Testy weryfikujące działanie endpointu pobierającego recenzje, z uwzględnieniem przypisywania odpowiednich obrazków w zależności od płci recenzenta oraz obsługi różnych przypadków brzegowych.
+
+**Funkcje**:
+
+- Pobieranie listy recenzji z bazy danych
+- Automatyczne przypisywanie obrazków na podstawie imienia recenzent
+- Obsługa przypadków specjalnych (brak imienia, undefined)
+- Zwracanie odpowiednich kodów błędów
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- ../supabaseClient – mockowany klient Supabase
+- ../routes/reviews – testowany router recenzji
+
+---
+
+### 🧪 Supabase.test.ts – [Testy inicjalizacji klienta Supabase]
+**Opis**:
+Testy weryfikujące poprawność konfiguracji i inicjalizacji klienta Supabase, w tym obsługę błędów przy braku wymaganych zmiennych środowiskowych.
+
+**Funkcje**:
+
+- Walidacja obecności wymaganych zmiennych środowiskowych
+- Poprawna inicjalizacja klienta Supabase
+- Obsługa błędów konfiguracji
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jest – framework testowy i mockowanie
+- Node.js process.env – zarządzanie zmiennymi środowiskowymi
+
+---
+
+### 🧪 UserBookings.test.ts – [Testy endpointów rezerwacji użytkownika]
+
+**Opis**:
+Testy weryfikujące działanie endpointów związanych z zarządzaniem rezerwacjami użytkowników, w tym pobieranie listy rezerwacji oraz ich usuwanie. Testy pokrywają zarówno ścieżki sukcesu, jak i obsługę błędów.
+
+**Funkcje**:
+
+- Pobieranie rezerwacji na podstawie userId
+- Walidacja wymaganych parametrów
+- Autoryzacja przy usuwaniu rezerwacji
+- Obsługa błędów bazy danych
+- Reakcja na brak tokenu JWT
+
+**Zależności**:
+
+- supertest – testowanie endpointów HTTP
+- express – serwer testowy
+- jsonwebtoken - Mockowana weryfikacja tokenów
+- ../utils/supabase - Mockowany klient Supabase
+- ../other/userBookings - Testowany router
+
+---
 
 ## Frontend:
 
