@@ -130,13 +130,11 @@
           }
         }
 
-        &.expanded {
-          .booking-details {
-            max-height: 200px;
-            opacity: 1;
-            margin-top: 15px;
-            border-top: 1px solid #ececec;
-          }
+        .booking-details.visible {
+          max-height: 200px;
+          opacity: 1;
+          margin-top: 15px;
+          border-top: 1px solid #ececec;
         }
 
         .booking-item {

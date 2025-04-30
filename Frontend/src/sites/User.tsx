@@ -203,7 +203,7 @@ function User() {
             setBookings(prev => prev.filter(b => b.PropertyId !== currentBookingToDelete));
             setAlertTitle('Sukces!');
             setAlertMessage('Rezerwacja usunięta pomyślnie');
-            setShowAlert(true);
+            setShowAlert(false);
         } catch (error) {
             setShowConfirmAlert(false);
             console.error('Błąd usuwania:', error);
@@ -298,7 +298,9 @@ function User() {
                                             </div>
                                         </div>
                                         <div className={`booking-details ${expanded === index ? "visible" : ""}`}>
-                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
+                                            <p>{booking.PropertyName} to {booking.PropertyAddress}. Posiada wyjątkowe
+                                                udogodnienia, takie jak basen, restauracja i wiele innych. Idealne
+                                                miejsce na odpoczynek.</p>
                                         </div>
                                     </div>
                                 ))}
@@ -329,15 +331,6 @@ function User() {
                         setCurrentBookingToDelete(null);
                     }}
                     onOk={confirmDelete}
-                />
-            )}
-
-            {/* Alert z wynikiem operacji */}
-            {showAlert && (
-                <Alert
-                    title={alertTitle}
-                    message={alertMessage}
-                    onClose={() => setShowAlert(false)}
                 />
             )}
         </main>
