@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// Typ danych hotelu
 interface ProductData {
     PropertyId: number;
     DealsFound: number;
@@ -27,7 +26,7 @@ interface ProductData {
 }
 
 const Product = () => {
-    const { hotelId } = useParams(); // Pobierz hotelId z URL
+    const { hotelId } = useParams();
     const [productData, setProductData] = useState<ProductData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,10 +35,9 @@ const Product = () => {
         const fetchProductData = async () => {
             try {
                 if (hotelId) {
-                    // Wywołanie zapytania do backendu API, które zwraca dane hotelu
                     const response = await axios.get(`http://localhost:5000/api/products/${hotelId}`);
                     console.log("Dane z API:", response.data);
-                    setProductData(response.data); // Przechowywanie danych w stanie
+                    setProductData(response.data);
                 } else {
                     setError('Brak identyfikatora hotelu.');
                 }
@@ -52,7 +50,7 @@ const Product = () => {
         };
 
         fetchProductData();
-    }, [hotelId]); // Wykonaj ponownie zapytanie, gdy zmieni się hotelId
+    }, [hotelId]);
 
     if (loading) {
         return <div>Ładowanie...</div>;
