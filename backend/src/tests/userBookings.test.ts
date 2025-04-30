@@ -1,6 +1,6 @@
 import request from 'supertest';
 import express from 'express';
-import userBookingsRouter from '../other/userBookings'; // <-- popraw ścieżkę!
+import userBookingsRouter from '../other/userBookings';
 import { supabase } from '../utils/supabase';
 import jwt from 'jsonwebtoken';
 
@@ -21,7 +21,7 @@ jest.mock('../utils/supabase', () => ({
 const app = express();
 app.use(express.json());
 app.use((req, res, next) => {
-    req.cookies = {}; // dodajemy cookies do requestu
+    req.cookies = {};
     next();
 });
 app.use('/', userBookingsRouter);
