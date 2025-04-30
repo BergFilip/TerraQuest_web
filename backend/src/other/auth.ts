@@ -17,23 +17,23 @@ const validatePassword = (password: string): boolean => {
 };
 
 router.post("/register", async (req: Request, res: Response) => {
-    const  { email, password } = req.body;
+    const { email, password } = req.body;
 
     if (!validateEmail(email)) {
         res.status(400).json({
-            message: "Invalid email format",
+            message: "Nieprawidłowy format wiadomości e-mail",
         });
         return;
     }
 
     if (!validatePassword(password)) {
         res.status(400).json({
-            message: "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.",
+            message: "Hasło musi mieć co najmniej 8 znaków i zawierać wielką literę, cyfrę i znak specjalny.",
         });
         return;
     }
 
-    const { data, error: err} = await supabase
+    const { data, error: err } = await supabase
         .from('users_terraQuest')
         .select('*')
         .eq('email', email)
@@ -41,13 +41,13 @@ router.post("/register", async (req: Request, res: Response) => {
 
     if (data) {
         res.status(400).json({
-            message: "User with this email already exists",
-        })
-        return
+            message: "Użytkownik z tym adresem e-mail już istnieje",
+        });
+        return;
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt)
+    const hashedPass = await bcrypt.hash(password, salt);
 
     type User = {
         id: string;
@@ -55,7 +55,7 @@ router.post("/register", async (req: Request, res: Response) => {
         pass: string;
     };
 
-    const { data: insertedUser , error: insertError } = await supabase.from("users_terraQuest").insert({
+    const { data: insertedUser, error: insertError } = await supabase.from("users_terraQuest").insert({
         email,
         pass: hashedPass
     }).select("*").single();
@@ -65,7 +65,7 @@ router.post("/register", async (req: Request, res: Response) => {
             message: 'Błąd przy rejestracji użytkownika',
             error: insertError?.message || 'Brak danych użytkownika po rejestracji',
         });
-        return
+        return;
     }
 
     const token = jwt.sign(
@@ -82,7 +82,7 @@ router.post("/register", async (req: Request, res: Response) => {
     });
 
     res.status(200).json({
-        message: 'Login successful',
+        message: 'Pomyślnie zalogowano',
         user: { email: insertedUser.email }
     });
 })
@@ -92,11 +92,11 @@ router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(400).json({ message: 'Missing email or password' });
-        return
+        res.status(400).json({ message: 'Brak adresu e-mail lub hasła' });
+        return;
     }
 
-    try{
+    try {
 
         const response = await supabase
             .from('users_terraQuest')
@@ -105,13 +105,13 @@ router.post('/login', async (req: Request, res: Response) => {
             .single();
 
         if (response.error) {
-            res.status(401).json({ message: 'Invalid credentials' });
-            return
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
+            return;
         }
 
         if (!response.data) {
-            res.status(401).json({ message: 'Invalid credentials' });
-            return
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
+            return;
         }
 
         const { data } = response;
@@ -119,8 +119,8 @@ router.post('/login', async (req: Request, res: Response) => {
         const passwordMatches = await bcrypt.compare(password, data.pass);
 
         if (!passwordMatches) {
-            res.status(401).json({ message: 'Invalid credentials' });
-            return
+            res.status(401).json({ message: 'Nieprawidłowe dane logowania' });
+            return;
         }
 
         const token = jwt.sign(
@@ -137,19 +137,18 @@ router.post('/login', async (req: Request, res: Response) => {
         });
 
         res.status(200).json({
-            message: 'Login successful',
+            message: 'Pomyślnie zalogowano',
             user: { email: data.email }
         });
     }
     catch (err: unknown) {
         console.error('Login error:', err);
-        res.status(500).json({ error: 'Internal server error' });
-        return
+        res.status(500).json({ error: 'Wewnętrzny błąd serwera' });
+        return;
     }
 });
 
 router.get('/user', async (req: Request, res: Response) => {
-
     const token = req.cookies.token;
 
     if (!token) {
@@ -163,13 +162,7 @@ router.get('/user', async (req: Request, res: Response) => {
 
         const { data, error } = await supabase
             .from('users_terraQuest')
-            .select(`
-                email,
-                users_info:users_info (
-                    Name,
-                    Surname
-                )
-            `)
+            .select('id, email, newsletter')
             .eq('id', userId)
             .single();
 
@@ -178,24 +171,18 @@ router.get('/user', async (req: Request, res: Response) => {
             return;
         }
 
-        const usersInfo = data.users_info as unknown as { Name: string; Surname: string } || {};
-        const firstName = usersInfo.Name || '';
-        const lastName = usersInfo.Surname || '';
-
         res.status(200).json({
             email: data.email,
-            firstName: firstName,
-            lastName: lastName
+            newsletter: data.newsletter,
         });
     } catch (err) {
-        res.status(401).json({ message: 'Token jest nieprawidłowy' });
+        res.status(500).json({ message: 'Błąd serwera' });
     }
 });
 
-
 router.post('/logout', (req: Request, res: Response) => {
     res.clearCookie('token');
-    res.status(200).json({ message: 'Logout successful' });
+    res.status(200).json({ message: 'Pomyślnie wylogowano' });
 });
 
 router.put('/updateProfile', async (req: Request, res: Response) => {

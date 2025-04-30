@@ -3,8 +3,9 @@ import HSection from "../components/h-section.tsx";
 import ReviewCard from "../components/ReviewCard.tsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
-
+// Typ dla recenzji
 type Review = {
     title: string;
     description: string;
@@ -14,22 +15,61 @@ type Review = {
     image: string;
 };
 
+// Typ dla hotelu
+type Hotel = {
+    PropertyName: string;
+    PropertyAddress: string;
+    PropertyRating: number;
+    PropertyImageUrlHighRes: string;
+    ReferencePrice: number;
+    ReferencePriceCurrency: string;
+    MaxDiscountPercent: number;
+};
 
 function Product() {
-    const images = [
-        "/src/assets/miesiace.webp",
-        "/src/assets/kontakt.webp",
-        "/src/assets/logowanie.webp",
-        "/src/assets/rejestracja.webp",
-        "/src/assets/kompas.webp",
-    ];
-
+    const { isLoggedIn, userEmail } = useAuth();
     const [reviews, setReviews] = useState<Review[]>([]);
+    const [hotel, setHotel] = useState<Hotel | null>(null); // Poprawione tutaj
 
+    // Przykładowe kursy walut
+    const [currencyRates] = useState({
+        USD: 4.3,
+        EUR: 4.5,
+    });
+
+    const handleReservation = async () => {
+        if (!isLoggedIn || !userEmail) {
+            alert("❌ Musisz być zalogowany, aby zarezerwować hotel.");
+            return;
+        }
+
+        try {
+            const reservationData = {
+                userEmail,
+                hotel: hotel,
+                checkIn: new Date().toISOString().split('T')[0], // dzisiejsza data
+                checkOut: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // data za 7 dni
+            };
+
+            const response = await axios.post(
+                "http://localhost:5000/api/reservations",
+                reservationData,
+                { withCredentials: true }
+            );
+
+            console.log("Odpowiedź serwera:", response.data);
+            alert("✅ Rezerwacja dodana!");
+        } catch (error) {
+            console.error("❌ Pełny błąd przy rezerwacji:", error);
+            alert(`❌ Błąd przy rezerwacji: ${error.response?.data?.message || error.message}`);
+        }
+    };
+
+    // Pobieranie recenzji
     useEffect(() => {
         const fetchReview = async () => {
             try {
-                const res = await axios.get("/api/reviews");
+                const res = await axios.get("http://localhost:5000/api/reviews");
                 if (Array.isArray(res.data)) setReviews(res.data);
             } catch (error) {
                 console.error("❌ Błąd ładowania recenzji:", error);
@@ -39,9 +79,33 @@ function Product() {
         fetchReview();
     }, []);
 
+    useEffect(() => {
+        const savedHotel = localStorage.getItem("selectedHotel");
+        if (savedHotel) {
+            setHotel(JSON.parse(savedHotel));
+        }
+    }, []);
 
-    const [mainImage, setMainImage] = useState(images[0]);
 
+    const convertToPLN = (price: number, currency: string): number => {
+        if (currency === "USD") {
+            return price * currencyRates.USD;
+        } else if (currency === "EUR") {
+            return price * currencyRates.EUR;
+        }
+        return price;
+    };
+
+
+    const calculateDiscountedPrice = (price: number, discountPercent: number): number => {
+        return price * (1 - discountPercent / 100);
+    };
+
+    if (!hotel) {
+        return <p>Ładowanie danych hotelu...</p>;
+    }
+
+    const discountedPrice = calculateDiscountedPrice(hotel.ReferencePrice, hotel.MaxDiscountPercent);
 
     return (
         <section className="product_site">
@@ -49,27 +113,23 @@ function Product() {
                 <div className="product_box">
                     <div className="product_header">
                         <div className="product_main-image">
-                            <img src={mainImage} alt="Wybrane zdjęcie"/>
+                            <img src={hotel.PropertyImageUrlHighRes} alt="Wybrane zdjęcie" />
                         </div>
                         <div className="product_info">
-                            <h2>Madryt <span>(Hiszpania)</span></h2>
-                            <p className="product_duration">za 3 noce</p>
-                            <p className="product_price">zł 350</p>
-                            <button className="product_button">Zarezerwuj</button>
-                            <p className="product_note">Przepiękna willa na obrzeżach miasta z własnym basenem.</p>
+                            <h2>{hotel.PropertyName}</h2>
+                            <span>({hotel.PropertyAddress})</span>
+                            <p className="product_duration">za 1 noc</p>
+                            <p className="product_price">
+                                <span className="old_price">
+                                    {convertToPLN(hotel.ReferencePrice, hotel.ReferencePriceCurrency).toFixed(2)} PLN
+                                </span>
+                                <span className="new_price">
+                                    {convertToPLN(discountedPrice, hotel.ReferencePriceCurrency).toFixed(2)} PLN
+                                </span>
+                            </p>
+                            <button className="product_button" onClick={handleReservation}>Zarezerwuj</button>
+                            <p className="product_note">{hotel.PropertyAddress}</p>
                         </div>
-                    </div>
-
-                    <div className="product_gallery">
-                        {images.map((img, idx) => (
-                            <img
-                                key={idx}
-                                src={img}
-                                alt={`Zdjęcie ${idx + 1}`}
-                                onClick={() => setMainImage(img)}
-                                className={mainImage === img ? "active" : ""}
-                            />
-                        ))}
                     </div>
 
                     <div className="product_amenities">
@@ -84,15 +144,16 @@ function Product() {
                     </div>
 
                     <div className="product_details">
-                        <h3>Apartamenty Collegia — informacje</h3>
-                        <p>Willa z basenem. 5 sypialni, kuchnia i kort tenisowy.</p>
+                        <h3>Opis hotelu</h3>
+                        <p>{hotel.PropertyName} to {hotel.PropertyAddress}. Posiada {hotel.PropertyRating} gwiazdek i oferuje wyjątkowe udogodnienia, takie jak basen, restauracja i wiele innych. Idealne miejsce na odpoczynek.</p>
                     </div>
                 </div>
+
                 <div className="sectaion5">
                     <HSection text1="Oceny klientów" text2="Statystyki mówią same za siebie"/>
                     <div className="card_review_section">
                         {reviews.length > 0 ? (
-                            <ReviewCard reviews={reviews.slice(9, 17)}/>
+                            <ReviewCard reviews={reviews.slice(9, 17)} />
                         ) : (
                             <p>Ładowanie recenzji...</p>
                         )}

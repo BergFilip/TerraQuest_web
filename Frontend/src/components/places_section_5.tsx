@@ -9,17 +9,23 @@ type PlacesSection = {
     text4: string;
     text5: string;
     link_to: string;
+    onClick?: () => void; // <<< dodajemy onClick jako opcjonalny
 };
 
-const Places_5 = ({ link, text1, text2, text3, text4, text5, link_to }: PlacesSection) => {
+const Places_5 = ({ link, text1, text2, text3, text4, text5, link_to, onClick }: PlacesSection) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(link_to);
+        if (onClick) {
+            onClick();
+        } else {
+            navigate(link_to);
+        }
+        window.scrollTo(0, 0);
     };
 
     return (
-        <div className="Places_5" onClick={handleClick}>
+        <div className="Places_5" onClick={handleClick} style={{ cursor: "pointer" }}>
             <img src={link} alt={text1} />
             <h4>{text1}</h4>
             <h4 className="descr_h4">{text2}</h4>

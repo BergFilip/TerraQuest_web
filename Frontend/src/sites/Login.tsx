@@ -30,10 +30,10 @@ function Login() {
                 await login(email);
                 navigate('/user');
             } else {
-                setError(data.message || 'Login failed');
+                setError(data.message || 'Błędne logowanie');
             }
         } catch (err) {
-            setError('Login failed');
+            setError('Błędne logowanie');
         } finally {
             setLoading(false);
         }

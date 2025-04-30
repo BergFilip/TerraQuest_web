@@ -30,10 +30,9 @@
         margin-right: 2rem;
         color: #333;
       }
-
       strong {
         display: block;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.5rem;
       }
     }
     .contactItem:first-of-type {
@@ -65,6 +64,7 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
+
       }
 
       textarea {
@@ -72,6 +72,9 @@
         height: 100px;
       }
 
+      textarea::placeholder {
+        font-family: roboto !important;
+      }
       button {
         padding: 0.8rem;
         background: #ffaa00;
@@ -125,7 +128,7 @@
 
         strong {
           display: block;
-          margin-bottom: 0.2rem;
+          margin-bottom: 0.3rem;
         }
       }
       .contactItem:first-of-type {
@@ -191,6 +194,15 @@
       box-shadow: 10px 10px 20px 5px rgba(0,0,0,0.3);
     }
   }
+}
+.errorInput {
+  border: 2px solid #ff4d4f !important;
+  background-color: #fff0f0;
+}
+
+.errorInput::placeholder {
+  color: #d03a3a;
+  font-style: italic;
 }
 
 @media (max-width: 405px) {

@@ -11,7 +11,8 @@ const Btn_LR = ({ text, colorB,colorT, route }: CardProps) => {
         <Link to={route}>
             <button style={{"backgroundColor": colorB, "color": colorT}}
             >{text}</button>
-        </Link>
+
+        </Link >
 
     ) : (
         <button style={{"backgroundColor": colorB, "color": colorT}}

@@ -13,6 +13,7 @@ const Places_6 = ({ link, text1, text2, link_to}: PlacesSection) => {
 
     const handleClick = () => {
         navigate(link_to);
+        window.scrollTo(0, 0);
     };
     return <div className="Places_6" onClick={handleClick}>
         <img src={link}/>

@@ -1,32 +1,41 @@
-import "../styles/sites/Help.scss"
+import "../styles/sites/Help.scss";
 import FaqSection from "../components/help_section.tsx";
-import Button from "../components/Button.tsx";
-
-
+import { useState } from "react";
 
 function Help() {
-    return(
-        <section className="help_site" data-testid="search-form">
+    const [inputValue, setInputValue] = useState("");
+
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+    };
+
+    return (
+        <section className="help_site">
             <div className="section9">
                 <article>
-                    <h1>Cześć, jak możemy ci pomóc?</h1>,
-                    <div>
-                        <form action="">
+                    <h1>Cześć, jak możemy ci pomóc?</h1>
+                    <div className="form-row-wrapper">
+                        <form onSubmit={handleSearch}>
                             <i className="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" name="question" id="question" placeholder="Zadaj nam pytanie?"/>
+                            <input
+                                type="text"
+                                name="question"
+                                id="question"
+                                placeholder="Wyszukaj pytanie?"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                            />
                         </form>
-                        <Button text={"Szukaj"}></Button>
                     </div>
                 </article>
                 <div className="places_section_8">
-                    <FaqSection></FaqSection>
+
+                    <FaqSection searchTerm={inputValue} />
                 </div>
-
-
             </div>
-
         </section>
-    )
+    );
 }
 
-export default Help
+export default Help;

@@ -13,6 +13,7 @@ const Places_3 = ({ link, text2, link_to}: PlacesSection) => {
 
     const handleClick = () => {
         navigate(link_to);
+        window.scrollTo(0, 0);
     };
 
     return <div className="Places_3" onClick={handleClick}>

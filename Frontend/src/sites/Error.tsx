@@ -6,7 +6,7 @@ const Error = () => {
         <section className="error">
             <div className="back">
                 <h1>
-                    Nieznaleziono strony
+                    Nie znaleziono strony
                 </h1>
                 <p>
                     Wróć do strony głównej
