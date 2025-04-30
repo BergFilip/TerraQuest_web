@@ -3,6 +3,7 @@
   flex-direction: column;
   padding-bottom: 100px;
 
+
   .section1 {
     background-image: url("/src/assets/baner_search.webp");
     background-size: 100%;
@@ -128,7 +129,9 @@
   height: 2.5rem;
   min-width: 200px;
 }
-
+.toggle-filters_search{
+  display: none;
+}
 .search_field input {
   border: none;
   background: transparent;
@@ -814,6 +817,11 @@
 }
 
 @media (max-width: 850px) {
+  .search_site .search_content {
+    padding: 1rem 1.5rem !important;
+    margin-top: 2rem;
+    gap: 0.5rem;
+  }
   .search_site{
     .section1 {
       h1 {
@@ -835,6 +843,9 @@
     }
     .adres_location{
       font-size: 13px;
+    }
+    .sorting button{
+      margin-right: 10px;
     }
   }
 }
@@ -965,30 +976,25 @@
 
   .sorting {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     gap: 10px;
     align-items: center;
     margin-bottom: 20px;
   }
 
-  .sorting .results_search {
-    width: 100%;
-    max-width: 300px;
-    padding: 6px;
+  .sorting button {
     font-size: 14px;
-    margin-right: 0;
+    margin-bottom: 10px;
   }
 
-  .sorting .results_button {
-    font-size: 13px;
-    padding: 4px 8px;
-  }
 
   .hotel_card {
     flex-direction: column;
     width: 100%;
     font-size: 14px;
     margin-bottom: 20px;
+    padding: 1rem;
   }
 
   .hotel_card img {
@@ -1004,9 +1010,48 @@
     font-size: 14px;
   }
 
-  .hotel_info button {
-    padding: 6px 12px;
+  .old_price,
+  .new_price {
     font-size: 14px;
+  }
+  .hotel_info button {
+    padding: 7px 15px;
+    font-size: 14px;
+  }
+  .search_content {
+    flex-direction: column;
+  }
+
+  .filters {
+    position: static !important;
+    width: 100%;
+    margin-bottom: 20px;
+    display: none; /* Domyślnie ukryte */
+    margin-right: 0 !important;
+    padding: 1.5rem !important;
+  }
+
+  .filters.visible {
+    display: block;
+  }
+
+  .toggle-filters_search {
+    display: flex;
+    background-color: #272727;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    width: 100%;
+    font-family: poppins !important;
+    font-size: 14px !important;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #616161;
+    }
   }
 }
 
