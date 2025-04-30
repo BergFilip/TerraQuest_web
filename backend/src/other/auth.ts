@@ -172,8 +172,9 @@ router.get('/user', async (req: Request, res: Response) => {
         }
 
         res.status(200).json({
+            id: data.id, // KLUCZOWE - frontend tego oczekuje
             email: data.email,
-            newsletter: data.newsletter,
+            newsletter: data.newsletter
         });
     } catch (err) {
         res.status(500).json({ message: 'Błąd serwera' });

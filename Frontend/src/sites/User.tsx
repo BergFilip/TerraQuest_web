@@ -35,23 +35,51 @@ function User() {
 
     // Weryfikacja autentyczności i pobieranie danych użytkownika
     useEffect(() => {
-        const verifyAuth = async () => {
-            const isAuthenticated = await checkAuth();
-            if (!isAuthenticated) {
-                navigate("/login");
-            } else {
-                fetchUserBookings();
-                fetchUserData(); // Pobierz dane użytkownika (newsletter)
+        let isMounted = true;
+
+        const verifyAuthAndFetchData = async () => {
+            setLoading(true);
+
+            try {
+                const isAuthenticated = await checkAuth();
+
+                if (!isAuthenticated) {
+                    navigate("/login");
+                    return;
+                }
+
+                // Poczekaj na userId - ważna zmiana!
+                if (!userId) {
+                    console.log("Oczekiwanie na userId...");
+                    return;
+                }
+
+                // Dopiero gdy mamy userId
+                if (isMounted) {
+                    await Promise.all([
+                        fetchUserBookings(),
+                        fetchUserData()
+                    ]);
+                }
+            } catch (error) {
+                console.error("Błąd inicjalizacji:", error);
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         };
 
-        verifyAuth();
+        verifyAuthAndFetchData();
 
         const interval = setInterval(() => {
             setCurrentTime(new Date().toLocaleTimeString());
         }, 1000);
 
-        return () => clearInterval(interval);
+        return () => {
+            isMounted = false;
+            clearInterval(interval);
+        };
     }, [checkAuth, navigate, userId]);
 
     useEffect(() => {
@@ -63,7 +91,7 @@ function User() {
     // Funkcja do pobrania danych użytkownika (w tym statusu newslettera)
     const fetchUserData = async () => {
         try {
-            const response = await axios.get('/api/user', { withCredentials: true });
+            const response = await axios.get('/api/auth/user', { withCredentials: true });
             setNewsletter(response.data.newsletter || false);
         } catch (error) {
             console.error('Błąd przy pobieraniu danych użytkownika', error);

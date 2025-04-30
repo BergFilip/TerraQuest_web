@@ -20,6 +20,8 @@ router.post('/', async (req: Request, res: Response) => {
             .eq('email', userEmail)
             .single();  // Używamy single() bo spodziewamy się tylko jednego wyniku
 
+        console.log(userData?.id);
+
         if (userError || !userData) {
             res.status(404).json({ message: 'Użytkownik nie znaleziony' });
             return
