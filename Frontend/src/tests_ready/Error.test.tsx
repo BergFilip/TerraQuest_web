@@ -19,7 +19,7 @@ describe('Error Component', () => {
     it('renders correctly with error message', () => {
         render(<Error />);
 
-        expect(screen.getByText('Nieznaleziono strony')).toBeInTheDocument();
+        expect(screen.getByText('Nie znaleziono strony')).toBeInTheDocument();
         expect(screen.getByText('Wróć do strony głównej')).toBeInTheDocument();
 
         const button = screen.getByTestId('mock-button');
