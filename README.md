@@ -158,7 +158,7 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Help.test.test.tsx**: [Filip]
 - **Home.test.tsx**: [Wiktor]
 - **Login.test.tsx**: [Wiktor]
-- **Newsletter.test.tsx**: [Filip]
+- **Newsletter.ZROBIC.tsx**: [Filip]
 - **Privacy_policy.test.tsx**: [Wiktor]
 - **Product.test.tsx**: [Jacek]
 - **Registration.test.tsx**: [Wiktor]
@@ -413,7 +413,7 @@ Testy jednostkowe dla komponentu `Help`, odpowiadającego za interfejs pomocy i 
 
 ---
 
-### 🧪 Newsletter.test.tsx – [Testy komponentu Newsletter]
+### 🧪 Newsletter.ZROBIC.tsx – [Testy komponentu Newsletter]
 
 **Opis:**  
 Zestaw testów jednostkowych dla komponentu `Newsletter`, który umożliwia zapis do newslettera i wyświetla alert potwierdzający.

@@ -1,62 +1,61 @@
+// Help.test.tsx
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Help from '../sites/Help.tsx';
-import FaqSection from '@components/help_section.tsx';
-import Button from '@components/Button.tsx';
+import Help from '../sites/Help';
+import '@testing-library/jest-dom';
 
-jest.mock('@components/help_section.tsx', () => ({
-    __esModule: true,
-    default: jest.fn(() => <div data-testid="faq-mock" />)
-}));
-
-jest.mock('@components/Button.tsx', () => ({
-    __esModule: true,
-    default: jest.fn(({ text }) => <button data-testid="mock-button">{text}</button>)
-}));
+// Mock the FaqSection component
+jest.mock('../components/help_section.tsx', () => {
+    return function MockFaqSection(props: { searchTerm: string }) {
+        return <div data-testid="faq-section">Mock FAQ Section - Search Term: {props.searchTerm}</div>;
+    };
+});
 
 describe('Help Component', () => {
-    beforeEach(() => {
-        (FaqSection as jest.Mock).mockClear();
-        (Button as jest.Mock).mockClear();
+    it('renders without crashing', () => {
+        render(<Help />);
+        expect(screen.getByText('Cześć, jak możemy ci pomóc?')).toBeInTheDocument();
     });
 
-    it('renders correctly', () => {
+    it('displays the search input with correct placeholder', () => {
         render(<Help />);
-
-        expect(screen.getByRole('heading', { name: /Cześć, jak możemy ci pomóc\?/i })).toBeInTheDocument();
-        expect(screen.getByPlaceholderText(/Zadaj nam pytanie\?/i)).toBeInTheDocument();
-        expect(screen.getByTestId('mock-button')).toHaveTextContent('Szukaj');
-        expect(screen.getByTestId('faq-mock')).toBeInTheDocument();
+        const input = screen.getByPlaceholderText('Wyszukaj pytanie?');
+        expect(input).toBeInTheDocument();
+        expect(input).toHaveAttribute('type', 'text');
     });
 
-    it('renders search form with correct elements', () => {
+    it('updates input value when typing', () => {
         render(<Help />);
+        const input = screen.getByPlaceholderText('Wyszukaj pytanie?') as HTMLInputElement;
 
-        const form = screen.getByTestId('search-form');
-        expect(form).toBeInTheDocument();
+        fireEvent.change(input, { target: { value: 'płatność' } });
+        expect(input.value).toBe('płatność');
+    });
 
-        const searchInput = screen.getByRole('textbox');
-        expect(searchInput).toHaveAttribute('name', 'question');
-        expect(searchInput).toHaveAttribute('id', 'question');
+    it('passes the search term to FaqSection component', () => {
+        render(<Help />);
+        const input = screen.getByPlaceholderText('Wyszukaj pytanie?');
 
-        const searchIcon = screen.getByTestId('search-icon');
+        fireEvent.change(input, { target: { value: 'anulowanie' } });
+
+        const faqSection = screen.getByTestId('faq-section');
+        expect(faqSection).toHaveTextContent('Mock FAQ Section - Search Term: anulowanie');
+    });
+
+    it('displays the search icon', () => {
+        render(<Help />);
+        // Since we're using Font Awesome with class names, we can check for the element with the class
+        const searchIcon = document.querySelector('.fa-magnifying-glass');
         expect(searchIcon).toBeInTheDocument();
     });
 
-    it('passes correct props to Button component', () => {
-        render(<Help />);
+    it('maintains proper structure and class names', () => {
+        const { container } = render(<Help />);
 
-        const buttonProps = (Button as jest.Mock).mock.calls[0][0];
-        expect(buttonProps).toEqual({
-            text: 'Szukaj'
-        });
-    });
-
-    it('allows typing in search input', () => {
-        render(<Help />);
-
-        const input = screen.getByPlaceholderText(/Zadaj nam pytanie\?/i);
-        fireEvent.change(input, { target: { value: 'Jak resetować hasło?' } });
-
-        expect(input).toHaveValue('Jak resetować hasło?');
+        expect(container.querySelector('.help_site')).toBeInTheDocument();
+        expect(container.querySelector('.section9')).toBeInTheDocument();
+        expect(container.querySelector('article')).toBeInTheDocument();
+        expect(container.querySelector('.form-row-wrapper')).toBeInTheDocument();
+        expect(container.querySelector('.places_section_8')).toBeInTheDocument();
     });
 });
