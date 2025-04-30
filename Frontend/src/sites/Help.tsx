@@ -5,23 +5,28 @@ import { useState } from "react";
 function Help() {
     const [inputValue, setInputValue] = useState("");
 
-    const handleSearchClick = (e: React.FormEvent) => {
+
+    const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9e1043908cc7f4db4297f270aeedb07150b0d7bf
     };
 
     return (
-        <section className="help_site" data-testid="search-form">
+        <section className="help_site">
             <div className="section9">
                 <article>
                     <h1>Cześć, jak możemy ci pomóc?</h1>
                     <div className="form-row-wrapper">
-                        <form onSubmit={handleSearchClick}>
+                        <form onSubmit={handleSearch}>
                             <i className="fa-solid fa-magnifying-glass"></i>
                             <input
                                 type="text"
                                 name="question"
                                 id="question"
-                                placeholder="Zadaj nam pytanie?"
+                                placeholder="Wyszukaj pytanie?"
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                             />
@@ -29,6 +34,7 @@ function Help() {
                     </div>
                 </article>
                 <div className="places_section_8">
+
                     <FaqSection searchTerm={inputValue} />
                 </div>
             </div>

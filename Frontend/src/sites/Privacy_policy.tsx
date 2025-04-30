@@ -7,8 +7,8 @@ function PrivacyPolicies() {
             <div className="container">
 
                 <div className="update">
-                    <p><strong>Data wejścia w życie:</strong> 01.02.2025</p>
-                    <p><strong>Ostatnia aktualizacja:</strong> 01.03.2025</p>
+                    <p><strong>Data wejścia w życie:</strong> 01.05.2025</p>
+                    <p><strong>Ostatnia aktualizacja:</strong> 30.04.2025</p>
                 </div>
 
 
