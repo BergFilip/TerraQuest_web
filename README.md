@@ -896,6 +896,11 @@ Zależności:
 - ../sites/Weather.tsx – testowany komponent
 - @components/Button.tsx – mockowany komponent przycisku
 
-## Makieta projektu - Figma:
+---
 
+## Makieta projektu - Figma:
+Opis:
+Makieta projektu w Figma to wizualne odwzorowanie interfejsu użytkownika aplikacji lub strony internetowej. Dokumentacja ta przedstawia sposób korzystania z makiety w Figma, jej cele, funkcje oraz strukturę, jak również zapewnia informacje dotyczące współpracy zespołowej i organizacji projektu w Figma.
+
+https://www.figma.com/design/VAEeMmg1rGRkZhTuEwuFnK/Platforma-do-Planowania-Podróży-i-Rezerwacji---TerraQuest?node-id=0-1&t=TFYAgNNcLLNpHKD8-1
 ---
