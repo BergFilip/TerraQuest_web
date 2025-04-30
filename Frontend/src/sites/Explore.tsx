@@ -69,11 +69,14 @@ function Explore() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+
+
         localStorage.setItem('destination', destination);
         localStorage.setItem('startDate', startDate);
         localStorage.setItem('numUsers', numUsers.toString());
 
         navigate('/search');
+        window.scrollTo(0, 0);
     };
 
     useEffect(() => {
