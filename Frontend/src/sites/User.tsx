@@ -203,7 +203,7 @@ function User() {
             setBookings(prev => prev.filter(b => b.PropertyId !== currentBookingToDelete));
             setAlertTitle('Sukces!');
             setAlertMessage('Rezerwacja usunięta pomyślnie');
-            setShowAlert(true);
+            setShowAlert(false);
         } catch (error) {
             setShowConfirmAlert(false);
             console.error('Błąd usuwania:', error);
@@ -329,15 +329,6 @@ function User() {
                         setCurrentBookingToDelete(null);
                     }}
                     onOk={confirmDelete}
-                />
-            )}
-
-            {/* Alert z wynikiem operacji */}
-            {showAlert && (
-                <Alert
-                    title={alertTitle}
-                    message={alertMessage}
-                    onClose={() => setShowAlert(false)}
                 />
             )}
         </main>
