@@ -7,7 +7,8 @@ router.get("/search", async (req: Request, res: Response) => {
     const { city } = req.query;
 
     if (!city) {
-        return res.status(400).json({ error: "Brakuje parametru 'city'" });
+        res.status(400).json({ error: "Brakuje parametru 'city'" });
+        return
     }
 
     try {
@@ -21,7 +22,8 @@ router.get("/search", async (req: Request, res: Response) => {
         const hotels = response.data;
 
         if (!hotels || hotels.length === 0) {
-            return res.status(404).json({ error: `Brak hoteli w mieście ${city}` });
+            res.status(404).json({ error: `Brak hoteli w mieście ${city}` });
+            return
         }
 
         res.json(hotels);
@@ -36,7 +38,8 @@ router.get("/:hotelId", async (req: Request, res: Response) => {
     const { hotelId } = req.params;
 
     if (!hotelId) {
-        return res.status(400).json({ error: "Brakuje hotelId" });
+        res.status(400).json({ error: "Brakuje hotelId" });
+        return
     }
 
     try {
@@ -51,7 +54,8 @@ router.get("/:hotelId", async (req: Request, res: Response) => {
         const hotelData = response.data;
 
         if (!hotelData || Object.keys(hotelData).length === 0) {
-            return res.status(404).json({ error: "Nie znaleziono danych dla podanego hotelu" });
+            res.status(404).json({ error: "Nie znaleziono danych dla podanego hotelu" });
+            return
         }
 
         res.json({

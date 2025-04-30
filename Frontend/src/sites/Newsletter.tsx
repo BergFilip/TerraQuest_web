@@ -111,8 +111,8 @@ function Newsletter() {
             <h1>Zapisz się do Newslettera</h1>
             <p className={"p_main"}>nie pozwól, aby ominęły cię promocje i nowe atrakcje</p>
 
-            <form onSubmit={handleSubmit}>
-                <div className="input-wrapper">
+            <form onSubmit={handleSubmit} data-testid="newsletter-form" aria-label="Newsletter subscription form">
+                <div className="input-wrapper" data-testid="input-wrapper">
                     <input
                         type="email"
                         placeholder={"jan.kowalski@wp.pl"}
@@ -121,7 +121,7 @@ function Newsletter() {
                         className={emailError ? "error_N" : ""}
                         disabled={isSubmitting}
                     />
-                    {emailError && <span className="error-message_N">{emailError}</span>}
+                    {emailError && <span className="error-message_N" data-testid="error-container">{emailError}</span>}
                 </div>
 
                 <input

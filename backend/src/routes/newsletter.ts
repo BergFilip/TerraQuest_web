@@ -7,10 +7,11 @@ router.post('/', async (req: Request, res: Response) => {
     const { email } = req.body;
 
     if (!email) {
-        return res.status(400).json({
+        res.status(400).json({
             success: false,
             error: 'Email jest wymagany'
         });
+        return;
     }
 
     try {
@@ -21,17 +22,19 @@ router.post('/', async (req: Request, res: Response) => {
             .single();
 
         if (userError || !userData) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 error: 'Użytkownik nie istnieje'
             });
+            return
         }
 
         if (userData.newsletter === true) {
-            return res.status(200).json({
+            res.status(200).json({
                 success: false,
                 message: 'Już jesteś zapisany do newslettera'
             });
+            return
         }
 
         const { error: updateError, data: updatedData } = await supabase
@@ -44,24 +47,27 @@ router.post('/', async (req: Request, res: Response) => {
             .single();
 
         if (updateError) {
-            return res.status(500).json({
+            res.status(500).json({
                 success: false,
                 error: 'Błąd bazy danych',
                 details: updateError.message
             });
+            return
         }
 
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             message: 'Zapisano do newslettera',
             data: updatedData
         });
+        return
 
     } catch (err) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             error: 'Wewnętrzny błąd serwera'
         });
+        return
     }
 });
 

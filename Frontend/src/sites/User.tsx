@@ -251,7 +251,7 @@ function User() {
                             <p><strong>Zapisz się do Newslettera</strong></p>
                         </div>
 
-                        <div className="setting-item" onClick={handleProfileUpdate}>
+                        <div className="setting-item" onClick={handleProfileUpdate} data-testid="profile-update-button">
                             <i className="fa-solid fa-pen"></i>
                             <p><strong>Aktualizacja profilu</strong></p>
                         </div>
