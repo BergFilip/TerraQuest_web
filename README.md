@@ -828,7 +828,7 @@ Testy komponentu `Register`, który odpowiada za rejestrację użytkownika. Test
 - `../context/AuthContext` – kontekst autoryzacji
 
 ---
-# 📄 Search.test.tsx – [Testy komponentu Search]
+### 📄 Search.test.tsx – [Testy komponentu Search]
 
 Opis:
 Testy komponentu Search, który odpowiada za wyszukiwanie hoteli. Testowane są interakcje z formularzem wyszukiwania, filtrowanie wyników oraz poprawność nawigacji.
@@ -853,7 +853,7 @@ Zależności:
 
 ---
 
-# 📄 User.test.tsx – [Testy komponentu User]
+### 📄 User.test.tsx – [Testy komponentu User]
 
 Opis:
 Testy komponentu User, który odpowiada za wyświetlanie danych użytkownika oraz jego rezerwacji. Testowane są interakcje z danymi użytkownika, stan logowania oraz możliwość wylogowania.
@@ -878,7 +878,7 @@ Zależności:
 
 ---
 
-# 📄 Weather.test.tsx – [Testy komponentu Weather]
+### 📄 Weather.test.tsx – [Testy komponentu Weather]
 
 Opis:
 Testy komponentu Weather, który wyświetla informacje o dostępności strony z prognozą pogody. Testowane są interakcje z przyciskiem powrotu na stronę główną oraz renderowanie komunikatu o niedostępności strony.
