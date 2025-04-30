@@ -76,12 +76,10 @@ const FaqSection = ({ searchTerm = "" }: FaqSectionProps) => {
 
         const lowerTerm = term.toLowerCase();
 
-        // Najpierw filtruj po title
         let filtered = allFaqs.filter(faq =>
             faq.title.toLowerCase().includes(lowerTerm)
         );
 
-        // Jeśli brak, próbuj po content
         if (filtered.length === 0) {
             filtered = allFaqs.filter(faq =>
                 faq.content.toLowerCase().includes(lowerTerm)

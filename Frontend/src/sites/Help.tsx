@@ -1,7 +1,5 @@
 import "../styles/sites/Help.scss";
 import FaqSection from "../components/help_section.tsx";
-import Button from "../components/Button.tsx";
-import Alert from "../components/Alert.tsx";
 import { useState } from "react";
 
 function Help() {
@@ -9,7 +7,6 @@ function Help() {
 
     const handleSearchClick = (e: React.FormEvent) => {
         e.preventDefault();
-        // nie resetujemy inputa — filtracja działa na bieżąco
     };
 
     return (
