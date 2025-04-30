@@ -248,96 +248,112 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 
 ### 🌐 `main.tsx`
 - **Opis**:  
-  Punkt wejściowy aplikacji. Renderuje aplikację do DOM.
+  Główny punkt wejściowy aplikacji React. Odpowiada za renderowanie komponentu głównego do drzewa DOM oraz konfigurację podstawowych dostawców kontekstu i routingu.
 - **Funkcje**:
-  - Montowanie `<App />`
-  - Konfiguracja `React.StrictMode`
-
+  - Montowanie komponentu <App /> do elementu DOM o id root
+  - Otoczenie aplikacji w React.StrictMode – tryb pomocny w wykrywaniu potencjalnych problemów
+  - Konfiguracja klienta routingu za pomocą BrowserRouter z react-router-dom
+  - Dostarczenie kontekstu uwierzytelniania za pomocą AuthProvider
 ---
 
 ### 📘 `About.tsx`
 - **Opis**:  
-  Strona informacyjna o projekcie lub firmie.
+  Główna strona informacyjna aplikacji TerraQuest, przedstawiająca jej misję, historię i kluczowe dane.
 - **Zawiera**: tekst + ilustracje
-
+- **Funkcje**:
+  - Prezentacja misji oraz wartości marki TerraQuest
+  - Opis funkcjonalności i unikalnych cech platformy
+  - Wyświetlenie danych statystycznych (kraje, języki, strony itp.)
+  - Oś czasu z kluczowymi wydarzeniami w historii rozwoju firmy
 ---
 
 ### 📩 `Contact.tsx`
 - **Opis**:  
-  Formularz kontaktowy + dane kontaktowe
+  Strona kontaktowa aplikacji TerraQuest. Udostępnia użytkownikom możliwość wysłania wiadomości poprzez formularz.
 - **Funkcje**:
-  - Walidacja formularza
+  - Wyświetlenie formularza kontaktowego
   - Możliwość wysłania wiadomości
 
 ---
 
 ### 🚧 `Error.tsx`
 - **Opis**:  
-  Strona błędu 404 lub innego – wyświetlana gdy trasa nie istnieje
+  Strona błędu 404, wyświetlana gdy użytkownik trafi na nieistniejącą trasę w aplikacji TerraQuest.
 - **Funkcje**:
-  - Przekierowanie do Home
-  - Komunikat dla użytkownika
+  - Informowanie użytkownika o braku dostępnej strony
+  - Wyświetlenie przycisku nawigującego z powrotem do strony głównej
 
 ---
 
 ### 🔍 `Explore.tsx`
 - **Opis**:  
-  Strona eksploracji miejsc – propozycje podróży, ciekawe lokalizacje
+  Strona eksploracji ofert hotelowych z formularzem wyszukiwania, listą promowanych hoteli i opiniami klientów.
 - **Funkcje**:
-  - Interaktywne kafelki
-  - Dynamiczne generowanie treści
+  - Pobieranie i wyświetlanie hoteli oraz recenzji z API
+  - Przeliczanie cen na PLN, paginacja ofert
+  - Formularz z nawigacją do /search
+  - Sekcja promocyjna i baner aplikacji
 
 ---
 
 ### ❓ `Help.tsx`
 - **Opis**:  
-  FAQ lub sekcja z pomocą dla użytkownika
+  Strona pomocy z wyszukiwarką pytań i odpowiedzi (FAQ).
 - **Funkcje**:
-  - Rozwijane pytania
-  - Stylowanie UX-friendly
+  - Obsługa pola wyszukiwania zapytań
+  - Dynamiczne filtrowanie sekcji FAQ (FaqSection)
 
 ---
 
 ### 🏠 `Home.tsx`
 - **Opis**:  
-  Strona główna, landing page projektu
+  Strona główna aplikacji turystycznej — prezentuje oferty, cele podróży, inspiracje i sekcję FAQ.
 - **Zawiera**:
-  - Banery
-  - Sekcje promujące funkcje
-  - Nawigacja do reszty podstron
+  - Formularz wyszukiwania z obsługą localStorage i przekierowaniem
+  - Dynamiczne ładowanie hoteli z API 
+  - Wiele sekcji podróżniczych z komponentami 
+  - Automatyczne przeliczanie waluty (USD/EUR → PLN)
+  - Nawigacja i paginacja wyników hoteli
 
 ---
 
 ### 🔐 `Login.tsx`
 - **Opis**:  
-  Formularz logowania
+  Formularz logowania użytkownika do aplikacji, z walidacją, obsługą błędów i integracją z backendem.
 - **Funkcje**:
-  - Walidacja danych
-  - Obsługa błędów
+  - Logowanie za pomocą emaila i hasła
+  - Obsługa błędów serwera i wyświetlanie komunikatów
+  - Przekierowanie po zalogowaniu do /user
+  - Integracja z kontekstem autoryzacji useAuth()
+  - Link do strony rejestracji /register
 
 ---
 
 ### 📬 `Newsletter.tsx`
 - **Opis**:  
-  Subskrypcja newslettera
+  Formularz do zapisania użytkownika do newslettera, z walidacją emaila, obsługą błędów, i sprawdzeniem logowania.
 - **Funkcje**:
-  - Walidacja e-mail
-  - Obsługa potwierdzeń
+  - Sprawdzenie, czy użytkownik jest zalogowany
+  - Walidacja poprawności adresu email
+  - Obsługa błędów
+  - Możliwość edytowania swojego adresu email w przypadku zalogowania
+  - Przekierowanie do strony logowania, jeśli użytkownik nie jest zalogowany
 
 ---
 
 ### 🛡️ `Privacy_policy.tsx`
 - **Opis**:  
-  Polityka prywatności
-- **Zawiera**:
-  - Tekst statyczny
-  - Linki do zewnętrznych dokumentów
+  Strona przedstawiająca Politykę Prywatności aplikacji TravelQuest.
+- **Funkcje**:
+  - Wyświetlanie podstawowych informacji o firmie 
+  - Szczegółowy opis przetwarzania danych osobowych
+  - Możliwość kontaktu z administratorem poprzez e-mail, telefon lub adres firmy.
 
 ---
 
 ### 📦 `Product.tsx`
 - **Opis**:  
-  Widok konkretnego produktu/oferty
+  Strona prezentacji szczegółów hotelu z funkcją rezerwacji i przeglądem recenzji użytkowników.
 - **Funkcje**:
   - Pobieranie danych z API
   - Wyświetlanie szczegółów
@@ -348,27 +364,31 @@ Nasza platforma oferuje intuicyjny interfejs, system oceny obiektów oraz filtry
 - **Opis**:  
   Rejestracja nowego użytkownika
 - **Funkcje**:
-  - Walidacja formularza
-  - Hashowanie hasła (back-end)
+  - Wyświetlanie szczegółowych informacji o hotelu.
+  - Możliwość rezerwacji hotelu tylko dla zalogowanych użytkowników.
+  - Dynamiczne przeliczanie cen z USD i EUR na PLN według ustalonych kursów walutowych.
+  - Ładowanie i wyświetlanie recenzji od innych użytkowników oraz prezentacja statystyk z ocenami.
 
 ---
 
 ### 🔎 `Search.tsx`
 - **Opis**:  
-  Strona wyszukiwania miejsc/ofert
+  Strona do wyszukiwania ofert
 - **Funkcje**:
-  - Filtry
-  - Sortowanie
-  - Integracja z back-endem
+  - Wyświetlanie informacji o hotelach
+  - Możliwość sortowania lokali
+  - Przejście do szczegółów wybranego hotelu i możliwość dokonania rezerwacji
 
 ---
 
 ### 👤 `User.tsx`
 - **Opis**:  
-  Profil użytkownika
+  Strona panelu użytkownika systemu rezerwacji hoteli, umożliwiająca zarządzanie profilem oraz przeglądanie historii rezerwacji.
 - **Funkcje**:
-  - Edycja danych
-  - Historia rezerwacji
+  - Wyświetlanie danych użytkownika
+  - Aktualizacja danych profilowych
+  - Zarządzanie subskrypcją newslettera
+  - Funkcja wylogowania
 
 ---
 
