@@ -1,24 +1,22 @@
 import express, { Request, Response, Router } from 'express';
-import { supabase } from '../utils/supabase'; // Wczytaj klienta Supabase
+import { supabase } from '../utils/supabase';
 
 const router = express.Router();
 
 router.post('/', async (req: Request, res: Response) => {
     const { userEmail, hotel, checkIn, checkOut } = req.body;
 
-    // Sprawdzamy, czy dane są poprawne
     if (!userEmail || !hotel) {
         res.status(400).json({ message: 'Brak wymaganych danych' });
         return
     }
 
     try {
-        // Pobranie userId użytkownika z tabeli users_terraQuest na podstawie e-maila
         const { data: userData, error: userError } = await supabase
             .from('users_terraQuest')
             .select('id')
             .eq('email', userEmail)
-            .single();  // Używamy single() bo spodziewamy się tylko jednego wyniku
+            .single();
 
         console.log(userData?.id);
 
@@ -27,7 +25,6 @@ router.post('/', async (req: Request, res: Response) => {
             return
         }
 
-        // Wstawienie rezerwacji do tabeli 'Reservation'
         const { data, error } = await supabase
             .from('Reservation')
             .insert([
@@ -50,8 +47,8 @@ router.post('/', async (req: Request, res: Response) => {
                     PropertyLongitude: hotel.PropertyLongitude,
                     PropertyImageUrlHighRes: hotel.PropertyImageUrlHighRes,
                     RatingImageUrl: hotel.RatingImageUrl,
-                    CheckIn: checkIn || null,  // Zapisujemy datę check-in, jeśli została podana
-                    CheckOut: checkOut || null // Zapisujemy datę check-out, jeśli została podana
+                    CheckIn: checkIn || null,
+                    CheckOut: checkOut || null
                 }
             ]);
 
@@ -61,7 +58,6 @@ router.post('/', async (req: Request, res: Response) => {
             return
         }
 
-        // Jeśli rezerwacja została dodana
         res.status(200).json({ message: 'Rezerwacja pomyślnie dodana!', data });
         return
     } catch (err) {
